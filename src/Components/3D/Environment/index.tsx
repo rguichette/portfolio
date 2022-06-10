@@ -1,6 +1,7 @@
 import React, { Ref, useEffect, useRef } from "react";
 import * as THREE from "three";
 import {
+  Box,
   Sphere,
   SpotLight,
   useAnimations,
@@ -9,6 +10,7 @@ import {
 } from "@react-three/drei";
 import { useFrame, useLoader } from "@react-three/fiber";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { Group } from "three";
 
 export default function Environment() {
   let gltf,
@@ -20,12 +22,12 @@ export default function Environment() {
   console.log("ANIMATIONS:", animations);
   console.log(THREE.PointLight);
 
-  useHelper(pointLight, THREE.PointLightHelper, 100);
+  useHelper(pointLight, THREE.PointLightHelper, 0.4);
 
   useEffect(() => {
     if (pointLight.current) {
       let pl = pointLight.current as THREE.PointLight;
-      pl.position.y = 700;
+      pl.position.y = 3.9;
     }
   });
 
@@ -34,12 +36,15 @@ export default function Environment() {
   });
 
   return (
-    <mesh scale={[0.001, 0.001, 0.001]}>
-      <primitive object={scene} />
-      <pointLight
+    <group>
+      {/* <ambientLight /> */}
+      {/* <pointLight
         ref={pointLight as unknown as Ref<THREE.SpotLight> | undefined}
         // intensity={10}
-      />
-    </mesh>
+      /> */}
+      <mesh position={[0, 0, 0]} scale={[0.001, 0.001, 0.001]}>
+        <primitive object={scene} />
+      </mesh>
+    </group>
   );
 }
