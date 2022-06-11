@@ -1,13 +1,21 @@
 import { Box, Plane } from "@react-three/drei";
 import { MeshProps } from "@react-three/fiber";
-import React, { useEffect, useRef, useState } from "react";
+import React, { forwardRef, Ref, useEffect, useRef, useState } from "react";
 import THREE from "three";
 
-function Monitor(props: MeshProps, src?: String) {
+type IProps = MeshProps & {
+  src?: string;
+};
+
+let Monitor = forwardRef((props: IProps, forwardRef?: any) => {
   let tvBack = useRef();
   let screenRef = useRef();
+  let { src } = props;
+
   let url =
-    "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4";
+    src != undefined
+      ? src
+      : "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4";
 
   const [video] = useState(() => {
     const vid = document.createElement("video");
@@ -15,7 +23,7 @@ function Monitor(props: MeshProps, src?: String) {
     vid.crossOrigin = "Anonymous";
     vid.loop = true;
     vid.muted = true;
-    vid.play();
+    // vid.play();
     return vid;
   });
 
@@ -34,7 +42,7 @@ function Monitor(props: MeshProps, src?: String) {
   });
 
   return (
-    <mesh {...props}>
+    <mesh {...props} ref={forwardRef}>
       <Box args={[2, 1, 0.05]} ref={tvBack}>
         <meshPhongMaterial color="blue" shininess={80} reflectivity={0.4} />
       </Box>
@@ -49,8 +57,8 @@ function Monitor(props: MeshProps, src?: String) {
           emissive={"white"}
           emissiveIntensity={0.5}
         >
-          <videoTexture args={[video]} />
-          <videoTexture args={[video]} />
+          <videoTexture attach="map" args={[video]} />
+          <videoTexture attach="emissiveMap" args={[video]} />
 
           {/* <videoTexture attach="map" args={[video]} />
           <videoTexture attach="emissiveMap" args={[video]} /> */}
@@ -58,6 +66,6 @@ function Monitor(props: MeshProps, src?: String) {
       </Plane>
     </mesh>
   );
-}
+});
 
 export default Monitor;
