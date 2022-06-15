@@ -37,7 +37,7 @@ export default function Environment() {
 
   return (
     <group>
-      {/* <ambientLight /> */}
+      <ambientLight />
       {/* <pointLight
         ref={pointLight as unknown as Ref<THREE.SpotLight> | undefined}
         // intensity={10}

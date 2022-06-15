@@ -1,7 +1,7 @@
 import { Box, Plane } from "@react-three/drei";
 import { MeshProps } from "@react-three/fiber";
 import React, { forwardRef, Ref, useEffect, useRef, useState } from "react";
-import THREE from "three";
+import THREE, { Vector2, VideoTexture } from "three";
 
 type IProps = MeshProps & {
   src?: string;
@@ -15,7 +15,7 @@ let Monitor = forwardRef((props: IProps, forwardRef?: any) => {
   let url =
     src != undefined
       ? src
-      : "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4";
+      : "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4";
 
   const [video] = useState(() => {
     const vid = document.createElement("video");
@@ -23,9 +23,17 @@ let Monitor = forwardRef((props: IProps, forwardRef?: any) => {
     vid.crossOrigin = "Anonymous";
     vid.loop = true;
     vid.muted = true;
-    // vid.play();
+
+    vid.play();
+
+    //other types of textures
+
     return vid;
   });
+
+  let r = useRef();
+
+  useEffect(() => {});
 
   //create video el to use as texture
 
@@ -44,7 +52,7 @@ let Monitor = forwardRef((props: IProps, forwardRef?: any) => {
   return (
     <mesh {...props} ref={forwardRef}>
       <Box args={[2, 1, 0.05]} ref={tvBack}>
-        <meshPhongMaterial color="blue" shininess={80} reflectivity={0.4} />
+        <meshPhongMaterial color="black" shininess={80} reflectivity={0.4} />
       </Box>
 
       <Plane
@@ -57,11 +65,12 @@ let Monitor = forwardRef((props: IProps, forwardRef?: any) => {
           emissive={"white"}
           emissiveIntensity={0.5}
         >
-          <videoTexture attach="map" args={[video]} />
+          <videoTexture
+            attach="map"
+            args={[video]}
+            ref={r as unknown as Ref<VideoTexture> | undefined}
+          />
           <videoTexture attach="emissiveMap" args={[video]} />
-
-          {/* <videoTexture attach="map" args={[video]} />
-          <videoTexture attach="emissiveMap" args={[video]} /> */}
         </meshStandardMaterial>
       </Plane>
     </mesh>
