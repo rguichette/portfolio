@@ -1,4 +1,4 @@
-import { Suspense, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import "./App.css";
 import { Canvas } from "@react-three/fiber";
 import {
@@ -7,11 +7,13 @@ import {
   PerspectiveCamera,
   Plane,
   Sphere,
+  useHelper,
 } from "@react-three/drei";
 import { Character, Environment, TvArea } from "./Components/3D";
 import { Monitor } from "./Components/3D";
 import WorkMonitors from "./Components/3D/WorkMonitors";
 import CameraControls from "./Components/Controls/CameraControls";
+import { CameraHelper } from "three";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -28,7 +30,11 @@ function App() {
           {/* <Monitor position={[1, 2, 5]} scale={[5, 5, 5]} /> */}
           {/* <TvArea /> */}
           {/* <WorkMonitors /> */}
-          <PerspectiveCamera makeDefault ref={r} position={[0, 0, 5]} />
+          <PerspectiveCamera
+            // makeDefault
+            ref={r}
+            //  position={[0, 0, 5]}
+          />
           <ambientLight />
 
           <Plane
@@ -40,6 +46,7 @@ function App() {
           </Plane>
           {/* {console.log(r)} */}
           <Character cam={r as unknown as THREE.PerspectiveCamera} />
+          <OrbitControls />
         </Suspense>
       </Canvas>
     </div>

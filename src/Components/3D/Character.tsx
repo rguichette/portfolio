@@ -1,8 +1,9 @@
-import React, { useEffect, useRef } from "react";
+import React, { MutableRefObject, useEffect, useRef } from "react";
 import { useFrame, useLoader } from "@react-three/fiber";
-import { Box, PerspectiveCamera } from "@react-three/drei";
+import { Box, PerspectiveCamera, useHelper } from "@react-three/drei";
 
 import * as THREE from "three";
+import { Object3D, CameraHelper } from "three";
 
 let moveFoward = false;
 let moveBack = false;
@@ -10,30 +11,80 @@ let turnLeft = false;
 let turnRight = false;
 
 export default function Character({ cam }: { cam?: THREE.PerspectiveCamera }) {
-  console.log("CHAracter");
+  let character = useRef<THREE.Mesh>();
+  let offset = new THREE.Vector3(0, 0, 5);
+  let camera =
+    cam as unknown as React.MutableRefObject<THREE.PerspectiveCamera>;
 
-  let ref = useRef();
+  const objectPosition = new THREE.Vector3();
   useEffect(() => {
-    console.log("CAM: ", cam);
-  }, []);
+    character.current?.add(camera.current);
+    character.current?.getWorldPosition(objectPosition);
+  });
 
-  useFrame(() => {
-    let _r = ref.current as unknown as THREE.Mesh;
-    if (ref.current) {
+  if (character.current) {
+    if (camera) {
+      console.log("Cam: ", camera.current);
+    }
+  }
+
+  useHelper(
+    camera as unknown as MutableRefObject<Object3D<Event>>,
+    CameraHelper
+  );
+
+  //init
+
+  useFrame((state, delta) => {
+    let _r = character.current as unknown as THREE.Mesh;
+    if (character.current) {
       if (moveFoward) {
-        _r.position.z -= 0.1;
+        _r.translateZ(0.1);
+        console.log("hi");
       } else if (moveBack) {
-        _r.position.z += 0.1;
+        _r.translateZ(-0.1);
       }
       if (turnRight) {
+        _r.rotation.y -= 0.0872665;
       } else if (turnLeft) {
+        _r.rotation.y += 0.0872665;
       }
+
+      //camera
+      camera.current.position.copy(objectPosition).add(offset);
+    }
+
+    // let idealOffset = calculateIdealLookat();
+    // let idealLookat = calculateIdealOffset();
+
+    if (camera) {
+      // console.log("camera", camera);
     }
   });
 
+  // /////////////////// cam ////////////////////////// cam ///////////////////////////// cam
+
+  const calculateIdealOffset = () => {
+    const idealOffset = new THREE.Vector3(0, 20, -30);
+    if (character.current) {
+      idealOffset.applyQuaternion(character.current.quaternion);
+      idealOffset.add(character.current.position);
+    }
+    return idealOffset;
+  };
+
+  const calculateIdealLookat = () => {
+    const idealLookat = new THREE.Vector3(0, 100, 50);
+    if (character.current) {
+      idealLookat.applyQuaternion(character.current.quaternion);
+      idealLookat.add(character.current.position);
+    }
+    return idealLookat;
+  };
+
   return (
     <mesh>
-      <Box ref={ref} position={[0, 0, 3]} />
+      <Box ref={character} position={[0, 0, 3]} />
     </mesh>
   );
 }
@@ -50,7 +101,9 @@ let move = () => {
   }
   if (keys["a"] || keys["ArrowLeft"]) {
     console.log("LEFT");
+    turnLeft = true;
   } else if (keys["d"] || keys["ArrowRight"]) {
+    turnRight = true;
     console.log("RIGHT");
   }
 };
