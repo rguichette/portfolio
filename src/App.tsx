@@ -19,22 +19,24 @@ function App() {
   const [count, setCount] = useState(0);
 
   let r = useRef();
+  let char = useRef();
+  let cam = useRef();
 
   //pretend char lives here to work with cam.
 
   return (
     <div className="App">
-      <Canvas>
+      <Canvas camera={cam.current}>
         <Suspense>
           {/* <Environment /> */}
           {/* <Monitor position={[1, 2, 5]} scale={[5, 5, 5]} /> */}
           {/* <TvArea /> */}
           {/* <WorkMonitors /> */}
-          <PerspectiveCamera
+          {/* <PerspectiveCamera
             // makeDefault
             ref={r}
             //  position={[0, 0, 5]}
-          />
+          /> */}
           <ambientLight />
 
           <Plane
@@ -45,8 +47,10 @@ function App() {
             <meshBasicMaterial color={"gray"} />
           </Plane>
           {/* {console.log(r)} */}
-          <Character cam={r as unknown as THREE.PerspectiveCamera} />
-          <OrbitControls />
+          <CameraControls character={char} ref={cam} />
+          <Character cam={r as unknown as THREE.PerspectiveCamera} ref={char} />
+          {/* <Box ref={boxRef} /> */}
+          {/* <OrbitControls /> */}
         </Suspense>
       </Canvas>
     </div>

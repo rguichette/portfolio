@@ -1,93 +1,69 @@
-import React, { MutableRefObject, useEffect, useRef } from "react";
+import React, {
+  forwardRef,
+  MutableRefObject,
+  Ref,
+  useEffect,
+  useRef,
+} from "react";
 import { useFrame, useLoader } from "@react-three/fiber";
 import { Box, PerspectiveCamera, useHelper } from "@react-three/drei";
 
 import * as THREE from "three";
-import { Object3D, CameraHelper } from "three";
+import { Object3D, CameraHelper, BufferGeometry, Mesh } from "three";
+import CameraControls from "../Controls/CameraControls";
 
 let moveFoward = false;
 let moveBack = false;
 let turnLeft = false;
 let turnRight = false;
 
-export default function Character({ cam }: { cam?: THREE.PerspectiveCamera }) {
-  let character = useRef<THREE.Mesh>();
-  let offset = new THREE.Vector3(0, 0, 5);
-  let camera =
-    cam as unknown as React.MutableRefObject<THREE.PerspectiveCamera>;
+let Character = forwardRef(
+  ({ cam }: { cam?: THREE.PerspectiveCamera }, ref?) => {
+    let character = useRef<THREE.Mesh>();
+    let offset = new THREE.Vector3(0, 0, 5);
+    let camera =
+      cam as unknown as React.MutableRefObject<THREE.PerspectiveCamera>;
 
-  const objectPosition = new THREE.Vector3();
-  useEffect(() => {
-    character.current?.add(camera.current);
-    character.current?.getWorldPosition(objectPosition);
-  });
+    const objectPosition = new THREE.Vector3();
 
-  if (character.current) {
-    if (camera) {
-      console.log("Cam: ", camera.current);
-    }
+    //init
+    useEffect(() => {
+      if (character.current) {
+        character.current.rotation.set(0, Math.PI, 0);
+      }
+    });
+
+    useFrame((state, delta) => {
+      let _r = character.current as unknown as THREE.Mesh;
+      if (character.current) {
+        if (moveFoward) {
+          _r.translateZ(0.1);
+          console.log("hi");
+        } else if (moveBack) {
+          _r.translateZ(-0.1);
+        }
+        if (turnRight) {
+          _r.rotation.y -= 0.0872665;
+        } else if (turnLeft) {
+          _r.rotation.y += 0.0872665;
+        }
+
+        //camera
+        // camera.current.position.copy(objectPosition).add(offset);
+      }
+    });
+
+    return (
+      <mesh ref={character as unknown as Ref<Mesh<BufferGeometry>>}>
+        <Box
+          ref={ref}
+          // position={[0, 0, 5]}
+          rotation={[0, (180 * Math.PI) / 180, 0]}
+        />
+      </mesh>
+    );
   }
-
-  useHelper(
-    camera as unknown as MutableRefObject<Object3D<Event>>,
-    CameraHelper
-  );
-
-  //init
-
-  useFrame((state, delta) => {
-    let _r = character.current as unknown as THREE.Mesh;
-    if (character.current) {
-      if (moveFoward) {
-        _r.translateZ(0.1);
-        console.log("hi");
-      } else if (moveBack) {
-        _r.translateZ(-0.1);
-      }
-      if (turnRight) {
-        _r.rotation.y -= 0.0872665;
-      } else if (turnLeft) {
-        _r.rotation.y += 0.0872665;
-      }
-
-      //camera
-      camera.current.position.copy(objectPosition).add(offset);
-    }
-
-    // let idealOffset = calculateIdealLookat();
-    // let idealLookat = calculateIdealOffset();
-
-    if (camera) {
-      // console.log("camera", camera);
-    }
-  });
-
-  // /////////////////// cam ////////////////////////// cam ///////////////////////////// cam
-
-  const calculateIdealOffset = () => {
-    const idealOffset = new THREE.Vector3(0, 20, -30);
-    if (character.current) {
-      idealOffset.applyQuaternion(character.current.quaternion);
-      idealOffset.add(character.current.position);
-    }
-    return idealOffset;
-  };
-
-  const calculateIdealLookat = () => {
-    const idealLookat = new THREE.Vector3(0, 100, 50);
-    if (character.current) {
-      idealLookat.applyQuaternion(character.current.quaternion);
-      idealLookat.add(character.current.position);
-    }
-    return idealLookat;
-  };
-
-  return (
-    <mesh>
-      <Box ref={character} position={[0, 0, 3]} />
-    </mesh>
-  );
-}
+);
 
 let keys: any = {};
 
@@ -124,3 +100,5 @@ document.onkeyup = (e) => {
   turnLeft = false;
   turnRight = false;
 };
+
+export default Character;
