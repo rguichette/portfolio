@@ -6,7 +6,7 @@ import React, {
   useRef,
 } from "react";
 import { useFrame, useLoader } from "@react-three/fiber";
-import { Box, PerspectiveCamera, useHelper } from "@react-three/drei";
+import { Box, PerspectiveCamera, useGLTF, useHelper } from "@react-three/drei";
 
 import * as THREE from "three";
 import { Object3D, CameraHelper, BufferGeometry, Mesh } from "three";
@@ -20,7 +20,6 @@ let turnRight = false;
 let Character = forwardRef(
   ({ cam }: { cam?: THREE.PerspectiveCamera }, ref?) => {
     let character = useRef<THREE.Mesh>();
-    let offset = new THREE.Vector3(0, 0, 5);
     let camera =
       cam as unknown as React.MutableRefObject<THREE.PerspectiveCamera>;
 
@@ -37,15 +36,18 @@ let Character = forwardRef(
       let _r = character.current as unknown as THREE.Mesh;
       if (character.current) {
         if (moveFoward) {
-          _r.translateZ(0.1);
+          _r.translateZ(0.03);
           console.log("hi");
         } else if (moveBack) {
-          _r.translateZ(-0.1);
+          _r.translateZ(-0.03);
         }
         if (turnRight) {
-          _r.rotation.y -= 0.0872665;
+          _r.rotateY(-0.0872665);
+          // _r.rotation.y -=
         } else if (turnLeft) {
-          _r.rotation.y += 0.0872665;
+          _r.rotateY(0.0872665);
+
+          // _r.rotation.y += 0.0872665;
         }
 
         //camera
@@ -53,13 +55,22 @@ let Character = forwardRef(
       }
     });
 
+    //load Character
+    const gltf = useGLTF("/models/male.glb");
+    console.log(gltf);
+
     return (
-      <mesh ref={character as unknown as Ref<Mesh<BufferGeometry>>}>
-        <Box
+      <mesh
+        scale={0.5}
+        ref={character as unknown as Ref<Mesh<BufferGeometry>>}
+        rotation={[0, -Math.PI, 0]}
+      >
+        {/* <Box
           ref={ref}
           // position={[0, 0, 5]}
           rotation={[0, (180 * Math.PI) / 180, 0]}
-        />
+        /> */}
+        <primitive ref={ref} object={gltf.scene} />
       </mesh>
     );
   }

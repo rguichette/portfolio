@@ -6,7 +6,7 @@ import {
   PerspectiveCamera,
   useHelper,
 } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import React, {
   forwardRef,
   MutableRefObject,
@@ -17,45 +17,47 @@ import React, {
 import * as THREE from "three";
 import { CameraHelper, Object3D, Vector3 } from "three";
 
-//TODO: replace ANY
-
-const currentPosition = new THREE.Vector3();
-const currentLookAt = new THREE.Vector3();
+//TODO: make cam more fluid
 
 let CameraControls = forwardRef(function (
-  { character }: { character?: React.MutableRefObject<undefined> },
+  { character }: { character?: React.MutableRefObject<THREE.Mesh | undefined> },
   ref?: any
 ) {
-  let offset = new THREE.Vector3(0, 0.5, 4);
-
+  //helpers and references
   let camera =
     useRef() as unknown as React.MutableRefObject<THREE.PerspectiveCamera>;
-
   useHelper(
     camera as unknown as MutableRefObject<Object3D<Event>>,
     CameraHelper
   );
 
-  const objectPosition = new THREE.Vector3();
-  let char: THREE.Mesh;
-  let cameraOrigin = new Vector3(0, 0, 10);
+  ////////////start here///////
+  //TODO: make camera more fluid
 
   useEffect(() => {
-    char = character?.current as unknown as THREE.Mesh;
-    if (char) {
-      char.add(camera.current);
+    if (character?.current) character.current.add(camera.current);
 
-      camera.current.position.set(0, 1, 10);
-    }
+    //offset cam
+    camera.current.position.set(0, 2.2, -2);
+    camera.current.rotateY(Math.PI);
+    character?.current?.getWorldPosition(obj);
   }, []);
 
-  useFrame((state, delta) => {
-    // if (camera.current && char)
-    // camera.current.lookAt(char.position.clone().add(cameraOrigin));
-    // if (camera.current) camera.current.lookAt(char.position);
+  let obj = new Vector3();
+  useFrame(() => {
+    /////////////////////////start below
+
+    var relativeCameraOffset = new THREE.Vector3(0, 2.2, -2);
+
+    //dont ERASE -- EVER
+    if (character?.current) {
+      // camera.current.lookAt(obj);
+    }
   });
 
-  return <PerspectiveCamera ref={camera} makeDefault />;
+  return <PerspectiveCamera ref={camera} fov={75} />;
 });
 
 export default CameraControls;
+
+//saved files

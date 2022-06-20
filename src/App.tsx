@@ -24,6 +24,11 @@ function App() {
 
   //pretend char lives here to work with cam.
 
+  useEffect(() => {
+    let _c = char.current as unknown as THREE.Mesh;
+    // if (_c) _c.rotation.y = Math.PI / 2;
+  }, []);
+
   return (
     <div className="App">
       <Canvas camera={cam.current}>
@@ -41,16 +46,18 @@ function App() {
 
           <Plane
             rotation={[-Math.PI / 2, 0, 0]}
-            position={[0, -2, 2]}
+            position={[0, 0, 2]}
             scale={[20, 20, 20]}
           >
             <meshBasicMaterial color={"gray"} />
           </Plane>
           {/* {console.log(r)} */}
+          <Character ref={char} />
+          {/* <Box position={[1, 0.5, 0]} /> */}
           <CameraControls character={char} ref={cam} />
-          <Character cam={r as unknown as THREE.PerspectiveCamera} ref={char} />
           {/* <Box ref={boxRef} /> */}
-          {/* <OrbitControls /> */}
+          {/* <Environment /> */}
+          <OrbitControls />
         </Suspense>
       </Canvas>
     </div>
