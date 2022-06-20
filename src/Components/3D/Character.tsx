@@ -6,11 +6,28 @@ import React, {
   useRef,
 } from "react";
 import { useFrame, useLoader } from "@react-three/fiber";
-import { Box, PerspectiveCamera, useGLTF, useHelper } from "@react-three/drei";
+import {
+  Box,
+  PerspectiveCamera,
+  useAnimations,
+  useFBX,
+  useGLTF,
+  useHelper,
+} from "@react-three/drei";
+
+import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
+import { GLTF, GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 import * as THREE from "three";
-import { Object3D, CameraHelper, BufferGeometry, Mesh } from "three";
+import {
+  Object3D,
+  CameraHelper,
+  BufferGeometry,
+  Mesh,
+  AnimationClip,
+} from "three";
 import CameraControls from "../Controls/CameraControls";
+import animations from "../../animations";
 
 let moveFoward = false;
 let moveBack = false;
@@ -30,7 +47,7 @@ let Character = forwardRef(
       if (character.current) {
         character.current.rotation.set(0, Math.PI, 0);
       }
-    });
+    }, []);
 
     useFrame((state, delta) => {
       let _r = character.current as unknown as THREE.Mesh;
@@ -57,7 +74,11 @@ let Character = forwardRef(
 
     //load Character
     const gltf = useGLTF("/models/male.glb");
-    console.log(gltf);
+
+    //animations
+    animationActions(animations, gltf.scene);
+
+    console.log("model Anim: ", gltf.scene);
 
     return (
       <mesh
@@ -111,5 +132,33 @@ document.onkeyup = (e) => {
   turnLeft = false;
   turnRight = false;
 };
+
+function animationActions(animationDirs: any, scene: any) {
+  let mixer = new THREE.AnimationMixer(scene);
+
+  useFrame((state, delta) => {
+    mixer.update(delta);
+  });
+  // const mixer = new THREE.AnimationMixer( model );
+  let animationsArray = [];
+  for (let item in animationDirs) {
+    let anim = animationDirs[item];
+    let { animations } = useFBX(anim);
+    //rename
+    animations[0].name = item;
+
+    animationsArray.push(animations[0]);
+
+    // console.log(mixer);
+  }
+  console.log("====================================");
+  console.log(animationsArray[0]);
+  console.log("====================================");
+  let action = mixer.clipAction(animationsArray[0]);
+
+  console.log("MODEL: ", animationsArray);
+  // useAnimations(animationsArray);
+  action.play();
+}
 
 export default Character;

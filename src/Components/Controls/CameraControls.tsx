@@ -35,19 +35,19 @@ let CameraControls = forwardRef(function (
   //TODO: make camera more fluid
 
   useEffect(() => {
-    if (character?.current) character.current.add(camera.current);
-
     //offset cam
-    camera.current.position.set(0, 2.2, -2);
+    if (character?.current) character.current.add(camera.current);
+    camera.current.position.set(0, 2.0, -3.9);
+    // camera.current.rotation.set(Math.PI / 180, 0, 0);
     camera.current.rotateY(Math.PI);
-    character?.current?.getWorldPosition(obj);
   }, []);
 
   let obj = new Vector3();
   useFrame(() => {
+    character?.current?.getWorldPosition(obj);
     /////////////////////////start below
 
-    var relativeCameraOffset = new THREE.Vector3(0, 2.2, -2);
+    // var relativeCameraOffset = new THREE.Vector3(0, 2.0, -2);
 
     //dont ERASE -- EVER
     if (character?.current) {
@@ -55,7 +55,7 @@ let CameraControls = forwardRef(function (
     }
   });
 
-  return <PerspectiveCamera ref={camera} fov={75} />;
+  return <PerspectiveCamera ref={camera} fov={75} makeDefault />;
 });
 
 export default CameraControls;

@@ -57,7 +57,7 @@ function App() {
           <CameraControls character={char} ref={cam} />
           {/* <Box ref={boxRef} /> */}
           {/* <Environment /> */}
-          <OrbitControls />
+          {/* <OrbitControls /> */}
         </Suspense>
       </Canvas>
     </div>
