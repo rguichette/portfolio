@@ -15,7 +15,7 @@ import React, {
   useRef,
 } from "react";
 import * as THREE from "three";
-import { CameraHelper, Object3D, Vector3 } from "three";
+import { CameraHelper, Object3D, Raycaster, Vector3 } from "three";
 
 //TODO: make cam more fluid
 
@@ -33,29 +33,69 @@ let CameraControls = forwardRef(function (
 
   ////////////start here///////
   //TODO: make camera more fluid
+  const raycaster = new THREE.Raycaster();
 
   useEffect(() => {
     //offset cam
     if (character?.current) character.current.add(camera.current);
-    camera.current.position.set(0, 2.0, -3.9);
+    camera.current.setFocalLength(24);
+    camera.current.lookAt(scene.position);
+    camera.current.position.set(0, 1.0, -5.5);
+
+    camera.current.filmOffset = 0;
+
     // camera.current.rotation.set(Math.PI / 180, 0, 0);
     camera.current.rotateY(Math.PI);
+    camera.current.rotateX((-1 * Math.PI) / 180);
   }, []);
 
   let obj = new Vector3();
-  useFrame(() => {
+
+  let { scene } = useThree();
+
+  let house = scene.children.filter((item) => {
+    return item.name == "homeMesh";
+  })[0];
+
+  console.log("house", house);
+  // console.log(house);
+
+  useFrame(({ camera, scene }) => {
+    // for detecting if a wall in between character and cam
+    raycaster.setFromCamera(new THREE.Vector2(), camera);
     character?.current?.getWorldPosition(obj);
     /////////////////////////start below
+    let intersect = raycaster.intersectObject(house);
+
+    //we know this when we set the cam's position "distance" from character |-3.9| --> 3.9
+    let distFromCam = 3.9;
+    console.log(intersect);
 
     // var relativeCameraOffset = new THREE.Vector3(0, 2.0, -2);
+    // console.log(scene);
 
     //dont ERASE -- EVER
     if (character?.current) {
-      // camera.current.lookAt(obj);
+      obj.y = 0.5;
+
+      camera.lookAt(obj);
     }
   });
 
-  return <PerspectiveCamera ref={camera} fov={75} makeDefault />;
+  return (
+    <group>
+      <PerspectiveCamera
+        ref={camera}
+        fov={85}
+        near={0.01}
+        far={1000}
+        name="characterCam"
+        makeDefault
+      />
+
+      <OrbitControls enablePan={false} />
+    </group>
+  );
 });
 
 export default CameraControls;

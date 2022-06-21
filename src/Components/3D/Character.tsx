@@ -85,6 +85,7 @@ let Character = forwardRef(
         scale={0.5}
         ref={character as unknown as Ref<Mesh<BufferGeometry>>}
         rotation={[0, -Math.PI, 0]}
+        name={"characterMesh"}
       >
         {/* <Box
           ref={ref}

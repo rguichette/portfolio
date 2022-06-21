@@ -20,7 +20,7 @@ export default function Environment() {
   console.log("HOUSE: ", scene);
   console.log("====================================");
   return (
-    <mesh scale={0.5}>
+    <mesh scale={0.5} name="homeMesh">
       <primitive object={scene} />;
       <meshBasicMaterial opacity={1} />
     </mesh>

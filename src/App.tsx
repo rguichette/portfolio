@@ -42,22 +42,21 @@ function App() {
             ref={r}
             //  position={[0, 0, 5]}
           /> */}
+          <Environment />
           <ambientLight />
-
+          {/* 
           <Plane
             rotation={[-Math.PI / 2, 0, 0]}
             position={[0, 0, 2]}
             scale={[20, 20, 20]}
           >
             <meshBasicMaterial color={"gray"} />
-          </Plane>
+          </Plane> */}
           {/* {console.log(r)} */}
           <Character ref={char} />
           {/* <Box position={[1, 0.5, 0]} /> */}
-          <CameraControls character={char} ref={cam} />
+          <CameraControls character={char} />
           {/* <Box ref={boxRef} /> */}
-          {/* <Environment /> */}
-          {/* <OrbitControls /> */}
         </Suspense>
       </Canvas>
     </div>
