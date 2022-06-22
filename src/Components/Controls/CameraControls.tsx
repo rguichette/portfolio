@@ -40,13 +40,13 @@ let CameraControls = forwardRef(function (
     if (character?.current) character.current.add(camera.current);
     camera.current.setFocalLength(24);
     camera.current.lookAt(scene.position);
-    camera.current.position.set(0, 1.0, -5.5);
+    camera.current.position.set(0, 2.7, -3.95);
 
     camera.current.filmOffset = 0;
 
     // camera.current.rotation.set(Math.PI / 180, 0, 0);
     camera.current.rotateY(Math.PI);
-    camera.current.rotateX((-1 * Math.PI) / 180);
+    // camera.current.rotateX((-1 * Math.PI) / 180);
   }, []);
 
   let obj = new Vector3();
@@ -57,26 +57,42 @@ let CameraControls = forwardRef(function (
     return item.name == "homeMesh";
   })[0];
 
-  console.log("house", house);
   // console.log(house);
+  let walls = [];
 
   useFrame(({ camera, scene }) => {
+    let dist: number;
     // for detecting if a wall in between character and cam
     raycaster.setFromCamera(new THREE.Vector2(), camera);
+
     character?.current?.getWorldPosition(obj);
-    /////////////////////////start below
-    let intersect = raycaster.intersectObject(house);
 
-    //we know this when we set the cam's position "distance" from character |-3.9| --> 3.9
-    let distFromCam = 3.9;
-    console.log(intersect);
+    if (character?.current) {
+      let intersects = raycaster.intersectObject(house);
 
-    // var relativeCameraOffset = new THREE.Vector3(0, 2.0, -2);
-    // console.log(scene);
+      dist = camera.position.distanceTo(character?.current?.position);
+      // console.log("DIST", dist);
+      //camera see-through
+      if (intersects.length > 0) {
+        intersects[0].object.material.transparent = true;
+
+        //BAD CODE
+        if (intersects[0].distance < dist) {
+          //make invisible
+          intersects[0].object.material.opacity = 0;
+        } else {
+          intersects[0].object.material.opacity = 1;
+        }
+
+        //remove walls and bring them back
+        // console.log(intersects);
+        //
+      }
+    }
 
     //dont ERASE -- EVER
     if (character?.current) {
-      obj.y = 0.5;
+      obj.y = 1;
 
       camera.lookAt(obj);
     }
@@ -86,14 +102,19 @@ let CameraControls = forwardRef(function (
     <group>
       <PerspectiveCamera
         ref={camera}
-        fov={85}
+        fov={75}
         near={0.01}
         far={1000}
         name="characterCam"
         makeDefault
       />
 
-      <OrbitControls enablePan={false} />
+      <OrbitControls
+        enablePan={false}
+        enableZoom={false}
+        minPolarAngle={1.4}
+        maxPolarAngle={1.5}
+      />
     </group>
   );
 });

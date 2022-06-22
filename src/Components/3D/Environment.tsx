@@ -16,11 +16,8 @@ export default function Environment() {
   let gltf,
     { animations, scene } = useGLTF("/models/Home.glb");
 
-  console.log("====================================");
-  console.log("HOUSE: ", scene);
-  console.log("====================================");
   return (
-    <mesh scale={0.5} name="homeMesh">
+    <mesh scale={0.75} name="homeMesh">
       <primitive object={scene} />;
       <meshBasicMaterial opacity={1} />
     </mesh>
