@@ -54,7 +54,7 @@ let Character = forwardRef(
       if (character.current) {
         if (moveFoward) {
           _r.translateZ(0.03);
-          console.log("hi");
+          // console.log("hi");
         } else if (moveBack) {
           _r.translateZ(-0.03);
         }
@@ -103,10 +103,10 @@ let keys: any = {};
 let move = () => {
   if (keys["w"] || keys["ArrowUp"]) {
     moveFoward = true;
-    console.log("FOWARD: ", moveFoward);
+    // console.log("FOWARD: ", moveFoward);
   } else if (keys["s"] || keys["ArrowDown"]) {
     moveBack = true;
-    console.log("BACK");
+    // console.log("BACK");
   }
   if (keys["a"] || keys["ArrowLeft"]) {
     console.log("LEFT");
@@ -152,9 +152,7 @@ function animationActions(animationDirs: any, scene: any) {
 
     // console.log(mixer);
   }
-  console.log("====================================");
-  console.log(animationsArray[0]);
-  console.log("====================================");
+
   let action = mixer.clipAction(animationsArray[0]);
 
   console.log("MODEL: ", animationsArray);
