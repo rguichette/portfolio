@@ -100,10 +100,27 @@ let control = useRef<OrbitControlsImpl>(null)
 //   })
 let camPos = new Vector3
 let ray; 
-  useFrame(() => {
+let intersects; 
 
-raycaster.setFromCamera({x:0.1, y:0}, camera.current)
-     ray = new THREE.ArrowHelper(raycaster.ray.direction, raycaster.ray.origin, 100, 2 * 0xffffff)
+window.onkeydown =()=>{
+  console.log(raycaster.ray);
+  //pushing here if nes
+  
+}
+
+
+useFrame(() => {
+    raycaster.setFromCamera({x:0.1, y:0}, camera.current)
+
+
+    //intersecting wall
+
+
+
+
+
+
+    //  ray = new THREE.ArrowHelper(raycaster.ray.direction, raycaster.ray.origin, 100, 2 * 0xffffff)
 
 
   // if(ray)
