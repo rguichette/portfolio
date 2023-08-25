@@ -7,9 +7,8 @@ function App() {
   return (
     <>
       <Canvas className="w-screen h-screen">
-        <Html center>
-          <LoadingPage />
-        </Html>
+        {/* <World /> */}
+        {/* <LoadingPage /> */}
       </Canvas>
     </>
   );
