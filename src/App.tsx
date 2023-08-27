@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       <Canvas className="w-screen h-screen">
-        {/* <World /> */}
+        <World />
         {/* <LoadingPage /> */}
       </Canvas>
     </>
