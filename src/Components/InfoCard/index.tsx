@@ -1,15 +1,39 @@
 import React, { useEffect, useState } from "react";
 import Typewriter from "typewriter-effect/dist/core";
 
+import "./textFocus.css";
+
 //TODO: set params
 //delay: speed for typing
 //delayDisplay: speed for opening window
 //txt: text to type.
 
-function ChangeWord(word: string, el: HTMLElement) {
-  console.log("word", word);
-  console.log("element", el);
+//tagName: tag want to select
+//el: parant element containing paragraph
+function changeWord(tagName: string, el: HTMLElement) {
+  console.log("word", tagName);
+  let parent = el;
+  let els: Element[] = []; //responsible for holding elements of specific tag
+  let prev = 0; //holds element size length;
+
+  kp = setInterval(() => {
+    // console.log(el.children[0].children);
+    if (el.children[0].children.length > prev) {
+      els.push(el.children[0].children[prev - 1]);
+      prev = el.children[0].children.length;
+      //select element and add style
+      console.log(
+        (el.children[0].children[prev - 1] as HTMLElement).classList.add(
+          "focus_bounce"
+        )
+      );
+
+      el.children[0].children[prev - 1];
+    }
+  }, 1000);
 }
+
+let kp: number | undefined;
 
 export default function InfoCard() {
   // fake globle state
@@ -23,7 +47,7 @@ export default function InfoCard() {
   }`;
 
   let txt =
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit consequatur dignissimos temporibus veritatis, voluptatibus placeat necessitatibus quo quia veniam ullam eaque unde dolorum rerum eveniet ex quidem sapiente? Ipsa, tempore!";
+    "<strong class='test'>Lorem</strong> ipsum dolor sit amet consectetur adipisicing elit. Impedit consequatur dignissimos temporibus veritatis, voluptatibus placeat necessitatibus quo <strong class='test'>quia</strong> veniam ullam eaque unde dolorum rerum eveniet ex quidem sapiente? Ipsa, tempore!";
 
   useEffect(() => {
     var i = 0;
@@ -37,9 +61,13 @@ export default function InfoCard() {
     });
     if (activateInfo) {
       tw.typeString(txt);
-      tw.start();
+      tw.start().callFunction(() => {
+        console.log("string all set! -- dont forget to clear interval");
+        clearInterval(kp);
+      });
 
       // adding styles to specific words
+      if (textContent) changeWord("strong", textContent);
     }
 
     if (!activateInfo) {
@@ -47,6 +75,8 @@ export default function InfoCard() {
         tw.stop();
         textContent.innerText = "shutting down...";
       }
+
+      clearInterval(kp);
     }
     // console.log(textContent);
   });

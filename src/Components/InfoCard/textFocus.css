@@ -1,0 +1,41 @@
+.focus_bounce{
+animation: focus 3s cubic-bezier(0.23, 0.59, 0.31, 1.11) forwards;
+/* cubic-bezier(0.23, 0.59, 0.31, 1.11) */
+/*cubic-bezier(1, 0.12, 0.22, 1.08)*/
+
+
+
+}
+
+
+@keyframes focus {
+   0%{
+    
+    
+    color: transparent;
+   
+
+   } 
+
+35%{
+    color: skyblue;
+}
+
+
+
+   50%{
+    opacity: 1;
+    font-size: 1.5rem;
+    color:blue;
+    position: absolute;
+    transform: translateX(500%);
+ 
+   }
+
+   100%{
+    /* background-color: black; */
+    transform: scale(2);
+    font-weight: 500;
+
+   }
+}
