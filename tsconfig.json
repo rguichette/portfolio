@@ -21,6 +21,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
+  "include": ["src", "public/3Dassets", "public/3Dassets"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

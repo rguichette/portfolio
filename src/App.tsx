@@ -7,7 +7,7 @@ import { Suspense } from "react";
 function App() {
   return (
     <>
-      <Canvas className="w-screen h-screen">
+      <Canvas className="w-screen h-screen" shadows>
         <Suspense>
           <World />
         </Suspense>

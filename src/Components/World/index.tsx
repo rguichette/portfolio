@@ -10,16 +10,21 @@ import {
   Lightformer,
   OrbitControls,
   Plane,
+  PresentationControls,
+  TransformControls,
   useFBX,
   useHelper,
 } from "@react-three/drei";
 import InfoCard from "../InfoCard";
-import { useRef, useState } from "react";
+import { Suspense, useRef, useState } from "react";
 import City from "../City";
 import * as THREE from "three";
-import { useThree } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 
 import wl from "../../world_ItemLocations.ts";
+import WorkStation from "../Workstation";
+import Keyboard from "../Keyboard";
+import Portal from "../portal/index.tsx";
 
 let World = () => {
   // let { scene } = useThree();
@@ -28,43 +33,43 @@ let World = () => {
   // {"x":0}, {"y":-10}, {"z":0}
   // console.log(wl.)
 
-  let test = [0, -10, 0];
+  const lightRef = useRef<THREE.DirectionalLight>(null!);
 
-  console.log(wl);
+  useHelper(lightRef, THREE.DirectionalLightHelper, 15, "red");
 
   return (
     <>
-      <ambientLight
-        intensity={0.9}
-        position={[0, 100, 0]}
-        // color={"rgb(37, 150, 190)"}
-      />
-
-      <Plane
-        scale={500}
-        rotation={[-Math.PI / 2, 0, 0]}
-        position={wl.positions.city.floor_position}
-      ></Plane>
-      <Box>
-        <meshStandardMaterial color={"aqua"} roughness={0} />
-      </Box>
-
-      {/* <Environment preset="warehouse" /> */}
-
-      <OrbitControls />
-
-      <City />
-
-      <GizmoHelper
-        alignment="bottom-right" // widget alignment within scene
-        margin={[80, 80]} // widget margins (X, Y)
-      >
-        <GizmoViewport
-          axisColors={["red", "green", "blue"]}
-          labelColor="black"
+      <Suspense>
+        <ambientLight
+          intensity={1}
+          position={[0, 0, 0]}
+          // color={"rgb(37, 150, 190)"}
         />
-        {/* alternative: <GizmoViewcube /> */}
-      </GizmoHelper>
+
+        <directionalLight
+          ref={lightRef}
+          intensity={0.4}
+          position={[0, 20, 0]}
+          // rotation={[0, 0, Math.PI]}
+          castShadow
+          scale={4}
+        />
+
+        <City />
+        <GizmoHelper
+          alignment="bottom-right" // widget alignment within scene
+          margin={[80, 80]} // widget margins (X, Y)
+        >
+          <GizmoViewport
+            axisColors={["red", "green", "blue"]}
+            labelColor="black"
+          />
+        </GizmoHelper>
+
+        <Portal lightColor={new THREE.Color("green")} />
+
+        <OrbitControls />
+      </Suspense>
     </>
   );
 };

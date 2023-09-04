@@ -1,6 +1,6 @@
 import { Box, Plane, useHelper, useTexture } from "@react-three/drei";
 import { useRef } from "react";
-import { BoxHelper, DoubleSide } from "three";
+import { BoxHelper, DoubleSide, MeshPhongMaterial } from "three";
 
 import wl from "../../world_ItemLocations";
 
@@ -11,71 +11,73 @@ export default function City() {
   let txt4 = useTexture("/wing4.png");
   let mesh = useRef(null!);
 
-  // useHelper(mesh, BoxHelper, "red");
-
   console.log(txt);
 
   return (
     <>
+      {/* floor */}
+
       <Plane
-        scale={[500, 300, 1]}
+        scale={wl.scales.city.floor_scale}
+        rotation={wl.rotations.city.floor_rotation}
+        position={wl.positions.city.floor_position}
+        receiveShadow
+      >
+        <meshStandardMaterial side={DoubleSide} />
+      </Plane>
+
+      {/* <Plane
+        name="floor"
+        rotation={wl.rotations.city.floor_rotation}
+        position={wl.positions.city.floor_position}
+        receiveShadow
+      >
+        <meshPhongMaterial reflectivity={0.4} />
+      </Plane> */}
+
+      {/* walls  */}
+      <Plane
+        scale={wl.scales.city.city_view_walls}
         position={wl.positions.city.z_back_position}
+        rotation={wl.rotations.city.z_back_rotation}
         ref={mesh}
       >
         <meshStandardMaterial
           map={txt}
           color={"rgb(29, 119, 150)"}
-          transparent={true}
+          transparent
         />
       </Plane>
 
-      {/* <Plane
-        scale={[500, 300, 1]}
-        position={wl.positions.city.z_front_position}
-        ref={mesh}
-      >
-        <meshStandardMaterial
-          side={DoubleSide}
-          // map={txt2}
-          color={"rgb(37, 150, 190)"}
-          transparent={true}
-        />
-      </Plane> */}
-
       {/* right */}
       <Plane
-        scale={[500, 300, 1]}
+        scale={wl.scales.city.city_view_walls}
         position={wl.positions.city.x_right_position}
-        rotation={[0, Math.PI / 2, 0]}
+        rotation={wl.rotations.city.x_right_rotation}
         ref={mesh}
       >
         <meshStandardMaterial
           side={DoubleSide}
           map={txt3}
           color={"rgb(37, 150, 190)"}
-          transparent={true}
+          transparent
         />
       </Plane>
 
       {/* Left */}
       <Plane
-        scale={[500, 300, 1]}
+        scale={wl.scales.city.city_view_walls}
         position={wl.positions.city.x_left_position}
-        rotation={[0, Math.PI / 2, 0]}
+        rotation={wl.rotations.city.x_left_rotation}
         ref={mesh}
       >
         <meshStandardMaterial
           side={DoubleSide}
           map={txt4}
           color={"rgb(29, 119, 150)"}
-          transparent={true}
+          transparent
         />
       </Plane>
-
-      {/* <mesh scale={4}>
-        <Box />
-        <meshBasicMaterial color={"green"} />
-      </mesh> */}
     </>
   );
 }
