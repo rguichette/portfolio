@@ -16,7 +16,7 @@ import {
   useHelper,
 } from "@react-three/drei";
 import InfoCard from "../InfoCard";
-import { Suspense, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import City from "../City";
 import * as THREE from "three";
 import { useFrame, useThree } from "@react-three/fiber";
@@ -25,9 +25,14 @@ import wl from "../../world_ItemLocations.ts";
 import WorkStation from "../Workstation";
 import Keyboard from "../Keyboard";
 import Portal from "../portal/index.tsx";
+import Character from "../Character/index.tsx";
+import CharacterController from "../CharacterController/index.tsx";
+import Skills from "../Resume/Skills/index.tsx";
 
 let World = () => {
   // let { scene } = useThree();
+
+  let ccr = useRef(null!);
 
   // scene.background = new THREE.Color("rgba(63,74,205,1)");
   // {"x":0}, {"y":-10}, {"z":0}
@@ -56,6 +61,10 @@ let World = () => {
         />
 
         <City />
+
+        {/* TODO: remove and place inside City */}
+        <Skills />
+
         <GizmoHelper
           alignment="bottom-right" // widget alignment within scene
           margin={[80, 80]} // widget margins (X, Y)
@@ -66,7 +75,7 @@ let World = () => {
           />
         </GizmoHelper>
 
-        <Portal lightColor={new THREE.Color("green")} />
+        <CharacterController obj={ccr} />
 
         <OrbitControls />
       </Suspense>

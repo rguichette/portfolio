@@ -1,14 +1,16 @@
-import { Box, Plane, useHelper, useTexture } from "@react-three/drei";
+import { Box, Gltf, Plane, useHelper, useTexture } from "@react-three/drei";
 import { useRef } from "react";
 import { BoxHelper, DoubleSide, MeshPhongMaterial } from "three";
 
 import wl from "../../world_ItemLocations";
+import Skills from "../Resume/Skills";
 
 export default function City() {
   let txt = useTexture("/city01.png");
   // let txt2 = useTexture("/wing5.png");
   let txt3 = useTexture("/wing2.png");
   let txt4 = useTexture("/wing4.png");
+
   let mesh = useRef(null!);
 
   console.log(txt);
@@ -26,16 +28,6 @@ export default function City() {
         <meshStandardMaterial side={DoubleSide} />
       </Plane>
 
-      {/* <Plane
-        name="floor"
-        rotation={wl.rotations.city.floor_rotation}
-        position={wl.positions.city.floor_position}
-        receiveShadow
-      >
-        <meshPhongMaterial reflectivity={0.4} />
-      </Plane> */}
-
-      {/* walls  */}
       <Plane
         scale={wl.scales.city.city_view_walls}
         position={wl.positions.city.z_back_position}
@@ -78,6 +70,15 @@ export default function City() {
           transparent
         />
       </Plane>
+      {/* city props */}
+
+      {/* <Gltf src="/3Dassets/s_buidlings_factory2.glb" position={[10, 0, 15]} />
+      <Gltf src="/3Dassets/s_buidlings_factory2.glb" position={[50, 0, 5]} />
+      <Gltf src="/3Dassets/s_buidlings_factory2.glb" />
+
+      <Gltf src="/3Dassets/s_L.glb" />
+      <Gltf src="/3Dassets/s_LL.glb" />
+      <Gltf src="/3Dassets/s_LLll.glb" /> */}
     </>
   );
 }
