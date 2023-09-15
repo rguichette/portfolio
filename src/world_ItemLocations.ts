@@ -3,7 +3,9 @@ import * as THREE from "three"
 import { useThree } from "@react-three/fiber";
 import { Vector3, Euler } from "three";
 
-let floorPosition = new Vector3(0, -10, 0);
+export let basePos = -.25; 
+
+let floorPosition = new Vector3(0, basePos-.26, 0);
 let floorScale = new Vector3(800, 800,5);
 let floorRotation = new Euler(-Math.PI / 2, 0, 0)
 let wallScale = new Vector3 (floorScale.x, floorScale.x/2.25, 1);

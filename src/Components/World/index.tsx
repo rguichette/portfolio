@@ -7,6 +7,7 @@ import {
   GizmoViewport,
   Grid,
   Html,
+  KeyboardControls,
   Lightformer,
   OrbitControls,
   PerspectiveCamera,
@@ -27,11 +28,11 @@ import WorkStation from "../Workstation";
 import Keyboard from "../Keyboard";
 import Portal from "../portal/index.tsx";
 import Character from "../Character/index.tsx";
-import CharacterController from "../CharacterController/index.tsx";
+import CharacterController, { co } from "../CharacterController/index.tsx";
 import Skills from "../Resume/Skills/index.tsx";
 
 import { OrbitControls as OC } from "three-stdlib";
-import { log } from "three/examples/jsm/nodes/Nodes.js";
+import { log, vec3 } from "three/examples/jsm/nodes/Nodes.js";
 
 let World = () => {
   // let { scene } = useThree();
@@ -43,17 +44,17 @@ let World = () => {
   // console.log(wl.)
 
   const lightRef = useRef<THREE.DirectionalLight>(null!);
-  const charRef = useRef<THREE.Mesh>(null);
+  const charRef = useRef<THREE.Mesh>(null!);
 
   let dcRef = useRef<OC>(null!);
   let camRef = useRef<THREE.PerspectiveCamera>(null!);
 
   useEffect(() => {
     if (camRef.current) {
-      camRef.current.position.z = 2.5;
-      camRef.current.position.y = 1;
       if (charRef.current) camRef.current.lookAt(charRef.current.position);
       charRef.current?.add(camRef.current);
+
+      // camRef.current.zoom = 0.1;
       // camRef.current.position.z = -5;
       // camRef.current.rotation.x = -Math.PI / 2;
       // .position = new THREE.Vector3(0, 0, 0);
@@ -68,13 +69,14 @@ let World = () => {
     let c = scene.getObjectByName("character");
     // console.log("this: ", c);
     let y = new THREE.Vector3();
-    c?.getWorldPosition(y);
+    c?.getWorldPosition(y.add(new THREE.Vector3(1, 15.0, 16)));
     // console.log(y);
+
     c?.add(camera);
 
     // add( new THREE.Vector3(0,0,0));
 
-    camera.lookAt(y);
+    camera.lookAt(y.add(new THREE.Vector3(0.1, 0.6, 0.1)));
     camera.updateProjectionMatrix();
   });
   // useHelper(lightRef, THREE.DirectionalLightHelper, 15, "red");
@@ -100,25 +102,36 @@ let World = () => {
         />
 
         <City />
-        <Character scale={0.5} ref={charRef} name="character" />
 
-        {/* TODO: remove and place inside City */}
-        {/* <Skills /> */}
+        {/* <Skills scale={0.5} /> */}
 
-        {/* <GizmoHelper
-          alignment="bottom-right" // widget alignment within scene
-          margin={[80, 80]} // widget margins (X, Y)
-        >
-          <GizmoViewport
-            axisColors={["red", "green", "blue"]}
-            labelColor="black"
+        <KeyboardControls map={co}>
+          <Character
+            scale={0.3}
+            ref={charRef}
+            name="character"
+            position={[0, -0.35, 0]}
           />
-        </GizmoHelper> */}
+          <CharacterController obj={charRef} />
+        </KeyboardControls>
 
-        {/* <CharacterController obj={ccr} /> */}
-        <OrbitControls />
+        <Box>
+          <meshBasicMaterial wireframe color={"red"} />
+        </Box>
 
-        <PerspectiveCamera ref={camRef} makeDefault position={[0, 1.2, 3.5]} />
+        <OrbitControls
+          minPolarAngle={0.1}
+          maxPolarAngle={1.6}
+          enableZoom={false}
+        />
+
+        <PerspectiveCamera
+          ref={camRef}
+          position={[0, -0.5, 5]}
+          // near={0.2}
+          // zoom={0.5}
+          makeDefault
+        />
       </Suspense>
     </>
   );

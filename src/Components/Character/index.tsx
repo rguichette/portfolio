@@ -19,9 +19,8 @@ let Character: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>(
             <meshBasicMaterial color={"yellow"} />
           </mesh>
         </group>
-        <KeyboardControls map={co}>
-          <CharacterController obj={charRef} />
-        </KeyboardControls>
+
+        {/* <CharacterController obj={charRef} /> */}
       </>
     );
   }

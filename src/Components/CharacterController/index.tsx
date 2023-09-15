@@ -1,6 +1,10 @@
 //needs a mesh ref in order to controll
 
-import { KeyboardControlsEntry, useKeyboardControls } from "@react-three/drei";
+import {
+  KeyboardControls,
+  KeyboardControlsEntry,
+  useKeyboardControls,
+} from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { MutableRefObject, RefObject, useEffect, useMemo } from "react";
 import { BufferGeometry, Group, Mesh } from "three";
@@ -47,8 +51,12 @@ let CharacterController: React.FC<controllerProps> = (
     }
     props.obj.current.getWorldDirection;
   });
+  //collision
+  //characher
+  //c- animation
+  // positioning
 
-  return <>{console.log("Character: ", props.obj)}</>;
+  return <>{/* {console.log("Character: ", props.obj)} */}</>;
 };
 
 export default CharacterController;
