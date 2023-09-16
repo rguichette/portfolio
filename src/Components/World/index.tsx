@@ -33,6 +33,9 @@ import Skills from "../Resume/Skills/index.tsx";
 
 import { OrbitControls as OC } from "three-stdlib";
 import { log, vec3 } from "three/examples/jsm/nodes/Nodes.js";
+import Experience from "../Experience/index.tsx";
+import Projects from "../Projects/index.tsx";
+import Involvement from "../Involvement/index.tsx";
 
 let World = () => {
   // let { scene } = useThree();
@@ -103,7 +106,11 @@ let World = () => {
 
         <City />
 
-        {/* <Skills scale={0.5} /> */}
+        <Skills scale={0.5} position={[-10, 0, 30]} />
+        {/* <Experience position={[-25, 0, -25]} Mcolor="red" /> */}
+        {/* <Experience position={[-25, 0, -25]} Mcolor="red" />
+        <Projects position={[17, 0, 30]} Mcolor="green" />*/}
+        <Involvement position={[25, 0, -35]} Mcolor="blue" />
 
         <KeyboardControls map={co}>
           <Character
@@ -122,7 +129,7 @@ let World = () => {
         <OrbitControls
           minPolarAngle={0.1}
           maxPolarAngle={1.6}
-          enableZoom={false}
+          // enableZoom={false}
         />
 
         <PerspectiveCamera

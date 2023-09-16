@@ -42,16 +42,16 @@ let Portal: React.FC<PortalProps> = forwardRef<Mesh, PortalProps>(
 
     return (
       <>
-        <mesh ref={ref} scale={10}>
-          {/* <cylinderGeometry attach="geometry" args={[1, 1, 5, 20, 1]} />
+        <mesh ref={ref} scale={2} position={[0, 14.5, 0]}>
+          <cylinderGeometry attach="geometry" args={[1, 1, 15, 20, 1]} />
           <shaderMaterial
             fragmentShader={frag}
             vertexShader={vert}
             uniforms={uniforms}
             transparent
             opacity={0.3}
-          /> */}
-          <mesh position={[0, 3, 0]} rotation={[0.2, 0, 0]}>
+          />
+          <mesh position={[0, -3, 0]} rotation={[0.2, 0, 0]}>
             <primitive object={bird} />
           </mesh>
         </mesh>

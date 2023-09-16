@@ -13,6 +13,9 @@ import world_ItemLocations from "../../../world_ItemLocations";
 import { Group, Material, Mesh, MeshStandardMaterial } from "three";
 import Monitor from "../../Monitor";
 import { MeshProps } from "@react-three/fiber";
+import Portal from "../../portal";
+
+import * as THREE from "three";
 
 let Skills: React.FC<MeshProps> = forwardRef((props, ref) => {
   let turbRef = useRef<Group>(null);
@@ -51,13 +54,14 @@ let Skills: React.FC<MeshProps> = forwardRef((props, ref) => {
             src="/3Dassets/Ventilator.glb"
             ref={turbRef}
             scale={0.25}
-            position={[0, -0.25, -0.25]}
-          ></Gltf>
+            position={[0, 0.1, -0.25]}
+          />
         </mesh>
 
-        <WorkStation scale={2} />
+        <WorkStation scale={3} position={[2, 0, -21]} rotation={[0, 2.5, 0]} />
       </mesh>
 
+      <Portal lightColor={new THREE.Color("blue")} />
       <mesh
         rotation={[Math.PI / 2, Math.PI / 2, 0]}
         position={[3, 0, 4]}
