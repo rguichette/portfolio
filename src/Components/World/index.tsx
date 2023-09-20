@@ -15,6 +15,7 @@ import {
   PresentationControls,
   TransformControls,
   useFBX,
+  useGLTF,
   useHelper,
 } from "@react-three/drei";
 import InfoCard from "../InfoCard";
@@ -36,6 +37,7 @@ import { log, vec3 } from "three/examples/jsm/nodes/Nodes.js";
 import Experience from "../Experience/index.tsx";
 import Projects from "../Projects/index.tsx";
 import Involvement from "../Involvement/index.tsx";
+import Particles from "../Particles/index.tsx";
 
 let World = () => {
   // let { scene } = useThree();
@@ -51,6 +53,14 @@ let World = () => {
 
   let dcRef = useRef<OC>(null!);
   let camRef = useRef<THREE.PerspectiveCamera>(null!);
+
+  enum Controls {
+    forward = "forward",
+    back = "back",
+    left = "left",
+    right = "right",
+    jump = "jump",
+  }
 
   useEffect(() => {
     if (camRef.current) {
@@ -85,6 +95,8 @@ let World = () => {
   // useHelper(lightRef, THREE.DirectionalLightHelper, 15, "red");
   useHelper(camRef, THREE.CameraHelper);
 
+  // let ch = useFBX("/3Dassets/character/ch12.fbx");
+
   // let offset = new THREE.Vector3(0, 0.3, -2.5);
   return (
     <>
@@ -106,11 +118,13 @@ let World = () => {
 
         <City />
 
-        <Skills scale={0.5} position={[-10, 0, 30]} />
+        <Skills scale={0.5} position={[-25, 0, 35]} />
         {/* <Experience position={[-25, 0, -25]} Mcolor="red" /> */}
         {/* <Experience position={[-25, 0, -25]} Mcolor="red" />
         <Projects position={[17, 0, 30]} Mcolor="green" />*/}
-        <Involvement position={[25, 0, -35]} Mcolor="blue" />
+        {/* <Involvement position={[25, 0, -35]} Mcolor="blue" /> */}
+        {/* <Projects position={[20, 0, 30]} Mcolor="green" /> */}
+        {/* <Particles /> */}
 
         <KeyboardControls map={co}>
           <Character
@@ -122,9 +136,9 @@ let World = () => {
           <CharacterController obj={charRef} />
         </KeyboardControls>
 
-        <Box>
+        {/* <Box>
           <meshBasicMaterial wireframe color={"red"} />
-        </Box>
+        </Box> */}
 
         <OrbitControls
           minPolarAngle={0.1}

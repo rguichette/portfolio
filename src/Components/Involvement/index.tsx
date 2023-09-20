@@ -2,6 +2,9 @@ import { Box, Text3D, useGLTF } from "@react-three/drei";
 import { MeshProps, useFrame } from "@react-three/fiber";
 import { forwardRef, useRef } from "react";
 import { Mesh } from "three";
+import Portal from "../portal";
+
+import * as THREE from "three";
 
 // import entrance from "../../3Dassets/entrance.glb";
 
@@ -27,6 +30,7 @@ let Involvement: React.FC<MProps> = forwardRef((props, ref) => {
         <mesh scale={2} position={[0, -0.5, 0]}>
           <primitive object={ent.scene} />
         </mesh>
+        {/* <Portal lightColor={new THREE.Color("white")} /> */}
 
         <mesh
           scale={0.02125}

@@ -20,7 +20,7 @@ import * as THREE from "three";
 let Skills: React.FC<MeshProps> = forwardRef((props, ref) => {
   let turbRef = useRef<Group>(null);
 
-  let turb = useGLTF("/3Dassets/Ventilator.glb");
+  let { scene: turb, animations } = useGLTF("/3Dassets/Ventilator.glb");
   let pRef = useRef(null);
   let gearRef = useRef<Mesh>(null);
 
@@ -49,29 +49,33 @@ let Skills: React.FC<MeshProps> = forwardRef((props, ref) => {
 
       <mesh {...props}>
         {/* <directionalLight /> */}
-        <mesh position={[0, 0, 0]} scale={7}>
+        {/* <mesh position={[0, 0, 0]} scale={7}>
           <Gltf
             src="/3Dassets/Ventilator.glb"
             ref={turbRef}
             scale={0.25}
             position={[0, 0.1, -0.25]}
           />
+        </mesh> */}
+
+        <mesh>
+          <primitive object={turb} />
         </mesh>
 
-        <WorkStation scale={3} position={[2, 0, -21]} rotation={[0, 2.5, 0]} />
+        <WorkStation scale={3} position={[2, 0, -11]} rotation={[0, 2.5, 0]} />
       </mesh>
 
-      <Portal lightColor={new THREE.Color("blue")} />
+      {/* <Portal lightColor={new THREE.Color("blue")} /> */}
       <mesh
         rotation={[Math.PI / 2, Math.PI / 2, 0]}
-        position={[3, 0, 4]}
+        position={new THREE.Vector3(-9, 0.5, 10)}
         scale={3}
         ref={gearRef}
       >
         <Gltf
           src="/3Dassets/Cogs.glb"
           scale={0.05}
-          position={[0.1, -0.04, 0.25]}
+          // position={[0.1, -0.04, 0.25]}
           rotation={[0, 0, 0]}
         />
       </mesh>

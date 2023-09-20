@@ -32,29 +32,32 @@ let Portal: React.FC<PortalProps> = forwardRef<Mesh, PortalProps>(
         birdAnimation.mixer.clipAction(clip).timeScale = 0.66;
         birdAnimation.mixer.clipAction(clip).play();
       });
-
-      //   console.log(birdAnimation.clips[0].tracks[0]);
     });
 
+    console.log("BIRD: ", bird);
     useFrame(({ clock }) => {
       uniforms.uTime.value = clock.elapsedTime;
     });
 
     return (
       <>
-        <mesh ref={ref} scale={2} position={[0, 14.5, 0]}>
-          <cylinderGeometry attach="geometry" args={[1, 1, 15, 20, 1]} />
-          <shaderMaterial
-            fragmentShader={frag}
-            vertexShader={vert}
-            uniforms={uniforms}
-            transparent
-            opacity={0.3}
-          />
-          <mesh position={[0, -3, 0]} rotation={[0.2, 0, 0]}>
-            <primitive object={bird} />
+        <mesh scale={4}>{/* <primitive object={bird} /> */}</mesh>
+
+        {/* <mesh {...props}>
+          <mesh ref={ref} scale={2} position={[0, 14.5, 0]}>
+            <cylinderGeometry attach="geometry" args={[1, 1, 15, 20, 1]} />
+            <shaderMaterial
+              fragmentShader={frag}
+              vertexShader={vert}
+              uniforms={uniforms}
+              transparent
+              opacity={0.3}
+            />
+            <mesh position={[0, 0, 0]} rotation={[0.2, 0, 0]}>
+              <primitive object={bird} />
+            </mesh>
           </mesh>
-        </mesh>
+        </mesh> */}
       </>
     );
   }
