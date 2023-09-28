@@ -1,80 +1,41 @@
-import { Box, Plane, useVideoTexture } from "@react-three/drei";
-import { useThree } from "@react-three/fiber";
-import React, { useEffect, useRef } from "react";
-import { DoubleSide, Euler, Mesh, MeshBasicMaterial } from "three";
-
-interface Mparams {
-  src?: string | null;
-  options?: {
-    muted: boolean;
-    start: boolean;
-    loop: boolean;
-    autoplay: boolean;
-  };
-  rotation?: number[];
-  scale?: number;
+if (get().forward) {
+  l -= 0.1;
+  translate.z -= l;
+}
+if (get().back) {
+  l += 0.1;
+  translate.z += l;
 }
 
-let DefaultMparams = {
-  src: null,
-  options: {
-    muted: true,
-    start: true,
-    loop: true,
-    autoplay: true,
-  },
-  rotation: [0, 0, 0],
-  scale: 1,
-};
+rot.setFromAxisAngle(new Vector3(0, 1, 0), ang);
+translate.set(0, 0, l);
 
-export default function Monitor(props: Mparams = DefaultMparams) {
-  useThree();
-
-  let tvTexture: THREE.VideoTexture;
-  let tvRef = useRef<Mesh>(null!);
-  let matRef = useRef<THREE.MeshStandardMaterial>(null!);
-
-  if (props.src) {
-    tvTexture = useVideoTexture(props.src, props.options);
-  }
-
-  //   let test = [0, 7, 0] as [number, number, number];
-
-  useEffect(() => {
-    //     console.log(tvTexture);
-    //     if (matRef.current) {
-    //       matRef.current.color.r = 1;
-    //       //   matRef.current.color.g = 0.1;
-    //       //   matRef.current.map = tvTexture;
-    //     }
-
-    // TODO: set color black for now:
-    if (props.src && tvRef.current)
-      (tvRef.current.material as MeshBasicMaterial).map = tvTexture;
-  });
-
-  console.log(props.rotation);
-  let r = new Euler().fromArray(props.rotation as [number, number, number]);
-
-  return (
-    <>
-      <group>
-        <mesh rotation={r} scale={props.scale}>
-          <Plane scale={[16, 9, 1]} position={[0, 0, 0.22]} ref={tvRef}></Plane>
-
-          <Box
-            scale={[16.4, 9.4, 0.15]}
-            rotation={[0, -Math.PI, 0]}
-            position={[0, 0, 0.138]}
-          >
-            <meshStandardMaterial side={DoubleSide} color={"silver"} />
-          </Box>
-        </mesh>
-        {/* <mesh name="desk" scale={3} position={[0, 0, 0]} ref={boxRef}>
-          <primitive object={desk} />
-        </mesh>
-  */}
-      </group>
-    </>
-  );
+if (get().left) {
+  ang += 0.1;
 }
+if (get().right) {
+  ang -= 0.1;
+}
+rbRef.current.setNextKinematicRotation(rot);
+
+translate.applyQuaternion(rot);
+
+rbRef.current.setNextKinematicTranslation(translate);
+
+//rotation
+HERE: fixedPos.set(0, 1, 0);
+
+rbRef.current.setRotation(
+  quaternion.setFromAxisAngle(fixedPos, clock.elapsedTime),
+  true
+);
+
+fixedPos.z = Math.sin(clock.elapsedTime * 3);
+
+fixedPos.applyQuaternion(quaternion);
+
+//Movement
+
+// fixedPos.set(0, 0, Math.sin(clock.elapsedTime));
+
+rbRef.current.setTranslation(fixedPos, true);

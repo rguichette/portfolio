@@ -2,20 +2,11 @@ import "./styles.css";
 
 import {
   Box,
-  Environment,
-  GizmoHelper,
-  GizmoViewport,
-  Grid,
-  Html,
   KeyboardControls,
-  Lightformer,
   OrbitControls,
   PerspectiveCamera,
-  Plane,
-  PresentationControls,
-  TransformControls,
-  useFBX,
-  useGLTF,
+  Sphere,
+  Text3D,
   useHelper,
 } from "@react-three/drei";
 import InfoCard from "../InfoCard";
@@ -38,6 +29,8 @@ import Experience from "../Experience/index.tsx";
 import Projects from "../Projects/index.tsx";
 import Involvement from "../Involvement/index.tsx";
 import Particles from "../Particles/index.tsx";
+import { Physics } from "@react-three/rapier";
+import Player from "../Player/Player.tsx";
 
 let World = () => {
   // let { scene } = useThree();
@@ -66,16 +59,7 @@ let World = () => {
     if (camRef.current) {
       if (charRef.current) camRef.current.lookAt(charRef.current.position);
       charRef.current?.add(camRef.current);
-
-      // camRef.current.zoom = 0.1;
-      // camRef.current.position.z = -5;
-      // camRef.current.rotation.x = -Math.PI / 2;
-      // .position = new THREE.Vector3(0, 0, 0);
     }
-    // charRef.current?.add(camRef.current);
-    // (dcRef.current as typeof PerspectiveCamera)
-    // charRef.current?.add(dcRef.current.object);
-    // console.log("myControls", dcRef.current.object);
   });
 
   useFrame(({ camera, scene }) => {
@@ -101,44 +85,46 @@ let World = () => {
   return (
     <>
       <Suspense>
-        <ambientLight
-          intensity={1}
-          position={[0, 0, 0]}
-          // color={"rgb(37, 150, 190)"}
-        />
-
         <directionalLight
           ref={lightRef}
           intensity={0.4}
           position={[0, 20, 0]}
-          // rotation={[0, 0, Math.PI]}
+          rotation={[0, 0, Math.PI]}
           castShadow
           scale={4}
         />
 
-        <City />
+        {/* <City /> */}
 
-        <Skills scale={0.5} position={[-25, 0, 35]} />
+        {/* <Skills scale={0.5} position={[-25, 0, 35]} /> */}
         {/* <Experience position={[-25, 0, -25]} Mcolor="red" /> */}
-        {/* <Experience position={[-25, 0, -25]} Mcolor="red" />
-        <Projects position={[17, 0, 30]} Mcolor="green" />*/}
+        {/* <Experience position={[-25, 0, -25]} Mcolor="red" /> */}
         {/* <Involvement position={[25, 0, -35]} Mcolor="blue" /> */}
         {/* <Projects position={[20, 0, 30]} Mcolor="green" /> */}
         {/* <Particles /> */}
+        <group position={[2, -0.4, 1]}>
+          <Sphere scale={0.2} />
+        </group>
+
+        {/* <Text3D
+          font={"fonts/Ultra_Regular.json"}
+          bevelEnabled
+          size={2}
+          curveSegments={12}
+        >
+          Hello
+        </Text3D> */}
 
         <KeyboardControls map={co}>
-          <Character
-            scale={0.3}
-            ref={charRef}
-            name="character"
-            position={[0, -0.35, 0]}
-          />
-          <CharacterController obj={charRef} />
+          <Physics debug>
+            <Player />
+          </Physics>
+          {/* <CharacterController obj={charRef} /> */}
         </KeyboardControls>
 
-        {/* <Box>
-          <meshBasicMaterial wireframe color={"red"} />
-        </Box> */}
+        <Box position={[0, 0, -3]}>
+          <meshBasicMaterial color={"red"} />
+        </Box>
 
         <OrbitControls
           minPolarAngle={0.1}

@@ -14,7 +14,9 @@ let Involvement: React.FC<MProps> = forwardRef((props, ref) => {
   // let fl = new FontLoader()
   let speechRef = useRef<Mesh>(null!);
 
-  let ent = useGLTF("../../3Dassets/entrance.glb");
+  //src/3Dassets/entrance2.glb
+
+  let ent = useGLTF("../../3Dassets/entrance2.glb");
   let { scene: lang } = useGLTF("../../3Dassets/translate.glb");
 
   useFrame(({ clock }) => {
@@ -27,7 +29,7 @@ let Involvement: React.FC<MProps> = forwardRef((props, ref) => {
   return (
     <>
       <mesh {...props}>
-        <mesh scale={2} position={[0, -0.5, 0]}>
+        <mesh scale={4.3} position={[0, -0.5, 0]}>
           <primitive object={ent.scene} />
         </mesh>
         {/* <Portal lightColor={new THREE.Color("white")} /> */}

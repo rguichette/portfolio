@@ -1,5 +1,5 @@
-import { MeshProps, useFrame } from "@react-three/fiber";
-import { forwardRef, useEffect, useRef } from "react";
+import { MeshProps, useFrame, useThree } from "@react-three/fiber";
+import { Suspense, forwardRef, useEffect, useRef } from "react";
 import { Group, Mesh } from "three";
 import * as THREE from "three";
 import CharacterController, { co } from "../CharacterController";
@@ -11,6 +11,17 @@ import {
   useKeyboardControls,
 } from "@react-three/drei";
 import { mix } from "three/examples/jsm/nodes/Nodes.js";
+import {
+  CapsuleCollider,
+  CapsuleColliderProps,
+  ColliderProps,
+  MeshCollider,
+  RapierRigidBody,
+  RigidBody,
+  euler,
+  interactionGroups,
+  quat,
+} from "@react-three/rapier";
 
 enum Controls {
   forward = "forward",
@@ -21,9 +32,11 @@ enum Controls {
 }
 
 // import character from '../../3Dassets'
-let Character: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>(
+let Character: React.FC<ColliderProps> = forwardRef<Mesh, ColliderProps>(
   (props, ref) => {
     let charRef = useRef<Group>(null!);
+
+    let rbRef = useRef<RapierRigidBody>(null!);
 
     let { scene: ch, animations } = useGLTF("/3Dassets/character/charAnim.glb");
     const { actions, mixer } = useAnimations(animations, ch);
@@ -45,10 +58,14 @@ let Character: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>(
     let walking = animations.find(
       (clip) => clip.name == "walking"
     ) as THREE.AnimationClip;
+    let scene = useThree();
 
-    useFrame(() => {
+    let mPos = new THREE.Vector3();
+
+    useFrame(({ scene }) => {
       if (get().forward) {
         mixer.clipAction(idle).fadeOut;
+
         mixer.clipAction(walking).play();
 
         console.log("hello");
@@ -61,17 +78,35 @@ let Character: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>(
 
         // mixer.clipAction(idle).play();
       }
+
+      /**************************************** */
+
+      //handle rbRef and char
     });
+
     return (
       <>
         <group ref={charRef}>
-          <mesh ref={ref} {...props}>
-            {/* <boxGeometry attach={"geometry"} />
+          <RigidBody>
+            {/* <Suspense> */}
+            <mesh ref={ref} {...props}>
+              {/* <boxGeometry attach={"geometry"} />
             <meshBasicMaterial color={"yellow"} /> */}
-            <mesh rotation={[0, Math.PI, 0]} scale={1} position={[0, -0.5, 2]}>
-              <primitive object={ch} />
+
+              <mesh
+                rotation={[0, Math.PI, 0]}
+                scale={1}
+                position={[0, -0.5, 2]}
+              >
+                <primitive object={ch} />
+              </mesh>
             </mesh>
-          </mesh>
+            {/* </Suspense> */}
+            <CapsuleCollider
+              args={[0.2, 0.2]}
+              collisionGroups={interactionGroups([0, 5], 7)}
+            />
+          </RigidBody>
         </group>
 
         {/* <CharacterController obj={charRef} /> */}

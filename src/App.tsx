@@ -11,6 +11,8 @@ import Portal from "./Components/portal";
 import * as THREE from "three";
 import Particles from "./Components/Particles";
 import Projects from "./Components/Projects";
+import { Physics } from "@react-three/rapier";
+import City from "./Components/City";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
       <Canvas className="w-screen h-screen" shadows>
         <Suspense>
           <OrbitControls />
+
+          {/* <City /> */}
           <World />
 
           {/* <Particles /> */}

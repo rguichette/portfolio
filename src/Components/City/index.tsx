@@ -4,6 +4,7 @@ import { BoxHelper, DoubleSide, MeshPhongMaterial } from "three";
 
 import wl from "../../world_ItemLocations";
 import Skills from "../Resume/Skills";
+import WorkStation from "../Workstation";
 
 export default function City() {
   let txt = useTexture("/city01.png");
@@ -18,7 +19,6 @@ export default function City() {
   return (
     <>
       {/* floor */}
-
       <Plane
         scale={wl.scales.city.floor_scale}
         rotation={wl.rotations.city.floor_rotation}
@@ -27,7 +27,7 @@ export default function City() {
       >
         <meshStandardMaterial side={DoubleSide} />
       </Plane>
-
+      {/* front wall */}
       <Plane
         scale={wl.scales.city.city_view_walls}
         position={wl.positions.city.z_back_position}
