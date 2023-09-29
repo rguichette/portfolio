@@ -5,6 +5,7 @@ import { BoxHelper, DoubleSide, MeshPhongMaterial } from "three";
 import wl from "../../world_ItemLocations";
 import Skills from "../Resume/Skills";
 import WorkStation from "../Workstation";
+import { RigidBody } from "@react-three/rapier";
 
 export default function City() {
   let txt = useTexture("/city01.png");
@@ -14,19 +15,19 @@ export default function City() {
 
   let mesh = useRef(null!);
 
-  console.log(txt);
-
   return (
     <>
       {/* floor */}
-      <Plane
-        scale={wl.scales.city.floor_scale}
-        rotation={wl.rotations.city.floor_rotation}
-        position={wl.positions.city.floor_position}
-        receiveShadow
-      >
-        <meshStandardMaterial side={DoubleSide} />
-      </Plane>
+      <RigidBody friction={0.5}>
+        <Plane
+          scale={wl.scales.city.floor_scale}
+          rotation={wl.rotations.city.floor_rotation}
+          position={wl.positions.city.floor_position}
+          receiveShadow
+        >
+          <meshStandardMaterial side={DoubleSide} />
+        </Plane>
+      </RigidBody>
       {/* front wall */}
       <Plane
         scale={wl.scales.city.city_view_walls}

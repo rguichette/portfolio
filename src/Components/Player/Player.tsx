@@ -1,13 +1,15 @@
-import { Box, Cone, useKeyboardControls } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
+import { Box, Cone, useGLTF, useKeyboardControls } from "@react-three/drei";
+import { MeshProps, useFrame } from "@react-three/fiber";
 import {
+  CuboidCollider,
+  MeshCollider,
   RapierRigidBody,
   RigidBody,
   euler,
   quat,
   vec3,
 } from "@react-three/rapier";
-import React, { useEffect, useRef } from "react";
+import React, { forwardRef, useEffect, useRef } from "react";
 import { Euler, Group, MathUtils, Mesh, Quaternion, Vector3 } from "three";
 import { color, rotateUV, sin } from "three/examples/jsm/nodes/Nodes.js";
 
@@ -19,8 +21,7 @@ enum Controls {
   jump = "jump",
 }
 
-//handles  everything needing to do with player
-export default function Player() {
+let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
   let [sub, get] = useKeyboardControls<Controls>();
 
   //  rgidBodyRef
@@ -34,17 +35,22 @@ export default function Player() {
 
   useEffect(() => {
     if (rbRef.current) {
-      originalDir = new Vector3(0, 0, 0);
-      quaternion = new Quaternion(0, 0, 0);
+      // quaternion = new Quaternion(0, 0, 0);
     }
     // charRef.current?.position.applyEuler(new Euler(0, 0, 0, "XYZ"));
   }, []);
 
-  let moveSpeed = 0.1;
+  quaternion = new Quaternion(0, 0, 0);
+  originalDir = new Vector3(0, 0, 0);
+
   let characterPosition = new Vector3(0, 0, 0);
   let angle = 0;
 
+  const moveSpeed = 0.02;
+
   useFrame(({ clock }) => {
+    let forwardDir = new Vector3(0, 0, 1);
+    //MOVEMENTS
     if (get().left) {
       angle += 0.025;
       originalDir.set(0, 1, 0);
@@ -55,20 +61,20 @@ export default function Player() {
     if (get().right) {
       angle -= 0.025;
       originalDir.set(0, 1, 0);
-      originalDir.applyAxisAngle(originalDir, angle);
-      quaternion.setFromAxisAngle(originalDir, angle);
-      rbRef.current.setRotation(quaternion, true);
+      if (originalDir) {
+        originalDir.applyAxisAngle(originalDir, angle);
+        quaternion.setFromAxisAngle(originalDir, angle);
+        rbRef.current.setRotation(quaternion, true);
+      }
     }
 
     if (get().forward) {
       // Create a forward direction vector (e.g., along the negative Z-axis)
-      const forwardDir = new Vector3(0, 0, -1);
 
       // Apply the rotation to the forward direction vector
       forwardDir.applyQuaternion(quaternion);
 
       // Define your movement speed
-      const moveSpeed = 0.1;
 
       // Multiply the rotated forward direction by the move speed to get the new movement vector
       const movementVector = forwardDir.clone().multiplyScalar(moveSpeed);
@@ -81,13 +87,14 @@ export default function Player() {
     }
     if (get().back) {
       // Create a forward direction vector (e.g., along the negative Z-axis)
-      const forwardDir = new Vector3(0, 0, 1);
-
-      // Apply the rotation to the forward direction vector
-      forwardDir.applyQuaternion(quaternion);
+      // const forwardDir = new Vector3(0, 0, -1);
+      if (forwardDir) {
+        forwardDir.set(0, 0, -1);
+        // Apply the rotation to the forward direction vector
+        forwardDir.applyQuaternion(quaternion);
+      }
 
       // Define your movement speed
-      const moveSpeed = 0.1;
 
       // Multiply the rotated forward direction by the move speed to get the new movement vector
       const movementVector = forwardDir.clone().multiplyScalar(moveSpeed);
@@ -98,22 +105,147 @@ export default function Player() {
       // Set the character's kinematic translation to the updated position
       rbRef.current.setNextKinematicTranslation(characterPosition);
     }
+    charRef.current?.updateMatrixWorld();
   });
 
+  let { scene: character, animations } = useGLTF(
+    "/3Dassets/character/charAnim.glb"
+  );
+
   return (
-    <group ref={charRef}>
+    <mesh {...props} ref={ref}>
       <RigidBody
         type="kinematicPosition"
-        colliders={"ball"}
+        // colliders={"hull"}
         ref={rbRef}
-
+        onCollisionEnter={() => {
+          console.log("Hello");
+        }}
+        name="charRigidBody"
         // lockTranslations
         // lockRotations
       >
-        <Cone rotation={[-Math.PI / 2, 0, 0]}>
-          <meshBasicMaterial wireframe />
-        </Cone>
+        <group ref={charRef}>
+          <mesh position={[0, -0.51, 0]} scale={0.3}>
+            <primitive object={character} />
+          </mesh>
+          <CuboidCollider args={[0.01, 0.01, 0.01]} />
+          {/* <Cone rotation={[-Math.PI / 2, 0, 0]}>
+          <meshBasicMaterial />
+        </Cone> */}
+        </group>
       </RigidBody>
-    </group>
+    </mesh>
   );
-}
+});
+
+// //handles  everything needing to do with player
+// export default function Player() {
+//   let [sub, get] = useKeyboardControls<Controls>();
+
+//   //  rgidBodyRef
+//   let rbRef = useRef<RapierRigidBody>(null!);
+//   //soon to be characterRef
+//   let charRef = useRef<Group>(null);
+
+//   //move player
+
+//   let originalDir: Vector3, quaternion: Quaternion;
+
+//   useEffect(() => {
+//     if (rbRef.current) {
+//       originalDir = new Vector3(0, 0, 0);
+//       quaternion = new Quaternion(0, 0, 0);
+//     }
+//     // charRef.current?.position.applyEuler(new Euler(0, 0, 0, "XYZ"));
+//   }, []);
+
+//   let characterPosition = new Vector3(0, 0, 0);
+//   let angle = 0;
+
+//   const moveSpeed = 0.02;
+//   useFrame(({ clock }) => {
+//     //MOVEMENTS
+//     if (get().left) {
+//       angle += 0.025;
+//       originalDir.set(0, 1, 0);
+//       originalDir.applyAxisAngle(originalDir, angle);
+//       quaternion.setFromAxisAngle(originalDir, angle);
+//       rbRef.current.setRotation(quaternion, true);
+//     }
+//     if (get().right) {
+//       angle -= 0.025;
+//       originalDir.set(0, 1, 0);
+//       originalDir.applyAxisAngle(originalDir, angle);
+//       quaternion.setFromAxisAngle(originalDir, angle);
+//       rbRef.current.setRotation(quaternion, true);
+//     }
+
+//     if (get().forward) {
+//       // Create a forward direction vector (e.g., along the negative Z-axis)
+//       const forwardDir = new Vector3(0, 0, 1);
+
+//       // Apply the rotation to the forward direction vector
+//       forwardDir.applyQuaternion(quaternion);
+
+//       // Define your movement speed
+
+//       // Multiply the rotated forward direction by the move speed to get the new movement vector
+//       const movementVector = forwardDir.clone().multiplyScalar(moveSpeed);
+
+//       // Update the character's position based on the movement vector
+//       characterPosition.add(movementVector);
+
+//       // Set the character's kinematic translation to the updated position
+//       rbRef.current.setNextKinematicTranslation(characterPosition);
+//     }
+//     if (get().back) {
+//       // Create a forward direction vector (e.g., along the negative Z-axis)
+//       const forwardDir = new Vector3(0, 0, -1);
+
+//       // Apply the rotation to the forward direction vector
+//       forwardDir.applyQuaternion(quaternion);
+
+//       // Define your movement speed
+
+//       // Multiply the rotated forward direction by the move speed to get the new movement vector
+//       const movementVector = forwardDir.clone().multiplyScalar(moveSpeed);
+
+//       // Update the character's position based on the movement vector
+//       characterPosition.add(movementVector);
+
+//       // Set the character's kinematic translation to the updated position
+//       rbRef.current.setNextKinematicTranslation(characterPosition);
+//     }
+//   });
+
+//   let { scene: character, animations } = useGLTF(
+//     "/3Dassets/character/charAnim.glb"
+//   );
+
+//   return (
+//     <RigidBody
+//       type="kinematicPosition"
+//       // colliders={"hull"}
+//       ref={rbRef}
+//       onCollisionEnter={() => {
+//         console.log("Hello");
+//       }}
+
+//       // lockTranslations
+//       // lockRotations
+//     >
+//       <group ref={charRef}>
+//         <mesh position={[0, -0.51, 0]} scale={0.3}>
+//           <primitive object={character} />
+//         </mesh>
+//         <CuboidCollider args={[0.01, 0.01, 0.01]} />
+//         {/* <Cone rotation={[-Math.PI / 2, 0, 0]}>
+//           <meshBasicMaterial />
+//         </Cone> */}
+//       </group>
+//     </RigidBody>
+//   );
+// }
+
+export default Player;

@@ -29,7 +29,7 @@ import Experience from "../Experience/index.tsx";
 import Projects from "../Projects/index.tsx";
 import Involvement from "../Involvement/index.tsx";
 import Particles from "../Particles/index.tsx";
-import { Physics } from "@react-three/rapier";
+import { CuboidCollider, Physics, RigidBody } from "@react-three/rapier";
 import Player from "../Player/Player.tsx";
 
 let World = () => {
@@ -42,46 +42,28 @@ let World = () => {
   // console.log(wl.)
 
   const lightRef = useRef<THREE.DirectionalLight>(null!);
-  const charRef = useRef<THREE.Mesh>(null!);
 
-  let dcRef = useRef<OC>(null!);
   let camRef = useRef<THREE.PerspectiveCamera>(null!);
 
-  enum Controls {
-    forward = "forward",
-    back = "back",
-    left = "left",
-    right = "right",
-    jump = "jump",
-  }
+  const orbitControlsRef = useRef();
 
-  useEffect(() => {
-    if (camRef.current) {
-      if (charRef.current) camRef.current.lookAt(charRef.current.position);
-      charRef.current?.add(camRef.current);
+  useHelper(camRef, THREE.CameraHelper);
+
+  let v = new THREE.Vector3();
+  let q = new THREE.Quaternion();
+
+  const [followCharacter, setFollowCharacter] = useState(true); // Flag to toggle camera behavior
+
+  const cameraOffset = new THREE.Vector3(0, 1, 1);
+  useFrame(({ scene, camera }) => {
+    const charB = scene.getObjectByName("charRigidBody");
+
+    if (charB && camera) {
+      charB.add(camera);
+      camera.lookAt(charB.position);
     }
   });
 
-  useFrame(({ camera, scene }) => {
-    let c = scene.getObjectByName("character");
-    // console.log("this: ", c);
-    let y = new THREE.Vector3();
-    c?.getWorldPosition(y.add(new THREE.Vector3(1, 15.0, 16)));
-    // console.log(y);
-
-    c?.add(camera);
-
-    // add( new THREE.Vector3(0,0,0));
-
-    camera.lookAt(y.add(new THREE.Vector3(0.1, 0.6, 0.1)));
-    camera.updateProjectionMatrix();
-  });
-  // useHelper(lightRef, THREE.DirectionalLightHelper, 15, "red");
-  useHelper(camRef, THREE.CameraHelper);
-
-  // let ch = useFBX("/3Dassets/character/ch12.fbx");
-
-  // let offset = new THREE.Vector3(0, 0.3, -2.5);
   return (
     <>
       <Suspense>
@@ -93,15 +75,6 @@ let World = () => {
           castShadow
           scale={4}
         />
-
-        {/* <City /> */}
-
-        {/* <Skills scale={0.5} position={[-25, 0, 35]} /> */}
-        {/* <Experience position={[-25, 0, -25]} Mcolor="red" /> */}
-        {/* <Experience position={[-25, 0, -25]} Mcolor="red" /> */}
-        {/* <Involvement position={[25, 0, -35]} Mcolor="blue" /> */}
-        {/* <Projects position={[20, 0, 30]} Mcolor="green" /> */}
-        {/* <Particles /> */}
         <group position={[2, -0.4, 1]}>
           <Sphere scale={0.2} />
         </group>
@@ -117,14 +90,17 @@ let World = () => {
 
         <KeyboardControls map={co}>
           <Physics debug>
-            <Player />
+            <Player name={"character"} />
+            <RigidBody friction={1.5}>
+              <Box position={[0, 1, -3]}>
+                <meshBasicMaterial color={"red"} />
+              </Box>
+            </RigidBody>
+
+            <City />
           </Physics>
           {/* <CharacterController obj={charRef} /> */}
         </KeyboardControls>
-
-        <Box position={[0, 0, -3]}>
-          <meshBasicMaterial color={"red"} />
-        </Box>
 
         <OrbitControls
           minPolarAngle={0.1}
@@ -134,7 +110,7 @@ let World = () => {
 
         <PerspectiveCamera
           ref={camRef}
-          position={[0, -0.5, 5]}
+          position={[0, -0.5, -1]}
           // near={0.2}
           // zoom={0.5}
           makeDefault
