@@ -16,14 +16,25 @@ import { MeshProps } from "@react-three/fiber";
 import Portal from "../../portal";
 
 import * as THREE from "three";
+import {
+  MeshCollider,
+  RapierCollider,
+  RigidBody,
+  CuboidCollider,
+  CapsuleCollider,
+  ConeCollider,
+  ConvexHullCollider,
+  RapierRigidBody,
+  useRapier,
+  AnyCollider,
+} from "@react-three/rapier";
 
 let Skills: React.FC<MeshProps> = forwardRef((props, ref) => {
   let turbRef = useRef<Group>(null);
 
   let { scene: turb, animations } = useGLTF("/3Dassets/Ventilator.glb");
-  let pRef = useRef(null);
   let gearRef = useRef<Mesh>(null);
-
+  let rbMill = useRef<RapierRigidBody>(null);
   useEffect(() => {
     if (gearRef.current) {
       console.log("REF", gearRef.current);
@@ -39,6 +50,10 @@ let Skills: React.FC<MeshProps> = forwardRef((props, ref) => {
 
       console.log(tubM);
     }
+
+    if (rbMill) {
+      // rbMill.current?
+    }
   });
 
   return (
@@ -46,20 +61,32 @@ let Skills: React.FC<MeshProps> = forwardRef((props, ref) => {
       {/* <Html ref={pRef} transform scale={0.1}>
         <img src={"https://media.tenor.com/2gfRHLv6GZ8AAAAd/code-coding.gif"} />
       </Html> */}
-
       <mesh {...props}>
         {/* <directionalLight /> */}
         {/* <mesh position={[0, 0, 0]} scale={7}>
           <Gltf
-            src="/3Dassets/Ventilator.glb"
-            ref={turbRef}
-            scale={0.25}
-            position={[0, 0.1, -0.25]}
+          src="/3Dassets/Ventilator.glb"
+          ref={turbRef}
+          scale={0.25}
+          position={[0, 0.1, -0.25]}
           />
+          
         </mesh> */}
-
-        <mesh>
-          <primitive object={turb} />
+        <mesh position={[0, 0.3, 0]}>
+          <RigidBody
+            position={[0, 0, 0]}
+            ref={rbMill}
+            type="fixed"
+            onSleep={() => false}
+            onWake={() => true}
+            colliders={"hull"}
+            onCollisionEnter={() => {
+              console.log("something");
+            }}
+          >
+            <CuboidCollider args={[1.9, 0.6, 1.6]} position={[0.4, 0, 0.4]} />
+            <primitive object={turb} />
+          </RigidBody>
         </mesh>
 
         <WorkStation scale={3} position={[2, 0, -11]} rotation={[0, 2.5, 0]} />
@@ -79,10 +106,6 @@ let Skills: React.FC<MeshProps> = forwardRef((props, ref) => {
           rotation={[0, 0, 0]}
         />
       </mesh>
-
-      <Box>
-        <meshBasicMaterial wireframe color={"red"} />
-      </Box>
     </>
   );
 });

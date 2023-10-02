@@ -1,6 +1,7 @@
 import { Box, Cone, useGLTF, useKeyboardControls } from "@react-three/drei";
 import { MeshProps, useFrame } from "@react-three/fiber";
 import {
+  CapsuleCollider,
   CuboidCollider,
   MeshCollider,
   RapierRigidBody,
@@ -41,6 +42,7 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
   }, []);
 
   quaternion = new Quaternion(0, 0, 0);
+
   originalDir = new Vector3(0, 0, 0);
 
   let characterPosition = new Vector3(0, 0, 0);
@@ -116,8 +118,12 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
     <mesh {...props} ref={ref}>
       <RigidBody
         type="kinematicPosition"
-        // colliders={"hull"}
         ref={rbRef}
+        colliders={false}
+        // canSleep={false}
+        onIntersectionEnter={() => {
+          console.log("SOMETHING!");
+        }}
         onCollisionEnter={() => {
           console.log("Hello");
         }}
@@ -129,7 +135,7 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
           <mesh position={[0, -0.51, 0]} scale={0.3}>
             <primitive object={character} />
           </mesh>
-          <CuboidCollider args={[0.01, 0.01, 0.01]} />
+          <CapsuleCollider args={[0.13, 0.15]} position={[0, -0.25, 0]} />
           {/* <Cone rotation={[-Math.PI / 2, 0, 0]}>
           <meshBasicMaterial />
         </Cone> */}

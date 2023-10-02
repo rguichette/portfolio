@@ -2,9 +2,11 @@ import "./styles.css";
 
 import {
   Box,
+  Gltf,
   KeyboardControls,
   OrbitControls,
   PerspectiveCamera,
+  Plane,
   Sphere,
   Text3D,
   useHelper,
@@ -31,6 +33,8 @@ import Involvement from "../Involvement/index.tsx";
 import Particles from "../Particles/index.tsx";
 import { CuboidCollider, Physics, RigidBody } from "@react-three/rapier";
 import Player from "../Player/Player.tsx";
+import Player2 from "../Player/Player2.tsx";
+import PlayerF from "../Player/PlayerF.tsx";
 
 let World = () => {
   // let { scene } = useThree();
@@ -59,8 +63,8 @@ let World = () => {
     const charB = scene.getObjectByName("charRigidBody");
 
     if (charB && camera) {
-      charB.add(camera);
-      camera.lookAt(charB.position);
+      // charB.add(camera);
+      // camera.lookAt(charB.position);
     }
   });
 
@@ -75,29 +79,33 @@ let World = () => {
           castShadow
           scale={4}
         />
-        <group position={[2, -0.4, 1]}>
-          <Sphere scale={0.2} />
-        </group>
-
-        {/* <Text3D
-          font={"fonts/Ultra_Regular.json"}
-          bevelEnabled
-          size={2}
-          curveSegments={12}
-        >
-          Hello
-        </Text3D> */}
 
         <KeyboardControls map={co}>
-          <Physics debug>
-            <Player name={"character"} />
-            <RigidBody friction={1.5}>
-              <Box position={[0, 1, -3]}>
+          <Physics debug gravity={[0, -30, 0]}>
+            <PlayerF />
+
+            <RigidBody friction={1.5} type="kinematicPosition" ccd>
+              <Box position={[0, 0.3, -3]}>
                 <meshBasicMaterial color={"red"} />
               </Box>
             </RigidBody>
 
-            <City />
+            <RigidBody type={"fixed"}>
+              <Box position={[2, -0.5, -3]}>
+                <meshBasicMaterial color={"pink"} />
+              </Box>
+              <CuboidCollider args={[1, 1, 1]} />
+            </RigidBody>
+
+            <RigidBody type="fixed" colliders={"cuboid"}>
+              <Plane
+                name="ground"
+                scale={[1000, 1000, 1000]}
+                rotation={[-Math.PI / 2, 0, 0]}
+                position={[0, 0, 0]}
+              />
+              {/* <CuboidCollider args={[1000, 1, 1000]} position={[0, 0, 0]}  /> */}
+            </RigidBody>
           </Physics>
           {/* <CharacterController obj={charRef} /> */}
         </KeyboardControls>

@@ -13,6 +13,8 @@ import Particles from "./Components/Particles";
 import Projects from "./Components/Projects";
 import { Physics } from "@react-three/rapier";
 import City from "./Components/City";
+import PlayGound from "./playGround";
+import PlayerF from "./Components/Player/PlayerF";
 
 function App() {
   return (
@@ -20,10 +22,8 @@ function App() {
       <Canvas className="w-screen h-screen" shadows>
         <Suspense>
           <OrbitControls />
-
-          {/* <City /> */}
-          <World />
-
+          <PlayGound />
+          {/* <World /> */}
           {/* <Particles /> */}
 
           {/* <Portal

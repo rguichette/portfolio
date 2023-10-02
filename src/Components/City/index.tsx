@@ -18,7 +18,7 @@ export default function City() {
   return (
     <>
       {/* floor */}
-      <RigidBody friction={0.5}>
+      <RigidBody colliders="hull" type="fixed">
         <Plane
           scale={wl.scales.city.floor_scale}
           rotation={wl.rotations.city.floor_rotation}
@@ -28,6 +28,7 @@ export default function City() {
           <meshStandardMaterial side={DoubleSide} />
         </Plane>
       </RigidBody>
+
       {/* front wall */}
       <Plane
         scale={wl.scales.city.city_view_walls}
@@ -71,6 +72,11 @@ export default function City() {
           transparent
         />
       </Plane>
+
+      {/* Buildings */}
+
+      <Gltf src="/3Dassets/s_buidlings_factory2.glb" position={[50, 0, 5]} />
+      {/* <Skills position={[5, 0, 5]} /> */}
       {/* city props */}
 
       {/* <Gltf src="/3Dassets/s_buidlings_factory2.glb" position={[10, 0, 15]} />
