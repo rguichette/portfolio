@@ -33,27 +33,6 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
   let direction = new Vector3(0, 0, 0);
   let rotation = new Quaternion();
 
-  // useFrame(({ clock }) => {
-  //   if (rbRef.current) {
-  //     direction.set(0, 0, Math.sin(clock.elapsedTime) * 3 + 0.1);
-
-  //     rbRef.current.setLinvel(direction, true);
-  //   }
-
-  //   //TEST:
-
-  //   if (rbRef.current) {
-  //     if (get().left) {
-  //       //rotate and let the MATH.SIN do the moving above:
-  //       direction.set(0, 1, 0);
-
-  //       rotation.setFromAxisAngle(direction, Math.sin(clock.elapsedTime * 3));
-  //       rbRef.current.setRotation(rotation, true);
-
-  //     }
-  //   }
-  // });
-
   let angle = 0;
   let turnSpeed = 0.02;
   // let speed = 0;

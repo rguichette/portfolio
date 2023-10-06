@@ -1,91 +1,64 @@
 import { Box, Gltf, Plane, useHelper, useTexture } from "@react-three/drei";
-import { useRef } from "react";
-import { BoxHelper, DoubleSide, MeshPhongMaterial } from "three";
+import { useEffect, useRef } from "react";
+import {
+  BoxHelper,
+  Camera,
+  DoubleSide,
+  MeshPhongMaterial,
+  Vector3,
+} from "three";
 
 import wl from "../../world_ItemLocations";
 import Skills from "../Resume/Skills";
 import WorkStation from "../Workstation";
-import { RigidBody } from "@react-three/rapier";
+import { CuboidCollider, RigidBody } from "@react-three/rapier";
+import world_ItemLocations from "../../world_ItemLocations";
+import { useFrame, useThree } from "@react-three/fiber";
 
 export default function City() {
-  let txt = useTexture("/city01.png");
+  // let txt = useTexture("/city01.png");
   // let txt2 = useTexture("/wing5.png");
-  let txt3 = useTexture("/wing2.png");
-  let txt4 = useTexture("/wing4.png");
+  // let txt3 = useTexture("/wing2.png");
+  // let txt4 = useTexture("/wing4.png");
 
   let mesh = useRef(null!);
 
+  let floorSize = 1000;
+
   return (
     <>
-      {/* floor */}
-      <RigidBody colliders="hull" type="fixed">
+      <RigidBody type="fixed" colliders={false}>
+        {/* multiply by 2 in order to adjust for RB scaling */}
         <Plane
-          scale={wl.scales.city.floor_scale}
-          rotation={wl.rotations.city.floor_rotation}
-          position={wl.positions.city.floor_position}
-          receiveShadow
+          rotation={[-Math.PI / 2, 0, 0]}
+          args={[floorSize * 2, floorSize * 2, floorSize * 2]}
+          position={[0, -1.3, 0]}
         >
-          <meshStandardMaterial side={DoubleSide} />
+          <meshBasicMaterial
+            // wireframe
+            color={"#D95030"}
+            side={DoubleSide}
+          />
         </Plane>
+        <CuboidCollider
+          args={[floorSize, 0.01, floorSize]}
+          position={[0, -1.3, 0]}
+        />
       </RigidBody>
-
-      {/* front wall */}
-      <Plane
-        scale={wl.scales.city.city_view_walls}
-        position={wl.positions.city.z_back_position}
-        rotation={wl.rotations.city.z_back_rotation}
-        ref={mesh}
+      <RigidBody
+        mass={1}
+        type="fixed"
+        position={[1, 0, 0]}
+        // colliders={false}
+        // gravityScale={0.1}
+        // angularDamping={0.3}
+        onCollisionEnter={() => {
+          console.log("collision");
+        }}
       >
-        <meshStandardMaterial
-          map={txt}
-          color={"rgb(29, 119, 150)"}
-          transparent
-        />
-      </Plane>
-
-      {/* right */}
-      <Plane
-        scale={wl.scales.city.city_view_walls}
-        position={wl.positions.city.x_right_position}
-        rotation={wl.rotations.city.x_right_rotation}
-        ref={mesh}
-      >
-        <meshStandardMaterial
-          side={DoubleSide}
-          map={txt3}
-          color={"rgb(37, 150, 190)"}
-          transparent
-        />
-      </Plane>
-
-      {/* Left */}
-      <Plane
-        scale={wl.scales.city.city_view_walls}
-        position={wl.positions.city.x_left_position}
-        rotation={wl.rotations.city.x_left_rotation}
-        ref={mesh}
-      >
-        <meshStandardMaterial
-          side={DoubleSide}
-          map={txt4}
-          color={"rgb(29, 119, 150)"}
-          transparent
-        />
-      </Plane>
-
-      {/* Buildings */}
-
-      <Gltf src="/3Dassets/s_buidlings_factory2.glb" position={[50, 0, 5]} />
-      {/* <Skills position={[5, 0, 5]} /> */}
-      {/* city props */}
-
-      {/* <Gltf src="/3Dassets/s_buidlings_factory2.glb" position={[10, 0, 15]} />
-      <Gltf src="/3Dassets/s_buidlings_factory2.glb" position={[50, 0, 5]} />
-      <Gltf src="/3Dassets/s_buidlings_factory2.glb" />
-
-      <Gltf src="/3Dassets/s_L.glb" />
-      <Gltf src="/3Dassets/s_LL.glb" />
-      <Gltf src="/3Dassets/s_LLll.glb" /> */}
+        <Box />
+        <CuboidCollider args={[0.5, 0.5, 0.5]} mass={1} />
+      </RigidBody>
     </>
   );
 }

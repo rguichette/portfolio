@@ -1,4 +1,10 @@
-import { Box, Cone, useGLTF, useKeyboardControls } from "@react-three/drei";
+import {
+  Box,
+  Cone,
+  OrbitControls,
+  useGLTF,
+  useKeyboardControls,
+} from "@react-three/drei";
 import { MeshProps, useFrame } from "@react-three/fiber";
 import {
   CapsuleCollider,
@@ -23,90 +29,53 @@ enum Controls {
 }
 
 let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
-  let [sub, get] = useKeyboardControls<Controls>();
+  let [_, get] = useKeyboardControls<Controls>();
 
   //  rgidBodyRef
   let rbRef = useRef<RapierRigidBody>(null!);
-  //soon to be characterRef
-  let charRef = useRef<Group>(null);
 
-  //move player
+  let charRef = useRef<Mesh>(null);
 
-  let originalDir: Vector3, quaternion: Quaternion;
+  //direction to set the position based on changes to this vector
+  let direction = new Vector3(0, 0, 0);
+  let rotation = new Quaternion();
 
-  useEffect(() => {
-    if (rbRef.current) {
-      // quaternion = new Quaternion(0, 0, 0);
-    }
-    // charRef.current?.position.applyEuler(new Euler(0, 0, 0, "XYZ"));
-  }, []);
-
-  quaternion = new Quaternion(0, 0, 0);
-
-  originalDir = new Vector3(0, 0, 0);
-
-  let characterPosition = new Vector3(0, 0, 0);
   let angle = 0;
+  let turnSpeed = 0.02;
+  // let speed = 0;
 
-  const moveSpeed = 0.02;
-
-  useFrame(({ clock }) => {
-    let forwardDir = new Vector3(0, 0, 1);
-    //MOVEMENTS
-    if (get().left) {
-      angle += 0.025;
-      originalDir.set(0, 1, 0);
-      originalDir.applyAxisAngle(originalDir, angle);
-      quaternion.setFromAxisAngle(originalDir, angle);
-      rbRef.current.setRotation(quaternion, true);
-    }
-    if (get().right) {
-      angle -= 0.025;
-      originalDir.set(0, 1, 0);
-      if (originalDir) {
-        originalDir.applyAxisAngle(originalDir, angle);
-        quaternion.setFromAxisAngle(originalDir, angle);
-        rbRef.current.setRotation(quaternion, true);
+  useFrame(({ clock, scene }) => {
+    if (rbRef.current) {
+      // Check if the "left" key is pressed
+      if (get().left) {
+        angle += turnSpeed;
+        // Rotate based on user input
+        direction.set(0, 1, 0);
+        rotation.setFromAxisAngle(direction, angle);
+        rbRef.current.setRotation(rotation, true);
       }
-    }
-
-    if (get().forward) {
-      // Create a forward direction vector (e.g., along the negative Z-axis)
-
-      // Apply the rotation to the forward direction vector
-      forwardDir.applyQuaternion(quaternion);
-
-      // Define your movement speed
-
-      // Multiply the rotated forward direction by the move speed to get the new movement vector
-      const movementVector = forwardDir.clone().multiplyScalar(moveSpeed);
-
-      // Update the character's position based on the movement vector
-      characterPosition.add(movementVector);
-
-      // Set the character's kinematic translation to the updated position
-      rbRef.current.setNextKinematicTranslation(characterPosition);
-    }
-    if (get().back) {
-      // Create a forward direction vector (e.g., along the negative Z-axis)
-      // const forwardDir = new Vector3(0, 0, -1);
-      if (forwardDir) {
-        forwardDir.set(0, 0, -1);
-        // Apply the rotation to the forward direction vector
-        forwardDir.applyQuaternion(quaternion);
+      if (get().right) {
+        angle -= turnSpeed;
+        // Rotate based on user input
+        direction.set(0, 1, 0);
+        rotation.setFromAxisAngle(direction, angle);
+        rbRef.current.setRotation(rotation, true);
       }
 
-      // Define your movement speed
+      // Calculate the forward direction based on the current rotation
+      direction.set(0, 0, 1);
+      direction.applyQuaternion(rotation);
 
-      // Multiply the rotated forward direction by the move speed to get the new movement vector
-      const movementVector = forwardDir.clone().multiplyScalar(moveSpeed);
-
-      // Update the character's position based on the movement vector
-      characterPosition.add(movementVector);
-
-      // Set the character's kinematic translation to the updated position
-      rbRef.current.setNextKinematicTranslation(characterPosition);
+      // Set the linear velocity in the forward direction
+      if (get().forward) {
+        direction.multiplyScalar(1);
+        rbRef.current.setLinvel(direction, true);
+      } else if (get().back) {
+        direction.multiplyScalar(-1);
+        rbRef.current.setLinvel(direction, true);
+      }
     }
+    scene.updateMatrixWorld();
     charRef.current?.updateMatrixWorld();
   });
 
@@ -115,143 +84,24 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
   );
 
   return (
-    <mesh {...props} ref={ref}>
-      <RigidBody
-        type="kinematicPosition"
-        ref={rbRef}
-        colliders={false}
-        // canSleep={false}
-        onIntersectionEnter={() => {
-          console.log("SOMETHING!");
-        }}
-        onCollisionEnter={() => {
-          console.log("Hello");
-        }}
-        name="charRigidBody"
-        // lockTranslations
-        // lockRotations
-      >
-        <group ref={charRef}>
-          <mesh position={[0, -0.51, 0]} scale={0.3}>
+    <RigidBody
+      type="dynamic"
+      ref={rbRef}
+      colliders={false}
+      enabledRotations={[false, false, false]}
+      name="charRigidBody"
+      mass={66}
+    >
+      <mesh {...props} ref={ref} name="Player">
+        <group>
+          <mesh position={[0, -0.86, 0]} ref={charRef}>
             <primitive object={character} />
           </mesh>
-          <CapsuleCollider args={[0.13, 0.15]} position={[0, -0.25, 0]} />
-          {/* <Cone rotation={[-Math.PI / 2, 0, 0]}>
-          <meshBasicMaterial />
-        </Cone> */}
         </group>
-      </RigidBody>
-    </mesh>
+        <CapsuleCollider args={[0.69, 0.25]} />
+      </mesh>
+    </RigidBody>
   );
 });
-
-// //handles  everything needing to do with player
-// export default function Player() {
-//   let [sub, get] = useKeyboardControls<Controls>();
-
-//   //  rgidBodyRef
-//   let rbRef = useRef<RapierRigidBody>(null!);
-//   //soon to be characterRef
-//   let charRef = useRef<Group>(null);
-
-//   //move player
-
-//   let originalDir: Vector3, quaternion: Quaternion;
-
-//   useEffect(() => {
-//     if (rbRef.current) {
-//       originalDir = new Vector3(0, 0, 0);
-//       quaternion = new Quaternion(0, 0, 0);
-//     }
-//     // charRef.current?.position.applyEuler(new Euler(0, 0, 0, "XYZ"));
-//   }, []);
-
-//   let characterPosition = new Vector3(0, 0, 0);
-//   let angle = 0;
-
-//   const moveSpeed = 0.02;
-//   useFrame(({ clock }) => {
-//     //MOVEMENTS
-//     if (get().left) {
-//       angle += 0.025;
-//       originalDir.set(0, 1, 0);
-//       originalDir.applyAxisAngle(originalDir, angle);
-//       quaternion.setFromAxisAngle(originalDir, angle);
-//       rbRef.current.setRotation(quaternion, true);
-//     }
-//     if (get().right) {
-//       angle -= 0.025;
-//       originalDir.set(0, 1, 0);
-//       originalDir.applyAxisAngle(originalDir, angle);
-//       quaternion.setFromAxisAngle(originalDir, angle);
-//       rbRef.current.setRotation(quaternion, true);
-//     }
-
-//     if (get().forward) {
-//       // Create a forward direction vector (e.g., along the negative Z-axis)
-//       const forwardDir = new Vector3(0, 0, 1);
-
-//       // Apply the rotation to the forward direction vector
-//       forwardDir.applyQuaternion(quaternion);
-
-//       // Define your movement speed
-
-//       // Multiply the rotated forward direction by the move speed to get the new movement vector
-//       const movementVector = forwardDir.clone().multiplyScalar(moveSpeed);
-
-//       // Update the character's position based on the movement vector
-//       characterPosition.add(movementVector);
-
-//       // Set the character's kinematic translation to the updated position
-//       rbRef.current.setNextKinematicTranslation(characterPosition);
-//     }
-//     if (get().back) {
-//       // Create a forward direction vector (e.g., along the negative Z-axis)
-//       const forwardDir = new Vector3(0, 0, -1);
-
-//       // Apply the rotation to the forward direction vector
-//       forwardDir.applyQuaternion(quaternion);
-
-//       // Define your movement speed
-
-//       // Multiply the rotated forward direction by the move speed to get the new movement vector
-//       const movementVector = forwardDir.clone().multiplyScalar(moveSpeed);
-
-//       // Update the character's position based on the movement vector
-//       characterPosition.add(movementVector);
-
-//       // Set the character's kinematic translation to the updated position
-//       rbRef.current.setNextKinematicTranslation(characterPosition);
-//     }
-//   });
-
-//   let { scene: character, animations } = useGLTF(
-//     "/3Dassets/character/charAnim.glb"
-//   );
-
-//   return (
-//     <RigidBody
-//       type="kinematicPosition"
-//       // colliders={"hull"}
-//       ref={rbRef}
-//       onCollisionEnter={() => {
-//         console.log("Hello");
-//       }}
-
-//       // lockTranslations
-//       // lockRotations
-//     >
-//       <group ref={charRef}>
-//         <mesh position={[0, -0.51, 0]} scale={0.3}>
-//           <primitive object={character} />
-//         </mesh>
-//         <CuboidCollider args={[0.01, 0.01, 0.01]} />
-//         {/* <Cone rotation={[-Math.PI / 2, 0, 0]}>
-//           <meshBasicMaterial />
-//         </Cone> */}
-//       </group>
-//     </RigidBody>
-//   );
-// }
 
 export default Player;

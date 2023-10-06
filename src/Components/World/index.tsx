@@ -4,7 +4,7 @@ import {
   Box,
   Gltf,
   KeyboardControls,
-  OrbitControls,
+  OrbitControlsProps,
   PerspectiveCamera,
   Plane,
   Sphere,
@@ -25,7 +25,6 @@ import Character from "../Character/index.tsx";
 import CharacterController, { co } from "../CharacterController/index.tsx";
 import Skills from "../Resume/Skills/index.tsx";
 
-import { OrbitControls as OC } from "three-stdlib";
 import { log, vec3 } from "three/examples/jsm/nodes/Nodes.js";
 import Experience from "../Experience/index.tsx";
 import Projects from "../Projects/index.tsx";
@@ -35,94 +34,73 @@ import { CuboidCollider, Physics, RigidBody } from "@react-three/rapier";
 import Player from "../Player/Player.tsx";
 import Player2 from "../Player/Player2.tsx";
 import PlayerF from "../Player/PlayerF.tsx";
+import { CameraHelper, Mesh, Vector3 } from "three";
+
+import { OrbitControls as OCtype } from "three-stdlib";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+
+import CameraControls from "camera-controls";
+
+CameraControls.install({ THREE: THREE });
 
 let World = () => {
-  // let { scene } = useThree();
+  let characterRef = useRef<Mesh>(null!);
 
-  let ccr = useRef(null!);
-
-  // scene.background = new THREE.Color("rgba(63,74,205,1)");
-  // {"x":0}, {"y":-10}, {"z":0}
-  // console.log(wl.)
-
-  const lightRef = useRef<THREE.DirectionalLight>(null!);
-
+  let { camera, gl, scene } = useThree();
   let camRef = useRef<THREE.PerspectiveCamera>(null!);
 
-  const orbitControlsRef = useRef();
+  // camera.rotation.set(0, Math.PI, 0);
+  camera.position.set(0, 2, -1);
+  camera.rotation.set(0, Math.PI, 0);
+  // camera.scale.set(0.1, 0.1, 0.1);
 
-  useHelper(camRef, THREE.CameraHelper);
+  const controls = new OrbitControls(camera, gl.domElement);
 
-  let v = new THREE.Vector3();
-  let q = new THREE.Quaternion();
+  controls.maxPolarAngle = Math.PI / 2.3;
 
-  const [followCharacter, setFollowCharacter] = useState(true); // Flag to toggle camera behavior
+  controls.maxAzimuthAngle = Math.PI / 2.3;
 
-  const cameraOffset = new THREE.Vector3(0, 1, 1);
-  useFrame(({ scene, camera }) => {
-    const charB = scene.getObjectByName("charRigidBody");
+  controls.enableZoom = false;
 
-    if (charB && camera) {
-      // charB.add(camera);
-      // camera.lookAt(charB.position);
+  // controls.maxPolarAngle = 1;
+
+  useFrame(({ scene, camera, clock }) => {
+    const character = scene.getObjectByName("charRigidBody");
+    let p = scene.getObjectByName("Player");
+
+    if (character) {
+      character.add(camera);
+      controls.target.set(
+        character.position.x,
+        character.position.y + 1,
+        character.position.z
+      );
+      character.updateMatrixWorld();
+      camera.updateMatrixWorld();
+      controls.update();
     }
   });
+  const helper = new THREE.CameraHelper(camera);
+  scene.add(helper);
 
   return (
     <>
       <Suspense>
         <directionalLight
-          ref={lightRef}
           intensity={0.4}
           position={[0, 20, 0]}
-          rotation={[0, 0, Math.PI]}
+          rotation={[0, Math.PI, 0]}
           castShadow
           scale={4}
         />
 
         <KeyboardControls map={co}>
-          <Physics debug gravity={[0, -30, 0]}>
-            <PlayerF />
+          <Physics debug gravity={[0, -9.988, 0]}>
+            <Player position={[0, 1, 0]} ref={characterRef} />
 
-            <RigidBody friction={1.5} type="kinematicPosition" ccd>
-              <Box position={[0, 0.3, -3]}>
-                <meshBasicMaterial color={"red"} />
-              </Box>
-            </RigidBody>
-
-            <RigidBody type={"fixed"}>
-              <Box position={[2, -0.5, -3]}>
-                <meshBasicMaterial color={"pink"} />
-              </Box>
-              <CuboidCollider args={[1, 1, 1]} />
-            </RigidBody>
-
-            <RigidBody type="fixed" colliders={"cuboid"}>
-              <Plane
-                name="ground"
-                scale={[1000, 1000, 1000]}
-                rotation={[-Math.PI / 2, 0, 0]}
-                position={[0, 0, 0]}
-              />
-              {/* <CuboidCollider args={[1000, 1, 1000]} position={[0, 0, 0]}  /> */}
-            </RigidBody>
+            <City />
           </Physics>
-          {/* <CharacterController obj={charRef} /> */}
         </KeyboardControls>
-
-        <OrbitControls
-          minPolarAngle={0.1}
-          maxPolarAngle={1.6}
-          // enableZoom={false}
-        />
-
-        <PerspectiveCamera
-          ref={camRef}
-          position={[0, -0.5, -1]}
-          // near={0.2}
-          // zoom={0.5}
-          makeDefault
-        />
       </Suspense>
     </>
   );

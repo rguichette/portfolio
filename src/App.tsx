@@ -15,15 +15,19 @@ import { Physics } from "@react-three/rapier";
 import City from "./Components/City";
 import PlayGound from "./playGround";
 import PlayerF from "./Components/Player/PlayerF";
+import Player from "./Components/Player/Player";
 
 function App() {
   return (
     <>
-      <Canvas className="w-screen h-screen" shadows>
+      <Canvas
+        className="w-screen h-screen"
+        shadows
+        // camera={{ fov: 24, position: [10, -1, 2] }}
+      >
         <Suspense>
-          <OrbitControls />
-          <PlayGound />
-          {/* <World /> */}
+          <World />
+
           {/* <Particles /> */}
 
           {/* <Portal
