@@ -23,6 +23,7 @@ import { MonitorProps } from "../Monitor";
 import * as THREE from "three";
 import Monitor from "../Monitor";
 import Keyboard from "../Keyboard";
+import { CuboidCollider, RigidBody } from "@react-three/rapier";
 
 // import desk from "../../3Dassets/glassDesk.glb";
 
@@ -32,6 +33,8 @@ let WorkStation: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>(
     let monRefRight = useRef<Mesh & MonitorProps>(null!);
     let monRefLeft = useRef<Mesh & MonitorProps>(null!);
 
+    let monGroupRef = useRef<THREE.Group>(null);
+
     let [toggle, setToggle] = useState(false);
 
     // let { scene: desk } = useGLTF("/3Dassets/glassDesk.glb");
@@ -39,32 +42,23 @@ let WorkStation: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>(
 
     useEffect(() => {
       //turn on and off
-      if (toggle) {
-        console.log("turning on...");
-        (
-          (monRef.current.children[0] as Mesh).material as MeshBasicMaterial
-        ).color.setRGB(1, 1, 1);
 
-        console.log(
-          ((monRef.current.children[0] as Mesh).material as MeshBasicMaterial)
-            .color
-        );
-      } else {
-        console.log("turning off...");
-        (
-          (monRef.current.children[0] as Mesh).material as MeshBasicMaterial
-        ).color.setRGB(0, 0, 0);
+      if (monGroupRef.current) {
+        if (monGroupRef.current.children) {
+          monGroupRef.current.children.map((c) => {
+            console.log("child: ", c);
+            if (toggle) {
+              (
+                (c.children[0] as Mesh).material as MeshBasicMaterial
+              ).color.setRGB(1, 1, 1);
+            } else {
+              (
+                (c.children[0] as Mesh).material as MeshBasicMaterial
+              ).color.setRGB(0, 0, 0);
+            }
+          });
+        }
       }
-
-      monRefRight.current.position.x = 16;
-      monRef.current.position.z = -4;
-      monRefRight.current.rotation.y = -0.5;
-
-      monRef.current.position.z = -5;
-
-      monRefLeft.current.position.x = -16;
-      monRefLeft.current.position.z = 0;
-      monRefLeft.current.rotation.y = 0.5;
     }, [toggle]);
 
     //   "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"
@@ -72,54 +66,57 @@ let WorkStation: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>(
     return (
       <>
         <mesh {...props} ref={ref}>
-          <group scale={0.0265} position={[0, -0.4, 0]}>
-            <group scale={0.8} position={[0, 6, -2.5]}>
+          <group position={[0, 1, 0]}>
+            <group ref={monGroupRef}>
               <Monitor
-                ref={monRef}
-                position={[0, 13, 0]}
+                scale={0.2}
+                position={[3.3, 0, 0]}
+                rotation={[0, -0.8, 0]}
                 vidSrc={"/3Dassets/textures/codeScroll.mp4"}
-                vidOptions={{
-                  unsuspend: "canplay",
-                  muted: true,
-                  start: toggle,
-                }}
-
-                // vidSrc={
-                //   "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"
-                // }
-              />
-
-              <Monitor
-                ref={monRefRight}
-                position={[0, 13, 0]}
-                vidSrc={"/3Dassets/textures/codeScroll.mp4"}
-                vidOptions={{
-                  unsuspend: "canplay",
-                  muted: true,
-                  start: toggle,
-                }}
-              />
-              <Monitor
+                vidOptions={{ muted: true }}
                 ref={monRefLeft}
-                position={[0, 13, 0]}
+              />
+
+              <Monitor
+                scale={0.2}
+                position={[0, 0, -1.2]}
                 vidSrc={"/3Dassets/textures/codeScroll.mp4"}
-                vidOptions={{
-                  unsuspend: "canplay",
-                  muted: true,
-                  start: toggle,
-                }}
+                vidOptions={{ muted: true }}
+                ref={monRef}
+              />
+
+              <Monitor
+                scale={0.2}
+                position={[-3.3, 0, 0]}
+                rotation={[0, 0.8, 0]}
+                ref={monRefRight}
+                vidSrc={"/3Dassets/textures/codeScroll.mp4"}
+                vidOptions={{ muted: true }}
               />
             </group>
-            {/*desk*/}
-            {/* <Gltf src="/3Dassets/glassDesk.glb" scale={[13, 12, 8]} /> */}
-            {/* <Keyboard/> */}
+            <CuboidCollider
+              args={[1, 1, 0.8]}
+              sensor
+              position={[0, 0, 0.7]}
+              onIntersectionEnter={() => {
+                setToggle(true);
+              }}
+            />
 
-            <Keyboard
-              scale={10}
-              rotation={[-Math.PI / 2 + 0.3, 0, 0]}
-              position={[0, 8, 0]}
+            <CuboidCollider
+              args={[5, 1, 0.01]}
+              sensor
+              position={[0, 0, 2]}
+              onCollisionExit={() => {
+                if (toggle) {
+                  setToggle(false);
+                }
+                console.log("exiting...");
+              }}
             />
           </group>
+
+          <Keyboard position={[0, -0.5, 0]} scale={2} rotation={[-0.7, 0, 0]} />
         </mesh>
       </>
     );

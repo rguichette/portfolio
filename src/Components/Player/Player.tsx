@@ -42,7 +42,7 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
 
   let angle = 0;
   let turnSpeed = 0.02;
-  // let speed = 0;
+  let speed = 3;
 
   useFrame(({ clock, scene }) => {
     if (rbRef.current) {
@@ -68,10 +68,10 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
 
       // Set the linear velocity in the forward direction
       if (get().forward) {
-        direction.multiplyScalar(1);
+        direction.multiplyScalar(speed);
         rbRef.current.setLinvel(direction, true);
       } else if (get().back) {
-        direction.multiplyScalar(-1);
+        direction.multiplyScalar(-speed);
         rbRef.current.setLinvel(direction, true);
       }
     }

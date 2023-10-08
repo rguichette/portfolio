@@ -1,5 +1,10 @@
 import { Box, Plane, useVideoTexture } from "@react-three/drei";
 import { MeshProps } from "@react-three/fiber";
+import {
+  CuboidCollider,
+  RigidBody,
+  RigidBodyTypeString,
+} from "@react-three/rapier";
 import { forwardRef, useEffect, useRef } from "react";
 import * as THREE from "three";
 import { DoubleSide, Mesh, MeshBasicMaterial } from "three";
@@ -36,6 +41,8 @@ let Monitor: React.FC<MonitorProps> = forwardRef<Mesh, MonitorProps>(
       }
     }, [props.vidOptions]);
 
+    let j = "fixed" as RigidBodyTypeString;
+
     return (
       <mesh {...props} ref={ref}>
         <Plane
@@ -45,14 +52,16 @@ let Monitor: React.FC<MonitorProps> = forwardRef<Mesh, MonitorProps>(
           ref={tvRef}
         ></Plane>
 
-        <Box
-          name="MonitorBack"
-          scale={[16.4, 9.4, 0.15]}
-          rotation={[0, -Math.PI, 0]}
-          position={[0, 0, 0.138]}
-        >
-          <meshStandardMaterial side={DoubleSide} color={"silver"} />
-        </Box>
+        <RigidBody type="fixed" colliders={"hull"}>
+          <Box
+            name="MonitorBack"
+            scale={[16.4, 9.4, 0.15]}
+            rotation={[0, -Math.PI, 0]}
+            position={[0, 0, 0.138]}
+          >
+            <meshStandardMaterial side={DoubleSide} color={"silver"} />
+          </Box>
+        </RigidBody>
       </mesh>
     );
   }

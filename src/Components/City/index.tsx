@@ -1,4 +1,11 @@
-import { Box, Gltf, Plane, useHelper, useTexture } from "@react-three/drei";
+import {
+  Box,
+  Gltf,
+  Plane,
+  Sphere,
+  useHelper,
+  useTexture,
+} from "@react-three/drei";
 import { useEffect, useRef } from "react";
 import {
   BoxHelper,
@@ -11,9 +18,14 @@ import {
 import wl from "../../world_ItemLocations";
 import Skills from "../Resume/Skills";
 import WorkStation from "../Workstation";
-import { CuboidCollider, RigidBody } from "@react-three/rapier";
+import { BallCollider, CuboidCollider, RigidBody } from "@react-three/rapier";
 import world_ItemLocations from "../../world_ItemLocations";
 import { useFrame, useThree } from "@react-three/fiber";
+import Ground from "../Ground";
+import Library from "../BuildingComponents/Library";
+import LL from "../BuildingComponents/LL";
+import Monitor from "../Monitor";
+import Keyboard from "../Keyboard";
 
 export default function City() {
   // let txt = useTexture("/city01.png");
@@ -23,28 +35,25 @@ export default function City() {
 
   let mesh = useRef(null!);
 
-  let floorSize = 1000;
-
   return (
     <>
-      <RigidBody type="fixed" colliders={false}>
-        {/* multiply by 2 in order to adjust for RB scaling */}
-        <Plane
-          rotation={[-Math.PI / 2, 0, 0]}
-          args={[floorSize * 2, floorSize * 2, floorSize * 2]}
-          position={[0, -1.3, 0]}
-        >
-          <meshBasicMaterial
-            // wireframe
-            color={"#D95030"}
-            side={DoubleSide}
-          />
-        </Plane>
-        <CuboidCollider
-          args={[floorSize, 0.01, floorSize]}
-          position={[0, -1.3, 0]}
-        />
+      {/* <Keyboard /> */}
+      <WorkStation />
+      <Ground />
+      <RigidBody
+        scale={0.6}
+        type="dynamic"
+        colliders={false}
+        friction={0.1}
+        // angularDamping={1.1}
+        position={[3, 3, 5]}
+        restitution={1.75}
+      >
+        <Sphere />
+        <BallCollider args={[1.2]} />
       </RigidBody>
+
+      {/* <Library /> */}
       <RigidBody
         mass={1}
         type="fixed"
@@ -56,8 +65,8 @@ export default function City() {
           console.log("collision");
         }}
       >
-        <Box />
-        <CuboidCollider args={[0.5, 0.5, 0.5]} mass={1} />
+        {/* <Box />
+        <CuboidCollider args={[0.5, 0.5, 0.5]} mass={1} /> */}
       </RigidBody>
     </>
   );
