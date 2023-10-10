@@ -27,8 +27,8 @@ import Skills from "../Resume/Skills/index.tsx";
 
 import { log, vec3 } from "three/examples/jsm/nodes/Nodes.js";
 import Experience from "../Experience/index.tsx";
-import Projects from "../Projects/index.tsx";
-import Involvement from "../Involvement/index.tsx";
+import Projects from "../Resume/Projects/index.tsx";
+import Involvement from "../Resume/Involvement/index.tsx";
 import Particles from "../Particles/index.tsx";
 import { CuboidCollider, Physics, RigidBody } from "@react-three/rapier";
 import Player from "../Player/Player.tsx";
@@ -63,41 +63,49 @@ let World = () => {
 
   const controls = new OrbitControls(camera, gl.domElement);
 
-  controls.maxPolarAngle = Math.PI / 2.3;
-  controls.maxAzimuthAngle = Math.PI / 2.3;
-  controls.enableDamping = true;
-  controls.dampingFactor = 0.05; // Use a smaller damping factor.
-  controls.maxPolarAngle = 1;
-  controls.enableZoom = true; // Disable zoom controls.
-  controls.enablePan = false; // Disable pan controls.
-
-  // useEffect(()=>{
-
-  // })
   useThree(({ scene }) => {
     let character = scene.getObjectByName("charRigidBody");
 
     console.log("CHARACTER: ", character);
   });
 
-  useFrame(({ scene, camera, clock }) => {
-    const character = scene.getObjectByName("charRigidBody");
-    let p = scene.getObjectByName("Player");
+  let camOrigin = new Vector3(0, 0.8, 0);
+  let camOffset = new Vector3(0, 0.79, -2);
 
-    // if (character) {
-    //   character.add(camera);
-    //   controls.target.set(
-    //     character.position.x,
-    //     character.position.y + 1,
-    //     character.position.z
-    //   );
-    //   // character.updateMatrixWorld();
-    //   camera.updateMatrixWorld();
-    //   // controls.enableZoom = false;
-    //   // controls.enablePan = false;
-    //   controls.update();
-    // }
+  camera.position.set(camOffset.x, camOffset.y, camOffset.z);
+  camera.lookAt(camOrigin);
+
+  useFrame(() => {
+    let character = scene.getObjectByName("charRigidBody");
+    if (character) {
+      character.add(camera);
+
+      camera.lookAt(character.position.clone().add(camOrigin));
+    }
   });
+
+  /*MINE *******MINE*********/
+
+  // useFrame(({ scene, camera, clock }) => {
+  //   const character = scene.getObjectByName("charRigidBody");
+  //   let p = scene.getObjectByName("Player");
+
+  //   if (character) {
+  //     character.add(camera);
+
+  //     // character.lookAt(character.position);
+  //     //   controls.target.set(
+  //     //     character.position.x,
+  //     //     character.position.y + 1,
+  //     //     character.position.z
+  //     //   );
+  //     //   // character.updateMatrixWorld();
+  //     //   camera.updateMatrixWorld();
+  //     //   // controls.enableZoom = false;
+  //     //   // controls.enablePan = false;
+  //     //   controls.update();
+  //   }
+  // });
 
   const helper = new THREE.CameraHelper(camera);
   scene.add(helper);

@@ -58,54 +58,17 @@ let Skills: React.FC<MeshProps> = forwardRef((props, ref) => {
 
   return (
     <>
-      {/* <Html ref={pRef} transform scale={0.1}>
-        <img src={"https://media.tenor.com/2gfRHLv6GZ8AAAAd/code-coding.gif"} />
-      </Html> */}
-      <mesh {...props}>
-        {/* <directionalLight /> */}
-        {/* <mesh position={[0, 0, 0]} scale={7}>
-          <Gltf
-          src="/3Dassets/Ventilator.glb"
-          ref={turbRef}
-          scale={0.25}
-          position={[0, 0.1, -0.25]}
-          />
-          
-        </mesh> */}
-        <mesh position={[0, 0.3, 0]}>
-          <RigidBody
-            position={[0, 0, 0]}
-            ref={rbMill}
-            type="fixed"
-            onSleep={() => false}
-            onWake={() => true}
-            colliders={"hull"}
-            onCollisionEnter={() => {
-              console.log("something");
-            }}
-          >
-            <CuboidCollider args={[1.9, 0.6, 1.6]} position={[0.4, 0, 0.4]} />
-            <primitive object={turb} />
-          </RigidBody>
-        </mesh>
-
-        <WorkStation scale={3} position={[2, 0, -11]} rotation={[0, 2.5, 0]} />
-      </mesh>
-
-      {/* <Portal lightColor={new THREE.Color("blue")} /> */}
-      <mesh
-        rotation={[Math.PI / 2, Math.PI / 2, 0]}
-        position={new THREE.Vector3(-9, 0.5, 10)}
-        scale={3}
-        ref={gearRef}
+      <Html
+        scale={0.1}
+        as="div"
+        center
+        // occlude="blending"
+        // transform
+        // rotation={[0, -Math.PI / 2 + 0.7, 0]}
+        // position={[-4, 2.4, -4]}
       >
-        <Gltf
-          src="/3Dassets/Cogs.glb"
-          scale={0.05}
-          // position={[0.1, -0.04, 0.25]}
-          rotation={[0, 0, 0]}
-        />
-      </mesh>
+        <img src={"https://media.tenor.com/2gfRHLv6GZ8AAAAd/code-coding.gif"} />
+      </Html>
     </>
   );
 });

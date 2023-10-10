@@ -10,7 +10,7 @@ import Portal from "./Components/portal";
 
 import * as THREE from "three";
 import Particles from "./Components/Particles";
-import Projects from "./Components/Projects";
+import Projects from "./Components/Resume/Projects";
 import { Physics } from "@react-three/rapier";
 import City from "./Components/City";
 import PlayGound from "./playGround";

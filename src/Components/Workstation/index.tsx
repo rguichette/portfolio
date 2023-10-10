@@ -37,9 +37,6 @@ let WorkStation: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>(
 
     let [toggle, setToggle] = useState(false);
 
-    // let { scene: desk } = useGLTF("/3Dassets/glassDesk.glb");
-    // let keyboardTexture = useTexture("/");
-
     useEffect(() => {
       //turn on and off
 
@@ -60,8 +57,6 @@ let WorkStation: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>(
         }
       }
     }, [toggle]);
-
-    //   "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"
 
     return (
       <>
@@ -94,26 +89,6 @@ let WorkStation: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>(
                 vidOptions={{ muted: true }}
               />
             </group>
-            <CuboidCollider
-              args={[1, 1, 0.8]}
-              sensor
-              position={[0, 0, 0.7]}
-              onIntersectionEnter={() => {
-                setToggle(true);
-              }}
-            />
-
-            <CuboidCollider
-              args={[5, 1, 0.01]}
-              sensor
-              position={[0, 0, 2]}
-              onCollisionExit={() => {
-                if (toggle) {
-                  setToggle(false);
-                }
-                console.log("exiting...");
-              }}
-            />
           </group>
 
           <Keyboard position={[0, -0.5, 0]} scale={2} rotation={[-0.7, 0, 0]} />
