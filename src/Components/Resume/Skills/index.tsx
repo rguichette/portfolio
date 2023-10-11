@@ -32,7 +32,23 @@ import {
 let Skills: React.FC<MeshProps> = forwardRef((props, ref) => {
   let turbRef = useRef<Group>(null);
 
-  let { scene: turb, animations } = useGLTF("/3Dassets/Ventilator.glb");
+  //public/3Dassets/technologies/gopher.glb
+  ///Users/ralphguichette/Development/porttfolio/public/3Dassets/technologies/gopher.glb
+  //public/3Dassets/technologies/mongo.glb
+  //public/3Dassets/technologies/Node.glb
+  //public/3Dassets/technologies/python.glb
+  //public/3Dassets/technologies/React.glb
+  //public/3Dassets/technologies/React.glb
+
+  // let { scene: turb, animations } = useGLTF("/3Dassets/Ventilator.glb");
+  let { scene: gopher } = useGLTF("/3Dassets/technologies/gopher.glb");
+  let { scene: golang } = useGLTF("/3Dassets/technologies/golang.glb");
+  let { scene: redux } = useGLTF("/3Dassets/technologies/redux.glb");
+  let { scene: react } = useGLTF("/3Dassets/technologies/React.glb");
+  let { scene: python } = useGLTF("/3Dassets/technologies/python.glb");
+  let { scene: node } = useGLTF("/3Dassets/technologies/Node.glb");
+  let { scene: mongo } = useGLTF("/3Dassets/technologies/mongo.glb");
+
   let gearRef = useRef<Mesh>(null);
   let rbMill = useRef<RapierRigidBody>(null);
   useEffect(() => {
@@ -58,17 +74,96 @@ let Skills: React.FC<MeshProps> = forwardRef((props, ref) => {
 
   return (
     <>
-      <Html
-        scale={0.1}
-        as="div"
-        center
-        // occlude="blending"
-        // transform
-        // rotation={[0, -Math.PI / 2 + 0.7, 0]}
-        // position={[-4, 2.4, -4]}
-      >
-        <img src={"https://media.tenor.com/2gfRHLv6GZ8AAAAd/code-coding.gif"} />
-      </Html>
+      <mesh {...props}>
+        <Box />
+        <RigidBody
+          type="fixed"
+          colliders={"cuboid"}
+          position={[-14, -1.7, -15]}
+          scale={0.8}
+        >
+          <mesh>
+            <primitive object={gopher} />
+          </mesh>
+        </RigidBody>
+
+        <RigidBody
+          type="fixed"
+          colliders={"cuboid"}
+          position={[0, 0, 6]}
+          scale={5}
+        >
+          <mesh>
+            <primitive object={golang} />
+          </mesh>
+        </RigidBody>
+        <RigidBody
+          type="fixed"
+          colliders={"cuboid"}
+          position={[-4, -1.3, 18]}
+          rotation={[0, 1.6, 0]}
+          scale={2}
+        >
+          <mesh>
+            <primitive object={node} scale={0.05} />
+          </mesh>
+        </RigidBody>
+        <RigidBody
+          type="fixed"
+          colliders={"cuboid"}
+          position={[2, -0.2, 2]}
+          rotation={[0, -1.5, 0]}
+          scale={5}
+        >
+          <mesh>
+            <primitive object={python} scale={0.01} />
+          </mesh>
+        </RigidBody>
+
+        <mesh>
+          <RigidBody
+            type="fixed"
+            colliders={"cuboid"}
+            position={[12, -0.2, -5.8]}
+            scale={0.1}
+          >
+            <primitive object={react} />
+          </RigidBody>
+        </mesh>
+
+        <RigidBody
+          type="fixed"
+          colliders={"cuboid"}
+          position={[-15, -0.5, -8]}
+          rotation={[0, 1.2, 0]}
+          scale={5}
+        >
+          <mesh>
+            <primitive object={mongo} scale={0.03} />
+          </mesh>
+        </RigidBody>
+
+        {/* <Html
+          scale={0.1}
+          // as="div"
+          // center
+          occlude="blending"
+          transform
+          sprite
+          // rotation={[0, -Math.PI / 2 + 0.7, 0]}
+          // position={[-4, 2.4, -4]}
+        >
+          <img
+            src={"https://media.tenor.com/2gfRHLv6GZ8AAAAd/code-coding.gif"}
+          />
+          HELLO
+        </Html> */}
+
+        <WorkStation
+          rotation={[0, Math.PI / 1.8, 0]}
+          position={[-10, 0.2, 0]}
+        />
+      </mesh>
     </>
   );
 });

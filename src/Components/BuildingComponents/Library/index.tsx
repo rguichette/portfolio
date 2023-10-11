@@ -39,6 +39,22 @@ let Library: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
           rotation={[0, 0.4, 0]}
           name="front_right"
         />
+
+        <CuboidCollider
+          args={[1.3, 0.1, 2]}
+          position={[-4, 0, -2]}
+          rotation={[0, -0.1, 0]}
+        />
+        <CuboidCollider
+          args={[2.7, 0.1, 1]}
+          position={[0, 0, -3]}
+          rotation={[0, -0.1, 0]}
+        />
+        <CuboidCollider
+          args={[1.3, 0.1, 2]}
+          position={[4, 0, -2]}
+          rotation={[0, -0.1, 0]}
+        />
       </RigidBody>
     </mesh>
   );

@@ -1,5 +1,6 @@
 import { Box, Html, Plane, Text3D } from "@react-three/drei";
 import { MeshProps, Vector3, useThree } from "@react-three/fiber";
+import { RigidBody } from "@react-three/rapier";
 import { forwardRef, useEffect } from "react";
 import * as THREE from "three";
 type MProps = MeshProps & { Mcolor?: string };
@@ -21,6 +22,7 @@ let Projects: React.FC<MProps> = forwardRef((props, ref) => {
         {/* <Box>
           <meshBasicMaterial side={THREE.DoubleSide} />
         </Box> */}
+
         <Html
           scale={0.1}
           as="div"
@@ -34,6 +36,7 @@ let Projects: React.FC<MProps> = forwardRef((props, ref) => {
 
           <img src="/webAssets/Listings.png" />
         </Html>
+
         <Html
           scale={0.1}
           as="div"

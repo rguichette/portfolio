@@ -1,6 +1,8 @@
 import {
   Box,
   Gltf,
+  Instance,
+  Instances,
   Plane,
   Sphere,
   useHelper,
@@ -34,19 +36,31 @@ export default function City() {
 
   return (
     <>
-      {/* <Monitor position={[0, 7, -5]} scale={0.4} rotation={[0.4, 0, 0]} /> */}
+      <mesh rotation={[0, 2, 0]}>
+        <Monitor position={[0, 7, -35]} scale={0.6} rotation={[0.4, 0, 0]} />
+      </mesh>
+
+      <mesh rotation={[0, -1.5, 0]} position={[60, 6, 60]}>
+        <Monitor scale={1.5} rotation={[0, 0, 0]} />
+      </mesh>
 
       {/* <Factory position={[0, 0, 0]} scale={[2, 1, 2]} /> */}
       {/* <Factory position={[8, 4, 15]} scale={[3, 4, 6]} /> */}
-      {/* <LL position={[1, 0.5, 8]} scale={2} /> */}
+      {/* <Instances limit={10} range={100}>
+        <LL position={[1, 0.78, 8]} scale={2} />
 
-      {/* <Skills position={[0, 0, 0]} scale={1} /> */}
-      {/* <Involvement position={[0, -0.7, 0]} /> */}
-      {/* <WorkStation scale={1.5} position={[0, 1, 0]} /> */}
-      {/* <Projects /> */}
+        <Instance position={[0, 1, 0]} />
+        <Instance position={[0, 1, 5]} />
+      </Instances> */}
+
+      {/* [-15, 0, 10] */}
+      <Skills position={[55, 0, 10]} scale={1} />
+      <Involvement position={[-57, -0.7, -56]} />
+      {/* <WorkStation position={[0, 1, 0]} /> */}
+      <Projects position={[0, 0, 56]} rotation={[0, 0.6, 0]} />
 
       {/* <Experience /> */}
-      <Box />
+
       <Ground />
       {/* <Box /> */}
     </>

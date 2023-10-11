@@ -39,21 +39,22 @@ import { OrbitControls as OCtype } from "three-stdlib";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
 import CameraControls from "camera-controls";
+import CamView from "../CamView/index.tsx";
 
 CameraControls.install({ THREE: THREE });
 
 let World = () => {
   let characterRef = useRef<Mesh>(null!);
 
-  let { camera, gl, scene } = useThree();
-  let camRef = useRef<THREE.PerspectiveCamera>(null!);
-  let ran = 0;
-  let [character, setCharacter] = useState(null);
+  // let { camera, gl, scene } = useThree();
+  // let camRef = useRef<THREE.PerspectiveCamera>(null!);
+  // let ran = 0;
+  // let [character, setCharacter] = useState(null);
 
-  useEffect(() => {
-    // Access myRef.current here after the component has rendered
-    console.log(characterRef.current);
-  }, [scene]);
+  // useEffect(() => {
+  //   // Access myRef.current here after the component has rendered
+  //   console.log(characterRef.current);
+  // }, [scene]);
   //MINE DOWN HERE:
 
   // // camera.rotation.set(0, Math.PI, 0);
@@ -61,28 +62,32 @@ let World = () => {
   // camera.rotation.set(0, Math.PI, 0);
   // // camera.scale.set(0.1, 0.1, 0.1);
 
-  const controls = new OrbitControls(camera, gl.domElement);
+  // const controls = new OrbitControls(camera, gl.domElement);
 
-  useThree(({ scene }) => {
-    let character = scene.getObjectByName("charRigidBody");
+  // useThree(({ scene }) => {
+  //   let character = scene.getObjectByName("charRigidBody");
 
-    console.log("CHARACTER: ", character);
-  });
+  //   console.log("CHARACTER: ", character);
+  // });
 
-  let camOrigin = new Vector3(0, 0.8, 0);
-  let camOffset = new Vector3(0, 0.79, -2);
+  // let camOrigin = new Vector3(0, 1, 0);
+  // let camOffset = new Vector3(0, 1, 1);
 
-  camera.position.set(camOffset.x, camOffset.y, camOffset.z);
-  camera.lookAt(camOrigin);
+  // camera.position.set(camOffset.x, camOffset.y, camOffset.z);
+  // camera.lookAt(camOrigin);
 
-  useFrame(() => {
-    let character = scene.getObjectByName("charRigidBody");
-    if (character) {
-      character.add(camera);
+  // // controls.enableZoom = false;
+  // controls.enablePan = false;
+  // // controls.minPolarAngle = Math.PI / 4;
+  // controls.maxPolarAngle = Math.PI / 2.2;
 
-      camera.lookAt(character.position.clone().add(camOrigin));
-    }
-  });
+  // useFrame(() => {
+  //   let character = scene.getObjectByName("charRigidBody");
+  //   if (character) {
+  //     // character.add(camera);
+  //     // camera.lookAt(character.position.clone());
+  //   }
+  // });
 
   /*MINE *******MINE*********/
 
@@ -107,12 +112,13 @@ let World = () => {
   //   }
   // });
 
-  const helper = new THREE.CameraHelper(camera);
-  scene.add(helper);
+  // const helper = new THREE.CameraHelper(camera);
+  // scene.add(helper);
 
   return (
     <>
       <Suspense>
+        <CamView />
         <KeyboardControls map={co}>
           <Physics debug gravity={[0, -9.988, 0]}>
             <Player position={[0, 1, 0]} ref={characterRef} />

@@ -6,6 +6,7 @@ import Portal from "../../portal";
 
 import * as THREE from "three";
 import { RigidBody } from "@react-three/rapier";
+import Library from "../../BuildingComponents/Library";
 
 // import entrance from "../../3Dassets/entrance.glb";
 
@@ -30,8 +31,8 @@ let Involvement: React.FC<MProps> = forwardRef((props, ref) => {
   return (
     <>
       <mesh {...props}>
-        <mesh scale={4.3} position={[0, -0.5, 0]}>
-          <primitive object={ent.scene} />
+        <mesh scale={4.3} position={[0, 4.93, 0]}>
+          <Library />
         </mesh>
         {/* <Portal lightColor={new THREE.Color("white")} /> */}
 
