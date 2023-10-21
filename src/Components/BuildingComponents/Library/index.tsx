@@ -2,6 +2,7 @@ import { useGLTF, useKeyboardControls } from "@react-three/drei";
 import { MeshProps } from "@react-three/fiber";
 import {
   CuboidCollider,
+  CylinderCollider,
   RapierRigidBody,
   RigidBody,
 } from "@react-three/rapier";
@@ -45,7 +46,7 @@ let Library: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
           position={[-4, 0, -2]}
           rotation={[0, -0.1, 0]}
         />
-        <CuboidCollider
+        {/* <CuboidCollider
           args={[2.7, 0.1, 1]}
           position={[0, 0, -3]}
           rotation={[0, -0.1, 0]}
@@ -54,7 +55,9 @@ let Library: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
           args={[1.3, 0.1, 2]}
           position={[4, 0, -2]}
           rotation={[0, -0.1, 0]}
-        />
+        /> */}
+
+        <CylinderCollider args={[0.01, 6]} />
       </RigidBody>
     </mesh>
   );

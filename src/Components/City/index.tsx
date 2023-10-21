@@ -27,6 +27,8 @@ import Involvement from "../Resume/Involvement";
 import Player from "../Player/Player";
 import WorkStation from "../Workstation";
 import Projects from "../Resume/Projects";
+import { BallCollider, CuboidCollider, RigidBody } from "@react-three/rapier";
+import RBox from "../RBox/RBox";
 
 export default function City() {
   // let txt = useTexture("/city01.png");
@@ -37,32 +39,42 @@ export default function City() {
   return (
     <>
       <mesh rotation={[0, 2, 0]}>
-        <Monitor position={[0, 7, -35]} scale={0.6} rotation={[0.4, 0, 0]} />
+        <Monitor
+          position={[0, 7, -35]}
+          scale={0.6}
+          rotation={[0.4, 0, 0]}
+          // vidSrc="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4"
+          vidOptions={{ muted: true, loop: true }}
+        />
       </mesh>
 
       <mesh rotation={[0, -1.5, 0]} position={[60, 6, 60]}>
-        <Monitor scale={1.5} rotation={[0, 0, 0]} />
+        <Monitor
+          scale={1.5}
+          rotation={[0, 0, 0]}
+          // vidSrc="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"
+          vidOptions={{ muted: true, loop: true }}
+        />
       </mesh>
 
-      {/* <Factory position={[0, 0, 0]} scale={[2, 1, 2]} /> */}
-      {/* <Factory position={[8, 4, 15]} scale={[3, 4, 6]} /> */}
-      {/* <Instances limit={10} range={100}>
-        <LL position={[1, 0.78, 8]} scale={2} />
+      <RigidBody
+        position={[3, 1, 6]}
+        colliders="ball"
+        scale={0.3}
+        friction={1.1}
+        angularDamping={0.4}
+        restitution={1.6}
+      >
+        <Sphere />
+      </RigidBody>
 
-        <Instance position={[0, 1, 0]} />
-        <Instance position={[0, 1, 5]} />
-      </Instances> */}
-
-      {/* [-15, 0, 10] */}
       <Skills position={[55, 0, 10]} scale={1} />
       <Involvement position={[-57, -0.7, -56]} />
-      {/* <WorkStation position={[0, 1, 0]} /> */}
+
       <Projects position={[0, 0, 56]} rotation={[0, 0.6, 0]} />
-
-      {/* <Experience /> */}
-
+      <RBox scale={1} position={[2, 0, 0]} />
+      <RBox scale={1} position={[2, 0.2, 0]} />
       <Ground />
-      {/* <Box /> */}
     </>
   );
 }

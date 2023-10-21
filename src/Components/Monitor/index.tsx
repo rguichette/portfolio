@@ -57,7 +57,7 @@ let Monitor: React.FC<MonitorProps> = forwardRef<Mesh, MonitorProps>(
             name="MonitorBack"
             scale={[16.4, 9.4, 0.15]}
             rotation={[0, -Math.PI, 0]}
-            position={[0, 0, 0.138]}
+            position={[0, 0, 0.13]}
           >
             <meshStandardMaterial side={DoubleSide} color={"silver"} />
           </Box>

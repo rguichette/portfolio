@@ -3,6 +3,7 @@ import "./styles.css";
 import {
   Box,
   Gltf,
+  Html,
   KeyboardControls,
   OrbitControlsProps,
   PerspectiveCamera,
@@ -40,80 +41,15 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
 import CameraControls from "camera-controls";
 import CamView from "../CamView/index.tsx";
+import { useAtom } from "jotai";
+import { infoAtom } from "../../state/index.tsx";
+import DetailCard from "../Cards/detailCard.tsx";
 
 CameraControls.install({ THREE: THREE });
 
 let World = () => {
   let characterRef = useRef<Mesh>(null!);
-
-  // let { camera, gl, scene } = useThree();
-  // let camRef = useRef<THREE.PerspectiveCamera>(null!);
-  // let ran = 0;
-  // let [character, setCharacter] = useState(null);
-
-  // useEffect(() => {
-  //   // Access myRef.current here after the component has rendered
-  //   console.log(characterRef.current);
-  // }, [scene]);
-  //MINE DOWN HERE:
-
-  // // camera.rotation.set(0, Math.PI, 0);
-  // camera.position.set(0, 2, -1);
-  // camera.rotation.set(0, Math.PI, 0);
-  // // camera.scale.set(0.1, 0.1, 0.1);
-
-  // const controls = new OrbitControls(camera, gl.domElement);
-
-  // useThree(({ scene }) => {
-  //   let character = scene.getObjectByName("charRigidBody");
-
-  //   console.log("CHARACTER: ", character);
-  // });
-
-  // let camOrigin = new Vector3(0, 1, 0);
-  // let camOffset = new Vector3(0, 1, 1);
-
-  // camera.position.set(camOffset.x, camOffset.y, camOffset.z);
-  // camera.lookAt(camOrigin);
-
-  // // controls.enableZoom = false;
-  // controls.enablePan = false;
-  // // controls.minPolarAngle = Math.PI / 4;
-  // controls.maxPolarAngle = Math.PI / 2.2;
-
-  // useFrame(() => {
-  //   let character = scene.getObjectByName("charRigidBody");
-  //   if (character) {
-  //     // character.add(camera);
-  //     // camera.lookAt(character.position.clone());
-  //   }
-  // });
-
-  /*MINE *******MINE*********/
-
-  // useFrame(({ scene, camera, clock }) => {
-  //   const character = scene.getObjectByName("charRigidBody");
-  //   let p = scene.getObjectByName("Player");
-
-  //   if (character) {
-  //     character.add(camera);
-
-  //     // character.lookAt(character.position);
-  //     //   controls.target.set(
-  //     //     character.position.x,
-  //     //     character.position.y + 1,
-  //     //     character.position.z
-  //     //   );
-  //     //   // character.updateMatrixWorld();
-  //     //   camera.updateMatrixWorld();
-  //     //   // controls.enableZoom = false;
-  //     //   // controls.enablePan = false;
-  //     //   controls.update();
-  //   }
-  // });
-
-  // const helper = new THREE.CameraHelper(camera);
-  // scene.add(helper);
+  let [popUP, setPopUP] = useAtom(infoAtom);
 
   return (
     <>
@@ -134,6 +70,28 @@ let World = () => {
           castShadow
           scale={4}
         />
+
+        {popUP && (
+          <Html fullscreen>
+            <div className="bg-slate-500 h-screen w-screen items-center align-middle justify-center content-center flex flex-col">
+              <div className="details flex ">
+                <DetailCard title="FrontEnd" />
+                <DetailCard title="BackEnd" />
+              </div>
+
+              <button
+                className="bg-slate-300 p-2 w-28 rounded-xl mt-4"
+                onClick={() => {
+                  console.log("closing...");
+                  setPopUP(false);
+                }}
+              >
+                Exit
+              </button>
+            </div>
+            {/* <img src="" */}
+          </Html>
+        )}
       </Suspense>
     </>
   );

@@ -1,8 +1,10 @@
-import { Box, OrbitControls } from "@react-three/drei";
+import { Box, Cone, OrbitControls } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
-import React, { useEffect, useRef } from "react";
-import { Quaternion, Vector3 } from "three";
+import { useAtom } from "jotai";
+import React, { useEffect, useRef, useState } from "react";
+import { Mesh, Object3D, Quaternion, Vector3 } from "three";
 import { OrbitControls as OcType } from "three-stdlib";
+import { infoAtom } from "../../state";
 
 export default function CamView() {
   let { camera, scene } = useThree();
@@ -11,52 +13,47 @@ export default function CamView() {
 
   console.log("CAMERA: ", camera);
 
-  let controls: OcType | null = null;
+  let [popUP, _] = useAtom(infoAtom);
+
   useEffect(() => {
-    if (orbitControlsRef.current) {
-      controls = orbitControlsRef.current;
-      // controls.enableZoom = false;
+    if (popUP) {
+      // orbitControlsRef.current.enableRotate = false;
+    } else {
+      // orbitControlsRef.current.enableRotate = true;
     }
-    camera && camera.position.set(0, 1, -2);
     console.log("SCENE: ", scene);
     if (scene) {
       let character = scene.getObjectByName("charRigidBody");
       console.log("CHARACTER", character);
       if (character) {
-        character.add(camera);
+        // character.add(camera);
+        // camera && camera.position.set(0, 1.25, -2);
       }
+
+      // orbitControlsRef.current?.position.set(0, 0, -150);
     }
   }, [camera, scene, scene.children]);
 
-  let charPos = new Vector3();
-  const charQuaternion = new Quaternion();
+  // Create a third person camera offset
+  const cameraOffset = new Vector3(-5, 2, 5);
 
-  useFrame(({}) => {
+  let t = new Vector3();
+  useFrame(({ controls }) => {
     let character = scene.getObjectByName("charRigidBody");
-    character?.getWorldPosition(charPos);
 
     if (character) {
-      character.getWorldQuaternion(charQuaternion);
-      character.updateWorldMatrix(true, true);
-      //   console.log("CAM POS: ", camera.position)
-      character.updateMatrixWorld();
-    }
+      character.getWorldPosition(t);
+      // console.log(controls);
 
-    camera.updateProjectionMatrix();
-    camera.updateWorldMatrix(true, true);
-
-    if (controls) {
-      //   controls.target.copy(charPos);
-
-      controls.object.updateMatrixWorld();
-      controls.target = charPos.add(new Vector3(0, 1, 0));
-
-      controls.update();
+      orbitControlsRef.current?.object.updateProjectionMatrix();
+      orbitControlsRef.current?.update();
     }
   });
 
   return (
     <>
+      {/* <Cone rotation={[Math.PI / 2, 0, 0]} ref={camPHRef} /> */}
+
       <OrbitControls ref={orbitControlsRef} />
     </>
   );

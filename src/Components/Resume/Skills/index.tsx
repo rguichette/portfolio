@@ -28,8 +28,11 @@ import {
   useRapier,
   AnyCollider,
 } from "@react-three/rapier";
+import { useAtom } from "jotai";
+import { engage } from "../../../state";
 
 let Skills: React.FC<MeshProps> = forwardRef((props, ref) => {
+  let [engaged, setEngaged] = useAtom(engage);
   let turbRef = useRef<Group>(null);
 
   //public/3Dassets/technologies/gopher.glb
@@ -158,12 +161,26 @@ let Skills: React.FC<MeshProps> = forwardRef((props, ref) => {
           />
           HELLO
         </Html> */}
-
+        <CuboidCollider
+          args={[0.1, 1, 0.7]}
+          position={[-9.5, 0.2, 0]}
+          rotation={[0, 0.2, 0]}
+          sensor
+          onIntersectionEnter={(e) => {
+            console.log("interaction...", e);
+            setEngaged(true);
+          }}
+        />
+        <CuboidCollider args={[1, 1, 1]} />
         <WorkStation
           rotation={[0, Math.PI / 1.8, 0]}
           position={[-10, 0.2, 0]}
         />
       </mesh>
+
+      {/* <Html center fullscreen>
+        <button>Engage</button>
+      </Html> */}
     </>
   );
 });

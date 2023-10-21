@@ -14,7 +14,6 @@ import Projects from "./Components/Resume/Projects";
 import { Physics } from "@react-three/rapier";
 import City from "./Components/City";
 import PlayGound from "./playGround";
-import PlayerF from "./Components/Player/PlayerF";
 import Player from "./Components/Player/Player";
 
 function App() {
