@@ -25,45 +25,39 @@ export default function CamView() {
   let { camera, scene } = useThree();
 
   let orbitControlsRef = useRef<OcType>(null);
+  let fakeCamRef = useRef<Mesh>(null);
 
   console.log("CAMERA: ", camera);
 
+  //init
+  let offset = new Vector3(0, 3, -2);
+  let idealLookAt = new Vector3(0, 0, 0);
+  let idealPos = new Vector3(0, 0, 0);
+
   useEffect(() => {
     let character = scene.getObjectByName("charRigidBody");
-
-    if (character && orbitControlsRef.current) {
-      orbitControlsRef.current.enableZoom = false;
-      orbitControlsRef.current.minDistance = 1;
-      orbitControlsRef.current.maxDistance = 2;
-    }
   }, [scene, scene.children]);
 
   useFrame(({ scene }) => {
     let character = scene.getObjectByName("charRigidBody");
-    if (character)
-      if (character && orbitControlsRef.current) {
-        let offset = new Vector3(0, 1.7, -2);
 
-        let charPos = character.position;
+    scene.updateMatrix();
+    if (character && orbitControlsRef.current) {
+      character.getWorldPosition(idealPos);
 
-        let idealLookAt = new Vector3(0, 1.25, 0).add(charPos);
-        offset.applyQuaternion(character.quaternion);
+      // idealPos.setZ(character.position.z);
+      fakeCamRef.current?.position.lerp(idealPos.add(offset), 0.01);
 
-        let idealCamPos = offset.add(charPos);
-
-        orbitControlsRef.current.object.position.lerp(idealCamPos, 0.01);
-        // orbitControlsRef.current.object.updateProjectionMatrix();
-        orbitControlsRef.current.target = idealLookAt;
-        orbitControlsRef.current.update();
-        // camera.updateProjectionMatrix();
-      }
+      fakeCamRef.current?.lookAt(character.position);
+    }
   });
 
   return (
     <>
-      {/* <Cone rotation={[Math.PI / 2, 0, 0]} ref={camPHRef} />
-      <Box ref={t2Ref} /> */}
-
+      {/* <Cone rotation={[Math.PI / 2, 0, 0]} ref={camPHRef} /> */}
+      <PivotControls>
+        <Box ref={fakeCamRef} />
+      </PivotControls>
       <OrbitControls ref={orbitControlsRef} />
     </>
   );

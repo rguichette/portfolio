@@ -70,8 +70,9 @@ let World = () => {
           castShadow
           scale={4}
         />
+        <ambientLight />
 
-        {popUP && (
+        {/* {popUP && (
           <Html fullscreen>
             <div className="bg-slate-500 h-screen w-screen items-center align-middle justify-center content-center flex flex-col">
               <div className="details flex ">
@@ -89,9 +90,9 @@ let World = () => {
                 Exit
               </button>
             </div>
-            {/* <img src="" */}
+  
           </Html>
-        )}
+        )} */}
       </Suspense>
     </>
   );
