@@ -38,7 +38,7 @@ export default function City() {
 
   return (
     <>
-      {/* <mesh rotation={[0, 2, 0]}>
+      <mesh rotation={[0, 2, 0]}>
         <Monitor
           position={[0, 7, -35]}
           scale={0.6}
@@ -55,9 +55,9 @@ export default function City() {
           // vidSrc="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"
           vidOptions={{ muted: true, loop: true }}
         />
-      </mesh> */}
+      </mesh>
 
-      {/* <RigidBody
+      <RigidBody
         position={[3, 1, 6]}
         colliders="ball"
         scale={0.3}
@@ -66,12 +66,12 @@ export default function City() {
         restitution={1.6}
       >
         <Sphere />
-      </RigidBody> */}
-      {/* 
+      </RigidBody>
+
       <Skills position={[55, 0, 10]} scale={1} />
       <Involvement position={[-57, -0.7, -56]} />
 
-      <Projects position={[0, 0, 56]} rotation={[0, 0.6, 0]} /> */}
+      <Projects position={[0, 0, 56]} rotation={[0, 0.6, 0]} />
       <RBox scale={1} position={[2, 0, 0]} />
       <RBox scale={1} position={[2, 0.2, 0]} />
       <Ground />

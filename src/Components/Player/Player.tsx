@@ -2,6 +2,7 @@ import {
   Box,
   Cone,
   OrbitControls,
+  useAnimations,
   useGLTF,
   useKeyboardControls,
 } from "@react-three/drei";
@@ -17,8 +18,19 @@ import {
   vec3,
 } from "@react-three/rapier";
 import React, { forwardRef, useEffect, useRef } from "react";
-import { Euler, Group, MathUtils, Mesh, Quaternion, Vector3 } from "three";
-import { color, rotateUV, sin } from "three/examples/jsm/nodes/Nodes.js";
+import {
+  AnimationAction,
+  AnimationClip,
+  Euler,
+  Group,
+  LoopOnce,
+  LoopRepeat,
+  MathUtils,
+  Mesh,
+  Quaternion,
+  Vector3,
+} from "three";
+import { color, mix, rotateUV, sin } from "three/examples/jsm/nodes/Nodes.js";
 
 enum Controls {
   forward = "forward",
@@ -43,6 +55,28 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
   let angle = 0;
   let turnSpeed = 0.02;
   let speed = 3;
+
+  let { scene: character, animations } = useGLTF(
+    "/3Dassets/character/charAnim.glb"
+  );
+
+  const { actions, mixer } = useAnimations(animations, character);
+
+  //animation list
+
+  let idle = animations.find(
+    (clip) => clip.name == "idle"
+  ) as THREE.AnimationClip;
+
+  let turnRight = animations.find(
+    (clip) => clip.name == "turnRight"
+  ) as THREE.AnimationClip;
+  let typing = animations.find(
+    (clip) => clip.name == "typing"
+  ) as THREE.AnimationClip;
+  let walking = animations.find(
+    (clip) => clip.name == "walking"
+  ) as THREE.AnimationClip;
 
   useFrame(({ clock, scene }) => {
     if (rbRef.current) {
@@ -77,11 +111,20 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
     }
     scene.updateMatrixWorld();
     charRef.current?.updateMatrixWorld();
+
+    //Character animations:
+    let currentAnim: AnimationAction;
+
+    if (get().forward) {
+      mixer.clipAction(walking).play();
+      mixer.clipAction(idle).stop();
+    } else {
+      mixer.clipAction(idle).play();
+      mixer.clipAction(walking).stop();
+    }
   });
 
-  let { scene: character, animations } = useGLTF(
-    "/3Dassets/character/charAnim.glb"
-  );
+  console.log("PLAYER ANIM: ", animations);
 
   return (
     <RigidBody

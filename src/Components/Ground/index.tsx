@@ -6,6 +6,7 @@ import {
   Camera,
   DoubleSide,
   MeshPhongMaterial,
+  RepeatWrapping,
   Vector3,
 } from "three";
 
@@ -20,6 +21,13 @@ let floorSize = 1000;
 
 export default function Ground() {
   let texture = useTexture("/honeycomb.png");
+  texture.wrapS = RepeatWrapping;
+  texture.wrapT = RepeatWrapping;
+
+  texture.offset.set(0.5, 0.5);
+  texture.repeat.set(32, 32);
+
+  console.log(texture);
 
   return (
     <>
@@ -27,14 +35,16 @@ export default function Ground() {
         {/* multiply by 2 in order to adjust for RB scaling */}
         <Plane
           rotation={[-Math.PI / 2, 0, 0]}
-          args={[floorSize * 2, floorSize * 2, floorSize * 2]}
+          args={[floorSize * 2, floorSize * 2]}
           position={[0, -1.3, 0]}
         >
           <meshBasicMaterial
             // map={texture}
-            // wireframe
+            // transparent
+
+            wireframe
             color={"#d22418"}
-            side={DoubleSide}
+            // side={DoubleSide}
           />
         </Plane>
 

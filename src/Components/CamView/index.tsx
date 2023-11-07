@@ -52,10 +52,8 @@ export default function CamView() {
         let idealCamPos = offset.add(charPos);
 
         orbitControlsRef.current.object.position.lerp(idealCamPos, 0.01);
-        // orbitControlsRef.current.object.updateProjectionMatrix();
         orbitControlsRef.current.target = idealLookAt;
         orbitControlsRef.current.update();
-        // camera.updateProjectionMatrix();
       }
   });
 

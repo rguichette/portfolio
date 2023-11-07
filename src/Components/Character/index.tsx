@@ -68,7 +68,7 @@ let Character: React.FC<ColliderProps> = forwardRef<Mesh, ColliderProps>(
 
         mixer.clipAction(walking).play();
 
-        console.log("hello");
+        console.log("hello CHAR");
       } else if (get().back) {
         mixer.clipAction(walking).timeScale = -1;
 
@@ -76,7 +76,7 @@ let Character: React.FC<ColliderProps> = forwardRef<Mesh, ColliderProps>(
       } else {
         mixer.clipAction(walking).stop();
 
-        // mixer.clipAction(idle).play();
+        mixer.clipAction(idle).play();
       }
 
       /**************************************** */
