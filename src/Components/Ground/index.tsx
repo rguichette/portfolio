@@ -38,14 +38,12 @@ export default function Ground() {
           args={[floorSize * 2, floorSize * 2]}
           position={[0, -1.3, 0]}
         >
-          <meshBasicMaterial
-            // map={texture}
-            // transparent
-
-            wireframe
-            color={"#d22418"}
-            // side={DoubleSide}
+          <meshStandardMaterial
+            color={"#7CFC00"}
+            roughness={0.902}
+            metalness={0.41}
           />
+          {/* <meshBasicMaterial color={"#7CFC00"} side={DoubleSide} /> */}
         </Plane>
 
         <CuboidCollider

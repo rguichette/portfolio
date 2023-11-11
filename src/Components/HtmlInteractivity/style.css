@@ -1,0 +1,45 @@
+.animate-and-hide {
+  color: white;
+  overflow: hidden;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 300px; 
+ 
+
+  
+}
+
+
+.animate-and-hide p {
+    height: 24px;
+    overflow: hidden;
+    animation: wrapperAnim 2s forwards 1,flash_hide 3s forwards 3s 3 ;
+    /* animation:  flash_hide 3s forwards 3s; */
+   
+   
+
+    /* animation: name duration timing-function delay iteration-count direction fill-mode; */
+  
+}
+
+
+@keyframes wrapperAnim{
+    0%   {width: 0px; color: transparent; }
+   
+  100% {width: 300px; height: 24px}
+}
+
+@keyframes flash_hide{
+
+50%{
+    opacity: 1;
+}
+100%{
+    opacity: 0;
+}
+}
+
+
+

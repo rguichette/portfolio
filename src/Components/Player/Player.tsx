@@ -71,6 +71,7 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
   let turnRight = animations.find(
     (clip) => clip.name == "turnRight"
   ) as THREE.AnimationClip;
+
   let typing = animations.find(
     (clip) => clip.name == "typing"
   ) as THREE.AnimationClip;
@@ -117,10 +118,20 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
 
     if (get().forward) {
       mixer.clipAction(walking).play();
+      mixer.clipAction(walking).timeScale = 1;
       mixer.clipAction(idle).stop();
+    } else if (get().back) {
+      mixer.clipAction(walking).timeScale = -1;
+      mixer.clipAction(walking).play();
+    } else if (get().left) {
+      // mixer.clipAction(turnRight).timeScale = -0.9;
+      // mixer.clipAction(turnRight).play();
+    } else if (get().right) {
+      // mixer.clipAction(turnRight).play();
     } else {
       mixer.clipAction(idle).play();
       mixer.clipAction(walking).stop();
+      mixer.clipAction(turnRight).stop();
     }
   });
 
@@ -141,7 +152,7 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
             <primitive object={character} />
           </mesh>
         </group>
-        <CapsuleCollider args={[0.69, 0.25]} />
+        <CapsuleCollider args={[0.69, 0.43]} />
       </mesh>
     </RigidBody>
   );

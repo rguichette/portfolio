@@ -5,7 +5,7 @@ import { Suspense } from "react";
 import WorkStation from "./Components/Workstation";
 import Monitor from "./Components/Monitor";
 import CharacterController from "./Components/CharacterController";
-import { Box, OrbitControls, Plane } from "@react-three/drei";
+import { Box, Html, OrbitControls, Plane } from "@react-three/drei";
 import Portal from "./Components/portal";
 
 import * as THREE from "three";
@@ -15,6 +15,10 @@ import { Physics } from "@react-three/rapier";
 import City from "./Components/City";
 import PlayGound from "./playGround";
 import Player from "./Components/Player/Player";
+import { useAtomValue } from "jotai";
+
+import DetailPopUp from "./Components/DetailPopUp";
+import HtmlInteractivity from "./Components/HtmlInteractivity/HtmlInteractivity";
 
 function App() {
   return (
@@ -40,6 +44,10 @@ function App() {
           {/* <LoadingPage /> */}
         </Suspense>
       </Canvas>
+
+      {/* <>{en && <button className="absolute top-0 z-10">Engage</button>}</> */}
+      {/* {details && <DetailPopUp />} */}
+      <HtmlInteractivity />
     </>
   );
 }

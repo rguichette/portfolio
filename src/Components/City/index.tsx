@@ -29,6 +29,9 @@ import WorkStation from "../Workstation";
 import Projects from "../Resume/Projects";
 import { BallCollider, CuboidCollider, RigidBody } from "@react-three/rapier";
 import RBox from "../RBox/RBox";
+import { useAtomValue } from "jotai";
+import Projects2 from "../Projects2/Projects2";
+import { showDetailsPopUp } from "../../state";
 
 export default function City() {
   // let txt = useTexture("/city01.png");
@@ -71,7 +74,10 @@ export default function City() {
       <Skills position={[55, 0, 10]} scale={1} />
       <Involvement position={[-57, -0.7, -56]} />
 
-      <Projects position={[0, 0, 56]} rotation={[0, 0.6, 0]} />
+      {/* {!show && <Projects position={[0, 0, 56]} rotation={[0, 0.6, 0]} />} */}
+
+      <Projects2 />
+
       <RBox scale={1} position={[2, 0, 0]} />
       <RBox scale={1} position={[2, 0.2, 0]} />
       <Ground />

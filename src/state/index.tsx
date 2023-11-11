@@ -1,5 +1,7 @@
 import { atom } from "jotai";
 
 export let infoAtom = atom(true);
-export let engage = atom(false);
+export let showEngageButton = atom(false);
+export let showDetailsPopUp = atom(false);
+export let showHelpPopUp = atom(false);
 export let characterMoving = atom(false);
