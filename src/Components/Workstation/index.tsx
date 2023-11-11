@@ -24,6 +24,8 @@ import * as THREE from "three";
 import Monitor from "../Monitor";
 import Keyboard from "../Keyboard";
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
+import { useAtomValue } from "jotai";
+import { showEngageButton } from "../../state";
 
 // import desk from "../../3Dassets/glassDesk.glb";
 
@@ -35,7 +37,7 @@ let WorkStation: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>(
 
     let monGroupRef = useRef<THREE.Group>(null);
 
-    let [toggle, setToggle] = useState(false);
+    let toggle = useAtomValue(showEngageButton);
 
     useEffect(() => {
       //turn on and off
