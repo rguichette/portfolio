@@ -21,7 +21,7 @@ export default function HtmlInteractivity() {
         <p>click or tap this area at any time for help </p>
       </div>
 
-      {engBtn && (
+      {!showDet && engBtn && (
         <span
           className="absolute bg-blue-300  bottom-1/4 w-28 left-[calc(50%-56px)] text-center rounded-lg p-2"
           onClick={() => {

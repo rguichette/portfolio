@@ -17,6 +17,7 @@ import {
   quat,
   vec3,
 } from "@react-three/rapier";
+import { useAtomValue } from "jotai";
 import React, { forwardRef, useEffect, useRef } from "react";
 import {
   AnimationAction,
@@ -31,6 +32,7 @@ import {
   Vector3,
 } from "three";
 import { color, mix, rotateUV, sin } from "three/examples/jsm/nodes/Nodes.js";
+import { showDetailsPopUp, showHelpPopUp } from "../../state";
 
 enum Controls {
   forward = "forward",
@@ -41,6 +43,9 @@ enum Controls {
 }
 
 let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
+  let detailsWindow = useAtomValue(showDetailsPopUp);
+  let helpWindow = useAtomValue(showHelpPopUp);
+
   let [_, get] = useKeyboardControls<Controls>();
 
   //  rgidBodyRef
@@ -82,32 +87,34 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
   useFrame(({ clock, scene }) => {
     if (rbRef.current) {
       // Check if the "left" key is pressed
-      if (get().left) {
-        angle += turnSpeed;
-        // Rotate based on user input
-        direction.set(0, 1, 0);
-        rotation.setFromAxisAngle(direction, angle);
-        rbRef.current.setRotation(rotation, true);
-      }
-      if (get().right) {
-        angle -= turnSpeed;
-        // Rotate based on user input
-        direction.set(0, 1, 0);
-        rotation.setFromAxisAngle(direction, angle);
-        rbRef.current.setRotation(rotation, true);
-      }
+      if (!detailsWindow && !helpWindow) {
+        if (get().left) {
+          angle += turnSpeed;
+          // Rotate based on user input
+          direction.set(0, 1, 0);
+          rotation.setFromAxisAngle(direction, angle);
+          rbRef.current.setRotation(rotation, true);
+        }
+        if (get().right) {
+          angle -= turnSpeed;
+          // Rotate based on user input
+          direction.set(0, 1, 0);
+          rotation.setFromAxisAngle(direction, angle);
+          rbRef.current.setRotation(rotation, true);
+        }
 
-      // Calculate the forward direction based on the current rotation
-      direction.set(0, 0, 1);
-      direction.applyQuaternion(rotation);
+        // Calculate the forward direction based on the current rotation
+        direction.set(0, 0, 1);
+        direction.applyQuaternion(rotation);
 
-      // Set the linear velocity in the forward direction
-      if (get().forward) {
-        direction.multiplyScalar(speed);
-        rbRef.current.setLinvel(direction, true);
-      } else if (get().back) {
-        direction.multiplyScalar(-speed);
-        rbRef.current.setLinvel(direction, true);
+        // Set the linear velocity in the forward direction
+        if (get().forward && !helpWindow && !detailsWindow) {
+          direction.multiplyScalar(speed);
+          rbRef.current.setLinvel(direction, true);
+        } else if (get().back) {
+          direction.multiplyScalar(-speed);
+          rbRef.current.setLinvel(direction, true);
+        }
       }
     }
     scene.updateMatrixWorld();
@@ -116,11 +123,11 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
     //Character animations:
     let currentAnim: AnimationAction;
 
-    if (get().forward) {
+    if (get().forward && !helpWindow && !detailsWindow) {
       mixer.clipAction(walking).play();
       mixer.clipAction(walking).timeScale = 1;
       mixer.clipAction(idle).stop();
-    } else if (get().back) {
+    } else if (get().back && !helpWindow && !detailsWindow) {
       mixer.clipAction(walking).timeScale = -1;
       mixer.clipAction(walking).play();
     } else if (get().left) {

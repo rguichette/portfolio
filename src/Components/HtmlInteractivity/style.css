@@ -23,6 +23,9 @@
     /* animation: name duration timing-function delay iteration-count direction fill-mode; */
   
 }
+.animate-and-hide p:hover{
+    cursor: pointer;
+}
 
 
 @keyframes wrapperAnim{
