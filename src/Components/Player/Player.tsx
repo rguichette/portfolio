@@ -17,7 +17,7 @@ import {
   quat,
   vec3,
 } from "@react-three/rapier";
-import { useAtomValue } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import React, { forwardRef, useEffect, useRef } from "react";
 import {
   AnimationAction,
@@ -32,7 +32,11 @@ import {
   Vector3,
 } from "three";
 import { color, mix, rotateUV, sin } from "three/examples/jsm/nodes/Nodes.js";
-import { showDetailsPopUp, showHelpPopUp } from "../../state";
+import {
+  isCharacterMoving,
+  showDetailsPopUp,
+  showHelpPopUp,
+} from "../../state";
 
 enum Controls {
   forward = "forward",
@@ -47,6 +51,8 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
   let helpWindow = useAtomValue(showHelpPopUp);
 
   let [_, get] = useKeyboardControls<Controls>();
+
+  let [charMoving, setCharMoving] = useAtom(isCharacterMoving);
 
   //  rgidBodyRef
   let rbRef = useRef<RapierRigidBody>(null!);
@@ -84,7 +90,26 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
     (clip) => clip.name == "walking"
   ) as THREE.AnimationClip;
 
+  //listen for key presses in to send "character moving message"
+  // onkeydown = () => {
+  //   if (get().forward || get().back) {
+  //     console.log("setting true");
+  //     setCharMoving(true);
+  //   } else {
+  //     setCharMoving(false);
+  //     console.log("setting false");
+  //   }
+  // };
+
   useFrame(({ clock, scene }) => {
+    if (get().forward || get().back) {
+      console.log("setting true");
+      setCharMoving(true);
+    } else {
+      setCharMoving(false);
+      console.log("setting false");
+    }
+
     if (rbRef.current) {
       // Check if the "left" key is pressed
       if (!detailsWindow && !helpWindow) {

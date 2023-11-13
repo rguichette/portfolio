@@ -5,7 +5,7 @@ import { showHelpPopUp } from "../state";
 export default function HelpView() {
   let [showHelp, setShowHelp] = useAtom(showHelpPopUp);
   return (
-    <div className="absolute top-0  w-full bg-slate-400 h-full  flex justify-center content-center text-center">
+    <div className="absolute top-0  w-full bg-slate-400 h-full  flex justify-center content-center text-center opacity-50">
       <p>Help</p>
 
       <button

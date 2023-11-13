@@ -44,6 +44,7 @@ import CamView from "../CamView/index.tsx";
 import { useAtom } from "jotai";
 import { infoAtom } from "../../state/index.tsx";
 import DetailCard from "../Cards/detailCard.tsx";
+import CamView2 from "../CamView2/index.tsx";
 
 CameraControls.install({ THREE: THREE });
 
@@ -54,7 +55,7 @@ let World = () => {
   return (
     <>
       <Suspense>
-        <CamView />
+        <CamView2 />
         <KeyboardControls map={co}>
           <Physics debug gravity={[0, -9.988, 0]}>
             <Player position={[0, 1, 0]} ref={characterRef} />

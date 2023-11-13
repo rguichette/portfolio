@@ -41,7 +41,7 @@ export default function City() {
 
   return (
     <>
-      <mesh rotation={[0, 2, 0]}>
+      {/* <mesh rotation={[0, 2, 0]}>
         <Monitor
           position={[0, 7, -35]}
           scale={0.6}
@@ -49,16 +49,16 @@ export default function City() {
           // vidSrc="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4"
           vidOptions={{ muted: true, loop: true }}
         />
-      </mesh>
+      </mesh> */}
 
-      <mesh rotation={[0, -1.5, 0]} position={[60, 6, 60]}>
+      {/* <mesh rotation={[0, -1.5, 0]} position={[60, 6, 60]}>
         <Monitor
           scale={1.5}
           rotation={[0, 0, 0]}
           // vidSrc="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"
           vidOptions={{ muted: true, loop: true }}
         />
-      </mesh>
+      </mesh> */}
 
       <RigidBody
         position={[3, 1, 6]}
@@ -71,15 +71,15 @@ export default function City() {
         <Sphere />
       </RigidBody>
 
-      <Skills position={[55, 0, 10]} scale={1} />
-      <Involvement position={[-57, -0.7, -56]} />
+      {/* <Skills position={[55, 0, 10]} scale={1} /> */}
+      {/* <Involvement position={[-57, -0.7, -56]} /> */}
 
       {/* {!show && <Projects position={[0, 0, 56]} rotation={[0, 0.6, 0]} />} */}
 
-      <Projects2 />
+      {/* <Projects2 /> */}
 
-      <RBox scale={1} position={[2, 0, 0]} />
-      <RBox scale={1} position={[2, 0.2, 0]} />
+      {/* <RBox scale={1} position={[2, 0, 0]} />
+      <RBox scale={1} position={[2, 0.2, 0]} /> */}
       <Ground />
     </>
   );
