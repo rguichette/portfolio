@@ -14,7 +14,6 @@ export default function CamView2() {
   let spectating = false;
 
   let orbitControlsRef = useRef<OcType>(null);
-  let boxRef = useRef<Mesh>(null);
 
   let { scene, camera } = useThree();
 
@@ -51,20 +50,16 @@ export default function CamView2() {
     //   spectating = false;
     // };
 
-    if (boxRef.current) {
-      let b = boxRef.current;
+    let character = scene.getObjectByName("charRigidBody");
 
-      let character = scene.getObjectByName("charRigidBody");
+    // new TWEEN.Tween(camera.position)
+    //   .to({ x: character?.position.x, z: character?.position.z }, 1000)
+    //   .onUpdate(function () {
+    //     console.log(100, character?.position);
+    //   });
 
-      // new TWEEN.Tween(camera.position)
-      //   .to({ x: character?.position.x, z: character?.position.z }, 1000)
-      //   .onUpdate(function () {
-      //     console.log(100, character?.position);
-      //   });
-
-      // .repeat(Infinity)
-      // .start();
-    }
+    // .repeat(Infinity)
+    // .start();
   });
 
   var position = { x: 0, y: 300 };
@@ -102,7 +97,6 @@ export default function CamView2() {
   return (
     <>
       <OrbitControls ref={orbitControlsRef} />
-      <Box ref={boxRef} />
     </>
   );
 }

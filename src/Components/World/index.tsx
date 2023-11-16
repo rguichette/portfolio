@@ -5,6 +5,7 @@ import {
   Gltf,
   Html,
   KeyboardControls,
+  OrbitControls,
   OrbitControlsProps,
   PerspectiveCamera,
   Plane,
@@ -37,7 +38,6 @@ import Player from "../Player/Player.tsx";
 import { CameraHelper, Mesh, Vector3 } from "three";
 
 import { OrbitControls as OCtype } from "three-stdlib";
-import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
 import CameraControls from "camera-controls";
 import CamView from "../CamView/index.tsx";
@@ -55,7 +55,8 @@ let World = () => {
   return (
     <>
       <Suspense>
-        <CamView2 />
+        <OrbitControls />
+        {/* <CamView2 /> */}
         <KeyboardControls map={co}>
           <Physics debug gravity={[0, -9.988, 0]}>
             <Player position={[0, 1, 0]} ref={characterRef} />
