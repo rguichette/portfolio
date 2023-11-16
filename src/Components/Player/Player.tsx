@@ -104,10 +104,10 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
   useFrame(({ clock, scene }) => {
     if (get().forward || get().back) {
       console.log("setting true");
-      setCharMoving(true);
+      // setCharMoving(true);
     } else {
-      setCharMoving(false);
-      console.log("setting false");
+      // setCharMoving(false);
+      // console.log("setting false");
     }
 
     if (rbRef.current) {

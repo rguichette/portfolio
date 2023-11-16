@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    //
+
     "target": "ES2020",
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
@@ -14,6 +16,9 @@
     "esModuleInterop": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    //
+    "allowJs": true,
+  
 
     /* Linting */
     "strict": true,
@@ -21,6 +26,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "public/3Dassets", "public/3Dassets"],
+  "include": ["src","src.d.ts", "public/3Dassets", "public/3Dassets"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

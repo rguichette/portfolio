@@ -4,3 +4,5 @@ declare module '*.glsl' {
     const file: string;
     export default file;
   }
+
+  // declare module "@tweenjs/tween.js" 
