@@ -19,19 +19,16 @@ import City from "../City";
 import * as THREE from "three";
 import { useFrame, useThree } from "@react-three/fiber";
 
-import wl from "../../world_ItemLocations.ts";
 import WorkStation from "../Workstation";
 import Keyboard from "../Keyboard";
 import Portal from "../portal/index.tsx";
-import Character from "../Character/index.tsx";
-import CharacterController, { co } from "../CharacterController/index.tsx";
+
 import Skills from "../Resume/Skills/index.tsx";
 
 import { log, vec3 } from "three/examples/jsm/nodes/Nodes.js";
 import Experience from "../Experience/index.tsx";
 import Projects from "../Resume/Projects/index.tsx";
 import Involvement from "../Resume/Involvement/index.tsx";
-import Particles from "../Particles/index.tsx";
 import { CuboidCollider, Physics, RigidBody } from "@react-three/rapier";
 import Player from "../Player/Player.tsx";
 
@@ -40,11 +37,10 @@ import { CameraHelper, Mesh, Vector3 } from "three";
 import { OrbitControls as OCtype } from "three-stdlib";
 
 import CameraControls from "camera-controls";
-import CamView from "../CamView/index.tsx";
 import { useAtom } from "jotai";
 import { infoAtom } from "../../state/index.tsx";
 import DetailCard from "../Cards/detailCard.tsx";
-import CamView2 from "../CamView2/index.tsx";
+import CamView from "../CamView/index.tsx";
 
 CameraControls.install({ THREE: THREE });
 
@@ -52,11 +48,27 @@ let World = () => {
   let characterRef = useRef<Mesh>(null!);
   let [popUP, setPopUP] = useAtom(infoAtom);
 
+  enum Controls {
+    forward = "forward",
+    back = "back",
+    left = "left",
+    right = "right",
+    jump = "jump",
+  }
+
+  let co = [
+    { name: Controls.forward, keys: ["ArrowUp", "KeyW"] },
+    { name: Controls.back, keys: ["ArrowDown", "KeyS"] },
+    { name: Controls.left, keys: ["ArrowLeft", "KeyA"] },
+    { name: Controls.right, keys: ["ArrowRight", "KeyD"] },
+    { name: Controls.jump, keys: ["Space"] },
+  ];
+
   return (
     <>
       <Suspense>
         <OrbitControls />
-        {/* <CamView2 /> */}
+        {/* <CamView /> */}
         <KeyboardControls map={co}>
           <Physics debug gravity={[0, -9.988, 0]}>
             <Player position={[0, 1, 0]} ref={characterRef} />

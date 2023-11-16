@@ -13,38 +13,38 @@ export default function Projects2() {
 
   return (
     <>
-      {/* <mesh>
-        <Plane args={[1.6, 0.9, 1]}>
+      <mesh>
+        <Plane position={[-40, 1, -10]} args={[1.6, 0.9, 1]}>
           <meshBasicMaterial map={breathTexture} side={DoubleSide} />
         </Plane>
-      </mesh> */}
+      </mesh>
 
-      {/* <mesh position={[0, 1, 1]} scale={2}>
+      <mesh position={[-55, 1, -20]} rotation={[0, 0.5, 0]} scale={2}>
         <Plane args={[0.9, 1.9, 1]}>
           <meshBasicMaterial map={ridAccountTexture} side={DoubleSide} />
         </Plane>
-      </mesh> */}
-      {/* <mesh position={[0, 1, 1]} scale={4}>
+      </mesh>
+      <mesh position={[-80, 1, 13]} scale={4}>
         <Plane args={[1.6, 0.9, 1]}>
           <meshStandardMaterial map={dashboardTexture} side={DoubleSide} />
         </Plane>
-      </mesh> */}
-      {/* <mesh position={[0, 1, 1]} scale={4}>
+      </mesh>
+      <mesh position={[-60, 1, -55]} scale={4}>
         <Plane args={[1.6, 0.9, 1]}>
           <meshStandardMaterial map={kelTexture} side={DoubleSide} />
         </Plane>
-      </mesh> */}
-      {/* <mesh position={[0, 1, 1]} scale={2}>
+      </mesh>
+      <mesh position={[-80, 1, -30]} scale={2} rotation={[0, 0.5, 0]}>
         <Plane args={[1, 1.9, 1]}>
           <meshStandardMaterial map={listingsTexture} side={DoubleSide} />
         </Plane>
-      </mesh> */}
-      {/* <mesh position={[0, 1, 1]} scale={2}>
+      </mesh>
+      <mesh position={[-40, 1, -40]} scale={2}>
         <Plane args={[1, 1.9, 1]}>
           <meshStandardMaterial map={ridPhotosTexture} side={DoubleSide} />
         </Plane>
-      </mesh> */}
-      <mesh position={[0, 1, 1]} scale={2}>
+      </mesh>
+      <mesh position={[-55, 1, 10]} scale={2} rotation={[0, 1, 0]}>
         <Plane args={[1, 1.9, 1]}>
           <meshStandardMaterial
             map={ridPostTexture}

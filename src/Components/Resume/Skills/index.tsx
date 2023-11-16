@@ -47,7 +47,7 @@ let Skills: React.FC<MeshProps> = forwardRef((props, ref) => {
 
   // let { scene: turb, animations } = useGLTF("/3Dassets/Ventilator.glb");
   let { scene: gopher } = useGLTF("/3Dassets/technologies/gopher.glb");
-  let { scene: golang } = useGLTF("/3Dassets/technologies/golang.glb");
+  // let { scene: golang } = useGLTF("/3Dassets/technologies/golang.glb");
   let { scene: redux } = useGLTF("/3Dassets/technologies/redux.glb");
   let { scene: react } = useGLTF("/3Dassets/technologies/React.glb");
   let { scene: python } = useGLTF("/3Dassets/technologies/python.glb");
@@ -79,108 +79,79 @@ let Skills: React.FC<MeshProps> = forwardRef((props, ref) => {
 
   return (
     <>
-      <mesh {...props}>
-        <Box />
-        <RigidBody
-          type="fixed"
-          colliders={"cuboid"}
-          position={[-14, -1.7, -15]}
-          scale={0.8}
-        >
-          <mesh>
-            <primitive object={gopher} />
-          </mesh>
-        </RigidBody>
-
-        <RigidBody
-          type="fixed"
-          colliders={"cuboid"}
-          position={[0, 0, 6]}
-          scale={5}
-        >
-          <mesh>
-            <primitive object={golang} />
-          </mesh>
-        </RigidBody>
-        <RigidBody
-          type="fixed"
-          colliders={"cuboid"}
-          position={[-4, -1.3, 18]}
-          rotation={[0, 1.6, 0]}
-          scale={2}
-        >
-          <mesh>
-            <primitive object={node} scale={0.05} />
-          </mesh>
-        </RigidBody>
-        <RigidBody
-          type="fixed"
-          colliders={"cuboid"}
-          position={[2, -0.2, 2]}
-          rotation={[0, -1.5, 0]}
-          scale={5}
-        >
-          <mesh>
-            <primitive object={python} scale={0.01} />
-          </mesh>
-        </RigidBody>
-
+      <RigidBody position={[40, 0, 80]} rotation={[0, 1.5, 0]} type="fixed">
         <mesh>
-          <RigidBody
-            type="fixed"
-            colliders={"cuboid"}
-            position={[12, -0.2, -5.8]}
-            scale={0.1}
-          >
-            <primitive object={react} />
-          </RigidBody>
+          <primitive object={gopher} />
         </mesh>
+      </RigidBody>
+      <RigidBody
+        position={[50, 0, 90]}
+        rotation={[0, -2.7, 0]}
+        scale={0.5}
+        type="fixed"
+      >
+        <mesh>
+          <primitive object={python} />
+        </mesh>
+      </RigidBody>
+      <RigidBody
+        position={[40, 0, 45]}
+        rotation={[0, -2.2, 0]}
+        scale={0.2}
+        type="fixed"
+      >
+        <mesh>
+          <primitive object={node} />
+        </mesh>
+      </RigidBody>
 
-        <RigidBody
-          type="fixed"
-          colliders={"cuboid"}
-          position={[-15, -0.5, -8]}
-          rotation={[0, 1.2, 0]}
-          scale={5}
-        >
-          <mesh>
-            <primitive object={mongo} scale={0.03} />
-          </mesh>
-        </RigidBody>
+      <RigidBody
+        position={[-25, 0, 80]}
+        rotation={[0, 2.8, 0]}
+        scale={1}
+        type="fixed"
+      >
+        <mesh>
+          <primitive object={mongo} />
+        </mesh>
+      </RigidBody>
 
-        {/* <Html
-          scale={0.1}
-          // as="div"
-          // center
-          occlude="blending"
-          transform
-          sprite
-          // rotation={[0, -Math.PI / 2 + 0.7, 0]}
-          // position={[-4, 2.4, -4]}
-        >
-          <img
-            src={"https://media.tenor.com/2gfRHLv6GZ8AAAAd/code-coding.gif"}
+      {/* frontennd  */}
+      <RigidBody
+        position={[-40, 0, 40]}
+        rotation={[0, 2.4, 0]}
+        scale={0.3}
+        type="fixed"
+      >
+        <mesh>
+          <primitive object={react} />
+        </mesh>
+      </RigidBody>
+
+      <mesh position={[-25, 50, 60]} rotation={[0, 2.4, 0]} scale={7}>
+        <primitive object={redux} />
+      </mesh>
+
+      <mesh {...props}>
+        <group rotation={[0, 1.35, 0]}>
+          <CuboidCollider
+            args={[1.2, 1, 0.9]}
+            position={[-9.5, 0.2, 0]}
+            rotation={[0, 0.2, 0]}
+            sensor
+            onIntersectionEnter={(e) => {
+              console.log("interaction...", e);
+              setShowEnBtn(true);
+            }}
+            onIntersectionExit={() => {
+              setShowEnBtn(false);
+            }}
           />
-          HELLO
-        </Html> */}
-        <CuboidCollider
-          args={[1.2, 1, 0.9]}
-          position={[-9.5, 0.2, 0]}
-          rotation={[0, 0.2, 0]}
-          sensor
-          onIntersectionEnter={(e) => {
-            console.log("interaction...", e);
-            setShowEnBtn(true);
-          }}
-          onIntersectionExit={() => {
-            setShowEnBtn(false);
-          }}
-        />
-        <CuboidCollider args={[1, 1, 1]} />
-        <WorkStation
-          rotation={[0, Math.PI / 1.8, 0]}
-          position={[-10, 0.2, 0]}
-        />
+          <WorkStation
+            rotation={[0, Math.PI / 1.8, 0]}
+            position={[-10, 0.2, 0]}
+          />
+        </group>
       </mesh>
 
       {/* dettails window after engage btn is clicked*/}

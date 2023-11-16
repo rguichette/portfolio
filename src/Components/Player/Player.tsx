@@ -180,7 +180,7 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
     >
       <mesh {...props} ref={ref} name="Player">
         <group>
-          <mesh position={[0, -0.85, 0]} ref={charRef}>
+          <mesh position={[0, -1.1, 0]} ref={charRef}>
             <primitive object={character} />
           </mesh>
         </group>

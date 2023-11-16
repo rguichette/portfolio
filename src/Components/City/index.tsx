@@ -28,11 +28,18 @@ import Involvement from "../Resume/Involvement";
 import Player from "../Player/Player";
 import WorkStation from "../Workstation";
 import Projects from "../Resume/Projects";
-import { BallCollider, CuboidCollider, RigidBody } from "@react-three/rapier";
+import {
+  BallCollider,
+  CuboidCollider,
+  InstancedRigidBodies,
+  RigidBody,
+} from "@react-three/rapier";
 import RBox from "../RBox/RBox";
 import { useAtomValue } from "jotai";
 import Projects2 from "../Projects2/Projects2";
 import { showDetailsPopUp } from "../../state";
+import StreetSign from "../StreetSign";
+import Domino from "../Interractivity/Dominos";
 
 export default function City() {
   // let txt = useTexture("/city01.png");
@@ -72,20 +79,29 @@ export default function City() {
         <Sphere />
       </RigidBody>
 
-      {/* <Skills position={[55, 0, 10]} scale={1} /> */}
-      {/* <Involvement position={[-57, -0.7, -56]} /> */}
+      {/* <Skills position={[1, 0, 65]} scale={1} />
+      <Involvement position={[30, -0.7, -45]} />
 
-      {/* {!show && <Projects position={[0, 0, 56]} rotation={[0, 0.6, 0]} />} */}
+      <Projects2 /> */}
 
-      {/* <Projects2 /> */}
+      {/* instances */}
+      <InstancedRigidBodies
+        instances={[
+          {
+            key: "instance_" + Math.random(),
+            position: [Math.random() * 1, Math.random() * 2, Math.random() * 2],
+          },
+        ]}
+      >
+        <Box />
 
-      {/* <RBox scale={1} position={[2, 0, 0]} />
-      <RBox scale={1} position={[2, 0.2, 0]} /> */}
+        <instancedMesh
+          position={[0, 0, 0]}
+          args={[undefined, undefined, 2]}
+          count={3}
+        />
+      </InstancedRigidBodies>
 
-      {/* <Box /> */}
-      {/* <Box position={[1, 0, 2]} /> */}
-
-      {/* layout frame */}
       <Ring
         scale={2}
         position={[1, 0, 1]}
@@ -110,20 +126,43 @@ export default function City() {
         rotation={[-Math.PI / 2, 0, 0]}
         args={[5.394, 6]}
       />
-      <mesh position={[-2, 0, -82]} name="skillsArea">
+      <mesh position={[-2, -1.2, 82]} name="skillsArea">
         <Box scale={4} args={[2, 1, 12]}>
           <meshBasicMaterial color={"yellow"} />
         </Box>
+
+        <Ring
+          scale={7}
+          position={[1, 0, 1]}
+          rotation={[-Math.PI / 2, 0, 0]}
+          args={[5.394, 6]}
+        />
       </mesh>
-      <mesh position={[-78, 0, 26]} name="projectsArea" rotation={[0, 0.4, 0]}>
+      <mesh
+        position={[-78, -1.2, -26]}
+        name="projectsArea"
+        rotation={[0, -0.4, 0]}
+      >
         <Box scale={4} args={[12, 1, 2]}>
           <meshBasicMaterial color={"blue"} />
         </Box>
+        <Ring
+          scale={7}
+          position={[1, 0, 1]}
+          rotation={[-Math.PI / 2, 0, 0]}
+          args={[5.394, 6]}
+        />
       </mesh>
-      <mesh position={[80, 0, 26]} name="InvolvementArea">
-        <Box scale={4} args={[12, 1, 2]} rotation={[0, -0.4, 0]}>
+      <mesh position={[80, -1.2, -26]} name="InvolvementArea">
+        <Box scale={4} args={[12, 1, 2]} rotation={[0, 0.4, 0]}>
           <meshBasicMaterial color={"brown"} />
         </Box>
+        <Ring
+          scale={7}
+          position={[1, 0, 1]}
+          rotation={[-Math.PI / 2, 0, 0]}
+          args={[5.394, 6]}
+        />
       </mesh>
       <Ground />
     </>
