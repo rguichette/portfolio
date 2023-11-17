@@ -1,5 +1,5 @@
 import { Box } from "@react-three/drei";
-import { InstancedMeshProps } from "@react-three/fiber";
+import { InstancedMeshProps, MeshProps } from "@react-three/fiber";
 import {
   InstancedRigidBodies,
   InstancedRigidBodyProps,
@@ -14,23 +14,41 @@ import {
 } from "three";
 import { color } from "three/examples/jsm/nodes/Nodes.js";
 
-const COUNT = 7;
-let geometry = new BoxGeometry(0.5, 1, 1);
+type layoutProps = MeshProps & {
+  randomRot?: boolean;
+  startingPos?: number;
+  spacing: number;
+  numberOfPieces?: number;
+  mass?: number;
+};
 
-export default function Domino() {
+export default function Domino({
+  randomRot = true,
+  startingPos = 0,
+  numberOfPieces = 5,
+  mass = 1,
+  ...props
+}: layoutProps) {
+  let geometry;
+  const COUNT = numberOfPieces;
   const instances = useMemo(() => {
+    geometry = new BoxGeometry(0.5, 1, 1);
+
     const instances: InstancedRigidBodyProps[] = [];
 
-    let basePos = 1;
+    let basePos = 10;
+    let baseRot = 0;
 
     for (let i = 0; i < COUNT; i++) {
       instances.push({
         key: "instance_" + Math.random(),
         scale: [0.5, 2, 1],
+        rotation: [0, baseRot, 0],
         position: [basePos, Math.random() * 10, 1],
         angularDamping: 0.4,
       });
       basePos += 1;
+      baseRot += 0.1;
     }
 
     return instances;
@@ -51,8 +69,10 @@ export default function Domino() {
   });
 
   return (
-    <InstancedRigidBodies instances={instances}>
-      <instancedMesh args={[geometry, mat, COUNT]} count={COUNT} />
-    </InstancedRigidBodies>
+    <mesh {...props}>
+      <InstancedRigidBodies instances={instances} mass={mass}>
+        <instancedMesh args={[geometry, mat, COUNT]} />
+      </InstancedRigidBodies>
+    </mesh>
   );
 }
