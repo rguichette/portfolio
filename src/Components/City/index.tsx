@@ -11,6 +11,7 @@ import {
 } from "@react-three/drei";
 import { useEffect, useRef } from "react";
 import {
+  BoxGeometry,
   BoxHelper,
   Camera,
   DoubleSide,
@@ -40,6 +41,7 @@ import Projects2 from "../Projects2/Projects2";
 import { showDetailsPopUp } from "../../state";
 import StreetSign from "../StreetSign";
 import Domino from "../Interractivity/Dominos";
+import * as THREE from "three";
 
 export default function City() {
   // let txt = useTexture("/city01.png");
@@ -47,6 +49,8 @@ export default function City() {
   // let txt3 = useTexture("/wing2.png");
   // let txt4 = useTexture("/wing4.png");
 
+  let box = new THREE.BoxGeometry(1, 1, 1);
+  let mat = new THREE.MeshBasicMaterial({ color: 0x00ff22 });
   return (
     <>
       {/* <mesh rotation={[0, 2, 0]}>
@@ -79,28 +83,32 @@ export default function City() {
         <Sphere />
       </RigidBody>
 
-      {/* <Skills position={[1, 0, 65]} scale={1} />
+      <Skills position={[1, 0, 65]} scale={1} />
       <Involvement position={[30, -0.7, -45]} />
 
-      <Projects2 /> */}
+      <Projects2 />
 
+      <Domino />
       {/* instances */}
+      {/* 
       <InstancedRigidBodies
         instances={[
           {
-            key: "instance_" + Math.random(),
-            position: [Math.random() * 1, Math.random() * 2, Math.random() * 2],
+            key: "instance_" + Math.random() * 2,
+            position: [Math.random() * 3, 0, Math.random() * 3],
+          },
+          {
+            key: "instance_" + Math.random() * 4,
+            position: [Math.random() * 3, 0, Math.random() * 3],
           },
         ]}
       >
-        <Box />
-
         <instancedMesh
-          position={[0, 0, 0]}
-          args={[undefined, undefined, 2]}
-          count={3}
+          // position={[1, 0, 1]}
+          args={[box, mat, 2]}
+          count={2}
         />
-      </InstancedRigidBodies>
+      </InstancedRigidBodies> */}
 
       <Ring
         scale={2}
