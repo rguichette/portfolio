@@ -45,7 +45,7 @@ let WorkStation: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>(
       if (monGroupRef.current) {
         if (monGroupRef.current.children) {
           monGroupRef.current.children.map((c) => {
-            console.log("child: ", c);
+            // console.log("child: ", c);
             if (toggle) {
               (
                 (c.children[0] as Mesh).material as MeshBasicMaterial

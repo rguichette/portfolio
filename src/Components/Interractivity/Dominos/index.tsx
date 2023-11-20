@@ -60,10 +60,6 @@ export default function Domino({
 
   let colorList: string | any[] = [];
 
-  instances.forEach((m) => {
-    console.log(m);
-  });
-
   let mat = new MeshStandardMaterial({
     color: c[Math.floor(Math.random() * c.length)],
   });

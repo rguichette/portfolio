@@ -10,11 +10,9 @@ import {
   Vector3,
 } from "three";
 
-import wl from "../../world_ItemLocations";
-import Skills from "../Resume/Skills";
 import WorkStation from "../Workstation";
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
-import world_ItemLocations from "../../world_ItemLocations";
+
 import { useFrame, useThree } from "@react-three/fiber";
 
 let floorSize = 1000;
@@ -26,8 +24,6 @@ export default function Ground() {
 
   texture.offset.set(0.5, 0.5);
   texture.repeat.set(32, 32);
-
-  console.log(texture);
 
   return (
     <>

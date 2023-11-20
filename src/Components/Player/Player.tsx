@@ -102,14 +102,6 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
   // };
 
   useFrame(({ clock, scene }) => {
-    if (get().forward || get().back) {
-      console.log("setting true");
-      // setCharMoving(true);
-    } else {
-      // setCharMoving(false);
-      // console.log("setting false");
-    }
-
     if (rbRef.current) {
       // Check if the "left" key is pressed
       if (!detailsWindow && !helpWindow) {
@@ -166,8 +158,6 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
       mixer.clipAction(turnRight).stop();
     }
   });
-
-  console.log("PLAYER ANIM: ", animations);
 
   return (
     <RigidBody

@@ -28,14 +28,14 @@ let Monitor: React.FC<MonitorProps> = forwardRef<Mesh, MonitorProps>(
     let tvRef = useRef<Mesh>(null!);
 
     if (props.vidSrc) {
-      console.log("Monitor: Reloading...", props.vidOptions);
+      // console.log("Monitor: Reloading...", props.vidOptions);
 
       tvTexture = useVideoTexture(props.vidSrc, props.vidOptions);
     }
 
     useEffect(() => {
       if (props.vidSrc && tvRef.current) {
-        console.log("Monitor: Running effects again");
+        // console.log("Monitor: Running effects again");
         (tvRef.current.material as MeshBasicMaterial).transparent = true;
         (tvRef.current.material as MeshBasicMaterial).map = tvTexture;
       }
