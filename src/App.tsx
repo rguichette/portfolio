@@ -34,7 +34,7 @@ function App() {
         shadows
         // camera={{ fov: 24, position: [10, -1, 2] }}
       >
-        <LoadingPage />
+        {/* <LoadingPage /> */}
 
         <World />
         {/* <LoadingPage /> */}

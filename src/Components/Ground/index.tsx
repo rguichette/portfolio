@@ -18,12 +18,12 @@ import { useFrame, useThree } from "@react-three/fiber";
 let floorSize = 1000;
 
 export default function Ground() {
-  let texture = useTexture("/honeycomb.png");
-  texture.wrapS = RepeatWrapping;
-  texture.wrapT = RepeatWrapping;
+  // let texture = useTexture("/honeycomb-hexagon.png");
+  // texture.wrapS = RepeatWrapping;
+  // texture.wrapT = RepeatWrapping;
 
-  texture.offset.set(0.5, 0.5);
-  texture.repeat.set(32, 32);
+  // texture.repeat.set(floorSize, floorSize);
+  // texture.repeat.set(4, 4);
 
   return (
     <>
@@ -33,13 +33,17 @@ export default function Ground() {
           rotation={[-Math.PI / 2, 0, 0]}
           args={[floorSize * 2, floorSize * 2]}
           position={[0, -1.3, 0]}
+          receiveShadow
         >
-          <meshStandardMaterial
-            color={"#7CFC00"}
-            roughness={0.902}
-            metalness={0.41}
-          />
+          {/* <meshStandardMaterial map={texture} transparent /> */}
           {/* <meshBasicMaterial color={"#7CFC00"} side={DoubleSide} /> */}
+          <meshPhongMaterial
+            color={"#e5d45b"}
+            emissive={"#5b56be"}
+            shininess={0.557}
+            reflectivity={0.7}
+            side={DoubleSide}
+          />
         </Plane>
 
         <CuboidCollider

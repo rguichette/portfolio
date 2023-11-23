@@ -2,6 +2,7 @@ import "./styles.css";
 
 import {
   Box,
+  Cloud,
   Gltf,
   Html,
   KeyboardControls,
@@ -9,7 +10,9 @@ import {
   OrbitControlsProps,
   PerspectiveCamera,
   Plane,
+  Sparkles,
   Sphere,
+  Stars,
   Text3D,
   useHelper,
 } from "@react-three/drei";
@@ -41,6 +44,8 @@ import { useAtom } from "jotai";
 import { infoAtom } from "../../state/index.tsx";
 import DetailCard from "../Cards/detailCard.tsx";
 import CamView from "../CamView/index.tsx";
+import City2 from "../City2/index.tsx";
+import GltfInstances from "../Nature/index.tsx";
 
 CameraControls.install({ THREE: THREE });
 
@@ -67,15 +72,25 @@ let World = () => {
   return (
     <>
       <Suspense>
-        <OrbitControls />
-        {/* <CamView /> */}
-        <KeyboardControls map={co}>
-          <Physics debug gravity={[0, -9.988, 0]}>
-            <Player position={[0, 1, 0]} ref={characterRef} />
+        <Stars
+          radius={70}
+          count={5000}
+          factor={4}
+          saturation={2}
+          fade
+          speed={1}
+        />
 
-            <City />
-          </Physics>
-        </KeyboardControls>
+        <Sparkles
+          size={10}
+          scale={[400, 10, 400]}
+          count={2000}
+          color={new THREE.Color("yellow")}
+          position={[0, 5, 0]}
+          noise={50}
+        />
+
+        {/* <fog attach="fog" near={3} far={15} color={"#eedfa3"} /> */}
 
         <directionalLight
           intensity={0.4}
@@ -84,7 +99,39 @@ let World = () => {
           castShadow
           scale={4}
         />
-        <ambientLight />
+        <ambientLight intensity={0.9} />
+
+        {/* <Nature /> */}
+        <GltfInstances
+          file={{
+            path: "/3Dassets/Environment/plants/alien_plant.glb",
+            useDraco: true,
+          }}
+          onClick={() => {
+            console.log("CLICKED!");
+          }}
+          distance={{ x: 10, y: 0, z: 10 }}
+          randomSpread={{ x: 40, y: 10, z: 33 }}
+          scale={0.3}
+          position={[0, -1.5, 0]}
+          startOffset={4}
+        />
+
+        {/* /3Dassets/Environment/plants/alien_plant.glb
+        public/3Dassets/Environment/plants/plants.glb
+
+
+*/}
+        <OrbitControls />
+
+        {/* <CamView /> */}
+        <KeyboardControls map={co}>
+          <Physics debug gravity={[0, -9.988, 0]}>
+            <Player position={[0, 1, 0]} ref={characterRef} />
+
+            <City2 />
+          </Physics>
+        </KeyboardControls>
 
         {/* {popUP && (
           <Html fullscreen>
