@@ -45,7 +45,7 @@ import { infoAtom } from "../../state/index.tsx";
 import DetailCard from "../Cards/detailCard.tsx";
 import CamView from "../CamView/index.tsx";
 import City2 from "../City2/index.tsx";
-import GltfInstances from "../Nature/index.tsx";
+import GltfInstances from "../GltfInstances/index.tsx";
 
 CameraControls.install({ THREE: THREE });
 
@@ -68,6 +68,10 @@ let World = () => {
     { name: Controls.right, keys: ["ArrowRight", "KeyD"] },
     { name: Controls.jump, keys: ["Space"] },
   ];
+
+  let testRef = useRef<THREE.Group>(null);
+
+  useEffect(() => {});
 
   return (
     <>
@@ -101,29 +105,29 @@ let World = () => {
         />
         <ambientLight intensity={0.9} />
 
-        {/* <Nature /> */}
-        <GltfInstances
-          file={{
-            path: "/3Dassets/Environment/plants/alien_plant.glb",
-            useDraco: true,
-          }}
-          onClick={() => {
-            console.log("CLICKED!");
-          }}
-          distance={{ x: 10, y: 0, z: 10 }}
-          randomSpread={{ x: 40, y: 10, z: 33 }}
-          scale={0.3}
-          position={[0, -1.5, 0]}
-          startOffset={4}
-        />
-
         {/* /3Dassets/Environment/plants/alien_plant.glb
         public/3Dassets/Environment/plants/plants.glb
+        public/3Dassets/Cogs.glb
 
 
 */}
         <OrbitControls />
-
+        <Suspense>
+          <group position={[-20, 0, -20]}>
+            <GltfInstances
+              file={{
+                path: "/3Dassets/Environment/plants/plantsR.glb",
+                useDraco: true,
+              }}
+              scale={0.09}
+              randomSpread={{ x: 18, y: 0, z: 18 }}
+              startOffset={{ x: 1, y: 0, z: -1 }}
+              count={40}
+              ref={testRef}
+              position={[0, -1.35, 0]}
+            />
+          </group>
+        </Suspense>
         {/* <CamView /> */}
         <KeyboardControls map={co}>
           <Physics debug gravity={[0, -9.988, 0]}>
@@ -132,28 +136,6 @@ let World = () => {
             <City2 />
           </Physics>
         </KeyboardControls>
-
-        {/* {popUP && (
-          <Html fullscreen>
-            <div className="bg-slate-500 h-screen w-screen items-center align-middle justify-center content-center flex flex-col">
-              <div className="details flex ">
-                <DetailCard title="FrontEnd" />
-                <DetailCard title="BackEnd" />
-              </div>
-
-              <button
-                className="bg-slate-300 p-2 w-28 rounded-xl mt-4"
-                onClick={() => {
-                  console.log("closing...");
-                  setPopUP(false);
-                }}
-              >
-                Exit
-              </button>
-            </div>
-  
-          </Html>
-        )} */}
       </Suspense>
     </>
   );

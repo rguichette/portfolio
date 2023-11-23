@@ -43,23 +43,24 @@ type InstanceProps = InstancedMeshProps & {
   randomDist?: boolean;
   /** constant distance between meshes.  can only use if randomDist is false. default: {x:2, y:0, z:2},  */
   distance?: { x: number; y: number; z: number };
-  /** random offset - helpful when trying to avoid certain positions. defualt: 0*/
-  startOffset?: number;
+  /** random offset - helpful when trying to avoid certain positions. defualt: {x:0,y:0,z:0} */
+  startOffset?: { x: number; y: number; z: number };
 };
 
-let GltfInstances = forwardRef<Ref<InstancedMesh>, InstanceProps>(
+let GltfInstances = forwardRef<Group, InstanceProps>(
   (
     {
       count = 5,
       randomSpread = { x: 3, y: 0, z: 3 },
       randomDist = true,
       distance = { x: 2, y: 0, z: 2 },
-      startOffset = 0,
+      startOffset = { x: 0, y: 0, z: 0 },
       ...props
     },
     ref
   ) => {
     console.log("HELLO N");
+
     const { nodes, scene } = useGLTF(
       props.file.path,
 
@@ -71,7 +72,7 @@ let GltfInstances = forwardRef<Ref<InstancedMesh>, InstanceProps>(
 
       for (let i = 0; i < count; i++) {
         instances.push(
-          <Merged meshes={nodes} key={i}>
+          <Merged meshes={nodes} key={"_merged: " + i}>
             {({ ...items }) => (
               <>
                 <group>
@@ -89,7 +90,7 @@ let GltfInstances = forwardRef<Ref<InstancedMesh>, InstanceProps>(
         );
       }
       return instances;
-    }, [nodes]);
+    }, [nodes, props]);
 
     let plantRef = useRef(null);
     let instancedMeshRef = useRef(null);
@@ -97,24 +98,25 @@ let GltfInstances = forwardRef<Ref<InstancedMesh>, InstanceProps>(
     useEffect(() => {
       // console.log(plantRef.current);
       let IM = instancedMeshRef.current as unknown as Mesh;
-      console.log(
-        "Instances count",
-        (instancedMeshRef.current as unknown as InstancedMesh).children
-      );
+      // console.log(
+      //   "Instances count",
+      //   (instancedMeshRef.current as unknown as InstancedMesh).children
+      // );
 
       let dist = { x: distance.x, y: distance.y, z: distance.z };
       instances.forEach((_, i) => {
         console.log(i);
         if (randomDist) {
+          console.log("children", IM.children);
           IM.children[i].position.set(
-            Math.random() * randomSpread.x + startOffset,
-            Math.random() * randomSpread.y + startOffset,
-            Math.random() * randomSpread.z + startOffset
+            (Math.random() * 101 - 50) * randomSpread.x + startOffset.x,
+            (Math.random() * 101 - 50) * randomSpread.y + startOffset.y,
+            (Math.random() * 101 - 50) * randomSpread.z + startOffset.z
           );
         } else {
-          dist.x += distance.x;
-          dist.y += distance.y;
-          dist.z += distance.z;
+          dist.x += distance.x + startOffset.x;
+          dist.y += distance.y + startOffset.y;
+          dist.z += distance.z + startOffset.z;
           IM.children[i].position.set(dist.x, dist.y, dist.z);
         }
       });
@@ -125,12 +127,14 @@ let GltfInstances = forwardRef<Ref<InstancedMesh>, InstanceProps>(
     // console.log(scene);
     return (
       <>
-        <instancedMesh ref={instancedMeshRef} count={count} {...props}>
-          {instances.map((M, i) => {
-            console.log("M is:", M);
-            return <mesh key={i}>{M}</mesh>;
-          })}
-        </instancedMesh>
+        <group ref={ref}>
+          <instancedMesh ref={instancedMeshRef} count={count} {...props}>
+            {instances.map((M, i) => {
+              console.log("M is:", M);
+              return <mesh key={i}>{M}</mesh>;
+            })}
+          </instancedMesh>
+        </group>
       </>
     );
   }
