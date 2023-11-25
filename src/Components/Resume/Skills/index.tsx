@@ -9,7 +9,6 @@ import {
 } from "@react-three/drei";
 import React, { Ref, forwardRef, useEffect, useRef } from "react";
 import WorkStation from "../../Workstation";
-import world_ItemLocations from "../../../world_ItemLocations";
 import { Group, Material, Mesh, MeshStandardMaterial } from "three";
 import Monitor from "../../Monitor";
 import { MeshProps } from "@react-three/fiber";
@@ -136,7 +135,7 @@ let Skills: React.FC<MeshProps> = forwardRef((props, ref) => {
         <group rotation={[0, 1.35, 0]}>
           <CuboidCollider
             args={[1.2, 1, 0.9]}
-            position={[-9.5, 0.2, 0]}
+            position={[-24.5, 0.2, 0]}
             rotation={[0, 0.2, 0]}
             sensor
             onIntersectionEnter={(e) => {
@@ -149,7 +148,7 @@ let Skills: React.FC<MeshProps> = forwardRef((props, ref) => {
           />
           <WorkStation
             rotation={[0, Math.PI / 1.8, 0]}
-            position={[-10, 0.2, 0]}
+            position={[-25, 0.2, 0]}
           />
         </group>
       </mesh>

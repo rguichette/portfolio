@@ -69,9 +69,11 @@ let World = () => {
     { name: Controls.jump, keys: ["Space"] },
   ];
 
-  let testRef = useRef<THREE.Group>(null);
+  let mLightRef = useRef(null);
 
   useEffect(() => {});
+
+  useHelper(mLightRef.current && mLightRef, THREE.PointLightHelper);
 
   return (
     <>
@@ -84,7 +86,6 @@ let World = () => {
           fade
           speed={1}
         />
-
         <Sparkles
           size={10}
           scale={[400, 10, 400]}
@@ -94,41 +95,26 @@ let World = () => {
           noise={50}
         />
 
-        {/* <fog attach="fog" near={3} far={15} color={"#eedfa3"} /> */}
+        {/* <fog attach="fog" near={3} far={15} color={"#53376c"} /> */}
 
-        <directionalLight
-          intensity={0.4}
-          position={[0, 20, 0]}
-          rotation={[0, Math.PI, 0]}
+        <pointLight
+          intensity={0.7}
           castShadow
-          scale={4}
+          position={[0, 1, 0]}
+          ref={mLightRef}
         />
         <ambientLight intensity={0.9} />
-
         {/* /3Dassets/Environment/plants/alien_plant.glb
         public/3Dassets/Environment/plants/plants.glb
         public/3Dassets/Cogs.glb
 
 
 */}
-        <OrbitControls />
+        {/* <OrbitControls /> */}
         <Suspense>
-          <group position={[-20, 0, -20]}>
-            <GltfInstances
-              file={{
-                path: "/3Dassets/Environment/plants/plantsR.glb",
-                useDraco: true,
-              }}
-              scale={0.09}
-              randomSpread={{ x: 18, y: 0, z: 18 }}
-              startOffset={{ x: 1, y: 0, z: -1 }}
-              count={40}
-              ref={testRef}
-              position={[0, -1.35, 0]}
-            />
-          </group>
+          <group position={[-20, 0, -20]}></group>
         </Suspense>
-        {/* <CamView /> */}
+        <CamView />
         <KeyboardControls map={co}>
           <Physics debug gravity={[0, -9.988, 0]}>
             <Player position={[0, 1, 0]} ref={characterRef} />

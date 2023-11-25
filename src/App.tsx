@@ -32,17 +32,18 @@ function App() {
       <Canvas
         className="w-screen h-screen"
         shadows
+
         // camera={{ fov: 24, position: [10, -1, 2] }}
       >
         {/* <LoadingPage /> */}
 
         <World />
-        {/* <LoadingPage /> */}
+        <LoadingPage />
         {/* <WorkStation /> */}
         {/* <Monitor vidSrc="/3Dassets/textures/codeScroll.mp4" /> */}
       </Canvas>
 
-      {/* <HtmlInteractivity /> */}
+      <HtmlInteractivity />
     </>
   );
 }

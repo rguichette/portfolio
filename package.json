@@ -27,6 +27,7 @@
     "react-dom": "^18.2.0",
     "react-powerglitch": "^1.0.0",
     "three": "^0.155.0",
+    "three-custom-shader-material": "^5.4.0",
     "three-plain-animator": "^1.1.2",
     "typewriter-effect": "^2.20.1",
     "vite-plugin-glsl": "^1.1.2"

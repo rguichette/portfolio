@@ -5,4 +5,7 @@ declare module '*.glsl' {
     export default file;
   }
 
+
+
+
   // declare module "@tweenjs/tween.js" 

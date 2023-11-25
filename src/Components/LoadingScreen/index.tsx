@@ -102,7 +102,7 @@ let LoadingPage = () => {
   console.log(progress);
   return (
     <Suspense>
-      <Html center>
+      <Html center className={`${inside && "hidden"} `}>
         <div
           id="glitch"
           className=" bg-slate-900 w-screen h-screen flex flex-col justify-center items-center uppercas "

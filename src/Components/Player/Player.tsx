@@ -29,6 +29,7 @@ import {
   MathUtils,
   Mesh,
   Quaternion,
+  Scene,
   Vector3,
 } from "three";
 import { color, mix, rotateUV, sin } from "three/examples/jsm/nodes/Nodes.js";
@@ -74,6 +75,12 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
   const { actions, mixer } = useAnimations(animations, character);
 
   //animation list
+  useEffect(() => {
+    // console.log("character: ", character);
+    // character.castShadow = true;
+    // character.children[0].castShadow = true;
+    // character.children[1].castShadow = true;
+  });
 
   let idle = animations.find(
     (clip) => clip.name == "idle"

@@ -1,5 +1,12 @@
 import React from "react";
-import { Box, Gltf, Plane, useHelper, useTexture } from "@react-three/drei";
+import {
+  Box,
+  Gltf,
+  MeshReflectorMaterial,
+  Plane,
+  useHelper,
+  useTexture,
+} from "@react-three/drei";
 import { useEffect, useRef } from "react";
 import {
   BoxHelper,
@@ -14,6 +21,7 @@ import WorkStation from "../Workstation";
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
 
 import { useFrame, useThree } from "@react-three/fiber";
+import GltfInstances from "../GltfInstances";
 
 let floorSize = 1000;
 
@@ -28,29 +36,39 @@ export default function Ground() {
   return (
     <>
       <RigidBody type="fixed" colliders={false}>
-        {/* multiply by 2 in order to adjust for RB scaling */}
-        <Plane
+        <mesh
           rotation={[-Math.PI / 2, 0, 0]}
-          args={[floorSize * 2, floorSize * 2]}
           position={[0, -1.3, 0]}
           receiveShadow
         >
-          {/* <meshStandardMaterial map={texture} transparent /> */}
-          {/* <meshBasicMaterial color={"#7CFC00"} side={DoubleSide} /> */}
-          <meshPhongMaterial
-            color={"#e5d45b"}
-            emissive={"#5b56be"}
-            shininess={0.557}
-            reflectivity={0.7}
-            side={DoubleSide}
+          {/* multiply by 2 in order to adjust for RB scaling */}
+          <planeGeometry args={[floorSize * 2, floorSize * 2]} />
+          <MeshReflectorMaterial
+            color={"#b7bbf5"}
+            mirror={0.23}
+            depthScale={5}
+            // mixStrength={0.25}
+            // mixContrast={2}
+            // metalness={0.2}
           />
-        </Plane>
+        </mesh>
 
         <CuboidCollider
           args={[floorSize, 0.01, floorSize]}
           position={[0, -1.3, 0]}
         />
       </RigidBody>
+      {/* <GltfInstances
+        file={{
+          path: "/3Dassets/Environment/plants/plantsR.glb",
+          useDraco: true,
+        }}
+        scale={0.09}
+        randomSpread={{ x: 18, y: 0, z: 18 }}
+        startOffset={{ x: 1, y: 0, z: -1 }}
+        count={40}
+        position={[0, -1.35, 0]}
+      /> */}
     </>
   );
 }

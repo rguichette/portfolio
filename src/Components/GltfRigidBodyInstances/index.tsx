@@ -6,12 +6,10 @@ import {
   PivotControls,
   Trail,
   TransformControls,
-  useAnimations,
   useGLTF,
 } from "@react-three/drei";
 import React, { Ref, forwardRef, useEffect, useMemo, useRef } from "react";
 import {
-  AnimationMixer,
   BoxGeometry,
   Group,
   InstancedMesh,
@@ -23,7 +21,7 @@ import { GLTF } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 import * as BufferGeometryUtils from "three/addons/utils/BufferGeometryUtils.js";
 import { Geometry } from "three/examples/jsm/deprecated/Geometry.js";
-import { InstancedMeshProps, useFrame } from "@react-three/fiber";
+import { InstancedMeshProps } from "@react-three/fiber";
 import { RigidBody } from "@react-three/rapier";
 
 type GLTFResult = GLTF & {
@@ -37,8 +35,8 @@ type InstanceProps = InstancedMeshProps & {
   /***number of instances. default: 5  */
   count?: number;
   /***
-  random distance spread between each instance. default: {x:3, y:0, z:3}
-  */
+    random distance spread between each instance. default: {x:3, y:0, z:3}
+    */
   randomSpread?: { x: number; y: number; z: number };
   /**if true, the distances between each instance will be random. default: true.
    *
@@ -50,7 +48,7 @@ type InstanceProps = InstancedMeshProps & {
   startOffset?: { x: number; y: number; z: number };
 };
 
-let GltfInstances = forwardRef<Group, InstanceProps>(
+let GltfRigidBodyInstances = forwardRef<Group, InstanceProps>(
   (
     {
       count = 5,
@@ -63,27 +61,27 @@ let GltfInstances = forwardRef<Group, InstanceProps>(
     },
     ref
   ) => {
-    const { nodes, scene, animations } = useGLTF(
+    const { nodes, scene } = useGLTF(
       file.path,
 
       file.useDraco
     ) as GLTFResult;
 
-    // console.log("HELLO N: ", scene);
+    console.log("HELLO N: ", scene);
 
     let instances = useMemo(() => {
       let instances = [];
 
       for (let i = 0; i < count; i++) {
         instances.push(
-          <Merged meshes={nodes} key={"_merged: " + i}>
+          <Merged meshes={nodes} key={"_mergedRigidBodyInstance: " + i}>
             {({ ...items }) => (
               <>
                 <group>
                   {Object.values(items).map((I, ind) => {
                     return (
                       <mesh key={ind}>
-                        <I />
+                        <I key={ind} />
                       </mesh>
                     );
                   })}
@@ -109,7 +107,7 @@ let GltfInstances = forwardRef<Group, InstanceProps>(
 
       let dist = { x: distance.x, y: distance.y, z: distance.z };
       instances.forEach((_, i) => {
-        // console.log(i);
+        console.log(i);
         if (randomDist) {
           // console.log("children", IM.children);
           IM.children[i].position.set(
@@ -126,7 +124,7 @@ let GltfInstances = forwardRef<Group, InstanceProps>(
       });
     }, [instances]);
 
-    // console.log(instances);
+    console.log(instances);
 
     // console.log(scene);
     return (
@@ -134,7 +132,7 @@ let GltfInstances = forwardRef<Group, InstanceProps>(
         <group ref={ref}>
           <instancedMesh ref={instancedMeshRef} count={count} {...props}>
             {instances.map((M, i) => {
-              // console.log("M is:", M);
+              console.log("M is:", M);
               return <mesh key={i}>{M}</mesh>;
             })}
           </instancedMesh>
@@ -144,4 +142,4 @@ let GltfInstances = forwardRef<Group, InstanceProps>(
   }
 );
 
-export default GltfInstances;
+export default GltfRigidBodyInstances;
