@@ -25,10 +25,19 @@ import { useAtomValue } from "jotai";
 import DetailPopUp from "./Components/DetailPopUp";
 import HtmlInteractivity from "./Components/HtmlInteractivity/HtmlInteractivity";
 import { DefaultLoadingManager } from "three";
+import { enterWorld } from "./state";
 
 function App() {
+  let worldEdtered = useAtomValue(enterWorld);
   return (
     <>
+      {/* this acts as a blinder */}
+      <div
+        className={`absolute z-10  ${
+          worldEdtered && "hidden"
+        }  left-0 bg-slate-900 w-screen h-screen  `}
+      ></div>
+
       <Canvas
         className="w-screen h-screen"
         shadows

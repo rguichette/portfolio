@@ -95,14 +95,8 @@ let World = () => {
           noise={50}
         />
 
-        {/* <fog attach="fog" near={3} far={15} color={"#53376c"} /> */}
+        <fog attach="fog" near={1} far={75} color={"#53376c"} />
 
-        <pointLight
-          intensity={0.7}
-          castShadow
-          position={[0, 1, 0]}
-          ref={mLightRef}
-        />
         <ambientLight intensity={0.9} />
         {/* /3Dassets/Environment/plants/alien_plant.glb
         public/3Dassets/Environment/plants/plants.glb

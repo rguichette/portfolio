@@ -15,7 +15,7 @@ import { enterWorld } from "../../state";
 let isH = false;
 
 let LoadingPage = () => {
-  let [progress, setProgress] = useState(0);
+  let [progress, setProgress] = useState(100);
   let [submit, setSubmit] = useAtom(enterWorld);
   useEffect(() => {
     DefaultLoadingManager.onStart = function (url, itemsLoaded, itemsTotal) {
@@ -50,7 +50,6 @@ let LoadingPage = () => {
   //   const glitch: GlitchHandle = useGlitch({});
   let pro = 0;
   let [horizontal, setHorizontal] = useState(false);
-  let [inside, setInside] = useState(false);
 
   useEffect(() => {
     let container = document.getElementById("glitch") as GlitchableElement;
@@ -66,11 +65,11 @@ let LoadingPage = () => {
       PowerGlitch.glitch(container, glitchOptions);
     }
     function detectOri(e: Event) {
-      if (portrait.matches && !inside) {
+      if (portrait.matches && !submit) {
         setHorizontal(false);
         console.log("portrait");
       } else {
-        if (!inside) {
+        if (!submit) {
           setHorizontal(true);
           console.log("LandScape");
         }
@@ -93,25 +92,25 @@ let LoadingPage = () => {
     return function cleanupListener() {
       //   window.removeEventListener("orientationchange", detectOri);
     };
-  }, [inside, horizontal]);
+  }, [submit, horizontal]);
 
   // {
   //   console.log(progress);
   // }
 
-  console.log(progress);
+  console.log(submit);
   return (
     <Suspense>
-      <Html center className={`${inside && "hidden"} `}>
+      <Html center className={`${submit && "fade_away"} `}>
         <div
           id="glitch"
-          className=" bg-slate-900 w-screen h-screen flex flex-col justify-center items-center uppercas "
+          className=" z-20  bg-slate-900 w-screen h-screen flex flex-col justify-center items-center uppercas "
         >
-          {!horizontal && !inside && (
+          {/* {!horizontal && !inside && (
             <div className=" bg-black absolute h-full w-full z-10 flex justify-center items-center">
               <img src="/rotate.gif" />
             </div>
-          )}
+          )} */}
 
           <div className="arc absolute flex flex-col justify-center items-center rounded-full">
             <span
@@ -148,10 +147,10 @@ let LoadingPage = () => {
           {/* <div className="block bg-slate-100 mt-8">Loading</div> */}
           <div
             className="m-4 sm:m-6 absolute bottom-0 mb-8 text-slate-200"
-            onClick={() => {
-              console.log("Im in");
-              setInside(true);
-            }}
+            // onClick={() => {
+            //   console.log("Im in");
+            //   setInside(true);
+            // }}
           >
             {progress != 100 && (
               <div className="sm:mb-2 md:mb-16 w-60 ">

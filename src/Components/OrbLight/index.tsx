@@ -84,7 +84,7 @@ export default function OrbLight({
     // }
   });
 
-  useHelper(pointLightRef.current && pointLightRef, PointLightHelper);
+  //   useHelper(pointLightRef.current && pointLightRef, PointLightHelper);
 
   //   interface;
   return (

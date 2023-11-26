@@ -1,75 +1,79 @@
-.arc{
-    /* background-color: red; */
-    /* border: 3px solid blueviolet ; */
-    /* width: 300px;
+.arc {
+  /* background-color: red; */
+  /* border: 3px solid blueviolet ; */
+  /* width: 300px;
     height: 300px; */
-    /* position: absolute; */
-    /* display: flex; */
-    /* flex-direction: column; */
-    /* justify-content: center; */
-    /* align-items: center; */
-    /* border-radius: 50%; */
-    /* z-index: 1; */
-  
-
+  /* position: absolute; */
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  /* border-radius: 50%; */
+  /* z-index: 1; */
 }
 
-.arc #top{ 
-    border: 8px solid skyblue; 
-    position: absolute;
+.arc #top {
+  border: 8px solid skyblue;
+  position: absolute;
 
-    /* width: 370px;
+  /* width: 370px;
     height: 380px; */
-  
-    border-radius: 50%;
-    border-left-color: transparent;
-    border-right-color: transparent;
 
-    animation-name: progress-top;
-    animation-duration: 4s;
-    animation-iteration-count: infinite
-
-
-    
-    
-}
-
-.arc #bottom{
-    border: 5px solid blue; 
-    position: absolute;
-
-    /* width: 330px;
-    height: 330px; */
-  
-    border-radius: 50%;
-    border-left-color: transparent;
-    border-right-color: transparent;
+  border-radius: 50%;
+  border-left-color: transparent;
+  border-right-color: transparent;
 
   animation-name: progress-top;
-    animation-duration: 4s;
-    animation-direction: reverse;
-animation-iteration-count: infinite
-
- }
-    /* padding: 5px;
-    
-    
-
-
-    
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
 }
 
+.arc #bottom {
+  border: 5px solid blue;
+  position: absolute;
 
-/* handle rotation here */
+  /* width: 330px;
+    height: 330px; */
+
+  border-radius: 50%;
+  border-left-color: transparent;
+  border-right-color: transparent;
+
+  animation-name: progress-top;
+  animation-duration: 4s;
+  animation-direction: reverse;
+  animation-iteration-count: infinite;
+}
+
+.fade_away{
+display: none;
+}
+.fade_away::after{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    z-index: -1;
+    background-color: #333;
+    height: 100%;
+}
+
 @keyframes progress-top {
-    0% {rotate: 0deg;}
-    75%{rotate: 125deg;}
-    85%{rotate: 200deg;}
-    100% {rotate: 360deg;}
+  0% {
+    rotate: 0deg;
+  }
+  75% {
+    rotate: 125deg;
+  }
+  85% {
+    rotate: 200deg;
+  }
+  100% {
+    rotate: 360deg;
+  }
 }
 
 /* .arc{
     animation-name: progress;
     animation-duration: 4s;
 } */
-

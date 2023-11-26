@@ -53,9 +53,6 @@ export default function City() {
           </Box>
         </RigidBody>
 
-        <Box position={[0, 2, 0]}>
-          <meshBasicMaterial color={"green"} />
-        </Box>
         <group name="city_energy_lights">
           <OrbLight
             position={[50, 7, -15]}
@@ -161,7 +158,7 @@ export default function City() {
           <meshNormalMaterial />
         </Text3D>
       </RigidBody>
-
+      {/*}
       <Ring
         scale={2}
         position={[0, 0, 0]}
@@ -220,7 +217,7 @@ export default function City() {
           rotation={[-Math.PI / 2, 0, 0]}
           args={[5.394, 6]}
         />
-      </mesh>
+    </mesh>*/}
       <Ground />
     </>
   );
