@@ -1,6 +1,11 @@
 import { useAtom, useAtomValue } from "jotai";
 import React from "react";
-import { showDetailsPopUp, showEngageButton, showHelpPopUp } from "../../state";
+import {
+  enterWorld,
+  showDetailsPopUp,
+  showEngageButton,
+  showHelpPopUp,
+} from "../../state";
 import DetailPopUp from "../DetailPopUp";
 import HelpView from "../../HelpView";
 import "./style.css";
@@ -9,11 +14,14 @@ export default function HtmlInteractivity() {
   let engBtn = useAtomValue(showEngageButton);
   let [showDet, setShowDet] = useAtom(showDetailsPopUp);
   let [showHelp, setShowHelp] = useAtom(showHelpPopUp);
+  let worldEntered = useAtomValue(enterWorld);
 
   return (
     <>
       <div
-        className="absolute top-0 right-0  p-1 animate-and-hide "
+        className={`absolute top-0 right-0  p-1 ${
+          worldEntered && "animate-and-hide"
+        }  `}
         onClick={() => {
           setShowHelp(true);
         }}
