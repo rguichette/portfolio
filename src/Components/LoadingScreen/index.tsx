@@ -14,8 +14,10 @@ import ProgressBar from "@ramonak/react-progress-bar";
 import { enterWorld } from "../../state";
 let isH = false;
 
+let displayBtnTimer: any;
+
 let LoadingPage = () => {
-  let [progress, setProgress] = useState(100);
+  let [progress, setProgress] = useState(0);
   let [submit, setSubmit] = useAtom(enterWorld);
   useEffect(() => {
     DefaultLoadingManager.onStart = function (url, itemsLoaded, itemsTotal) {
@@ -51,6 +53,10 @@ let LoadingPage = () => {
   let pro = 0;
   let [horizontal, setHorizontal] = useState(false);
 
+  let [displayContinue, setDisplayContinue] = useState(false);
+
+  let portrait = window.matchMedia("(orientation: portrait)");
+
   useEffect(() => {
     let container = document.getElementById("glitch") as GlitchableElement;
     // console.log(container);
@@ -76,8 +82,6 @@ let LoadingPage = () => {
       }
     }
 
-    let portrait = window.matchMedia("(orientation: portrait)");
-
     portrait.addEventListener("change", detectOri);
 
     if (!portrait.matches) {
@@ -89,16 +93,39 @@ let LoadingPage = () => {
     // window.addEventListener("loadstart", detectOri);
     // window.addEventListener("orientationchange", detectOri);
 
+    // let displayBtnTimer = setInterval(() => {
+    //   console.log("PROGRESS:", progress, "\n", "ContinueBtn: ", setProgress);
+    //   setDisplayContinue(true);
+    //   if (progress == 100) {
+    //   }
+    // }, 2000);
+
+    // displayBtnTimer;
+    // if (displayContinue) {
+    //   clearInterval("displayBtnTimer");
+    // }
+
     return function cleanupListener() {
       //   window.removeEventListener("orientationchange", detectOri);
     };
-  }, [submit, horizontal]);
+  }, [submit, portrait]);
 
   // {
   //   console.log(progress);
   // }
+  var touchDevice = "ontouchstart" in document.documentElement;
 
-  console.log(submit);
+  useEffect(() => {
+    displayBtnTimer = setTimeout(() => {
+      if (progress == 100) {
+        setDisplayContinue(true);
+      } else setDisplayContinue(false);
+    }, 2000);
+
+    console.log("TOUCH: ", touchDevice);
+    if (displayContinue) clearTimeout(displayBtnTimer);
+  }, [progress, touchDevice]);
+
   return (
     <Suspense>
       <Html center className={`${submit && "fade_away"} `}>
@@ -106,11 +133,11 @@ let LoadingPage = () => {
           id="glitch"
           className=" z-20  bg-slate-900 w-screen h-screen flex flex-col justify-center items-center uppercas "
         >
-          {/* {!horizontal && !inside && (
+          {!horizontal && !submit && (
             <div className=" bg-black absolute h-full w-full z-10 flex justify-center items-center">
               <img src="/rotate.gif" />
             </div>
-          )} */}
+          )}
 
           <div className="arc absolute flex flex-col justify-center items-center rounded-full">
             <span
@@ -152,28 +179,31 @@ let LoadingPage = () => {
             //   setInside(true);
             // }}
           >
-            {progress != 100 && (
-              <div className="sm:mb-2 md:mb-16 w-60 ">
+            {/* <h1>{Math.floor(progress)}</h1> */}
+
+            {/* {isMobile ? "Tap to continue" : "Click to continue"} */}
+          </div>
+        </div>
+
+        {
+          <div className="absolute z-30 bottom-0 sm:mb-6 lg:mb-20   flex w-screen content-center items-center justify-center  md:flex-col sm:flex-col-reverse ">
+            <span className=" h-4 ">
+              <div className=" md:mb-16 w-60  sm:mt-6 md:mt-0">
                 <ProgressBar
                   completed={progress}
                   isLabelVisible={false}
                   height="7px"
                 />
               </div>
-            )}
-            {/* <h1>{Math.floor(progress)}</h1> */}
-
-            {progress == 100 && (
-              <button
-                className="animate-pulse delay-75 "
-                onClick={() => setSubmit(true)}
-              >
-                CONTINUE
-              </button>
-            )}
-            {/* {isMobile ? "Tap to continue" : "Click to continue"} */}
+            </span>
+            <button
+              className="animate-pulse delay-2000  h-6 w-32 sm:p-2  md:p-0 "
+              onClick={() => setSubmit(true)}
+            >
+              {displayContinue && "CONTINUE"}
+            </button>
           </div>
-        </div>
+        }
       </Html>
     </Suspense>
   );
