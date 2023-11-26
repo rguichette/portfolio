@@ -185,7 +185,7 @@ let LoadingPage = () => {
           </div>
         </div>
 
-        {
+        {((touchDevice && horizontal) || !touchDevice) && (
           <div className="absolute z-30 bottom-0 sm:mb-6 lg:mb-20   flex w-screen content-center items-center justify-center  md:flex-col sm:flex-col-reverse ">
             <span className=" h-4 ">
               <div className=" md:mb-16 w-60  sm:mt-6 md:mt-0">
@@ -203,7 +203,7 @@ let LoadingPage = () => {
               {displayContinue && "CONTINUE"}
             </button>
           </div>
-        }
+        )}
       </Html>
     </Suspense>
   );
