@@ -1,0 +1,11 @@
+#buttons {
+  position: relative;
+  border: solid 1px #aaa;
+  display: inline-block;
+  width: 100%;
+  border-radius: 10px;
+  height: 50px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}

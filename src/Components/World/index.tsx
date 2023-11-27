@@ -53,22 +53,6 @@ let World = () => {
   let characterRef = useRef<Mesh>(null!);
   let [popUP, setPopUP] = useAtom(infoAtom);
 
-  enum Controls {
-    forward = "forward",
-    back = "back",
-    left = "left",
-    right = "right",
-    jump = "jump",
-  }
-
-  let co = [
-    { name: Controls.forward, keys: ["ArrowUp", "KeyW"] },
-    { name: Controls.back, keys: ["ArrowDown", "KeyS"] },
-    { name: Controls.left, keys: ["ArrowLeft", "KeyA"] },
-    { name: Controls.right, keys: ["ArrowRight", "KeyD"] },
-    { name: Controls.jump, keys: ["Space"] },
-  ];
-
   let mLightRef = useRef(null);
 
   useEffect(() => {});
@@ -109,13 +93,12 @@ let World = () => {
           <group position={[-20, 0, -20]}></group>
         </Suspense>
         <CamView />
-        <KeyboardControls map={co}>
-          <Physics debug gravity={[0, -9.988, 0]}>
-            <Player position={[0, 1, 0]} ref={characterRef} />
 
-            <City2 />
-          </Physics>
-        </KeyboardControls>
+        <Physics debug gravity={[0, -9.988, 0]}>
+          <Player position={[0, 1, 0]} ref={characterRef} />
+
+          <City2 />
+        </Physics>
       </Suspense>
     </>
   );

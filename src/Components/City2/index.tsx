@@ -99,7 +99,7 @@ export default function City() {
         count={2}
         startOffset={{ x: -2, y: 0, z: -3 }}
       /> */}
-
+      {/* 
       <Domino spacing={2} />
       <Domino spacing={2} scale={2} position={[-20, 0, 10]} />
       <Domino
@@ -107,7 +107,7 @@ export default function City() {
         scale={1.25}
         position={[-20, 0, -10]}
         rotation={[0.0, 0.3, 0.0]}
-      />
+      /> */}
 
       <RigidBody
         position={[3, 1, 6]}

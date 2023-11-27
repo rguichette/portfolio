@@ -8,6 +8,7 @@ import Monitor from "./Components/Monitor";
 import {
   Box,
   Html,
+  KeyboardControls,
   OrbitControls,
   Plane,
   useProgress,
@@ -26,32 +27,50 @@ import DetailPopUp from "./Components/DetailPopUp";
 import HtmlInteractivity from "./Components/HtmlInteractivity/HtmlInteractivity";
 import { DefaultLoadingManager } from "three";
 import { enterWorld } from "./state";
+import MobileControls from "./Components/MobileControls";
 
+enum Controls {
+  forward = "forward",
+  back = "back",
+  left = "left",
+  right = "right",
+  jump = "jump",
+}
+
+let co = [
+  { name: Controls.forward, keys: ["ArrowUp", "KeyW"] },
+  { name: Controls.back, keys: ["ArrowDown", "KeyS"] },
+  { name: Controls.left, keys: ["ArrowLeft", "KeyA"] },
+  { name: Controls.right, keys: ["ArrowRight", "KeyD"] },
+  { name: Controls.jump, keys: ["Space"] },
+];
 function App() {
   let worldEdtered = useAtomValue(enterWorld);
   return (
     <>
       {/* this acts as a blinder */}
-      <div
+      {/* <div
         className={`absolute z-10  ${
           worldEdtered && "hidden"
         }  left-0 bg-slate-900 w-screen h-screen  `}
-      ></div>
+      /> */}
+      <KeyboardControls map={co}>
+        <Canvas
+          className=" w-screen h-screen bg-green-300 "
+          shadows
 
-      <Canvas
-        className="w-screen h-screen"
-        shadows
+          // camera={{ fov: 24, position: [10, -1, 2] }}
+        >
+          {/* <LoadingPage /> */}
 
-        // camera={{ fov: 24, position: [10, -1, 2] }}
-      >
-        {/* <LoadingPage /> */}
+          <World />
+          {/* <LoadingPage /> */}
 
-        <World />
-        <LoadingPage />
-        {/* <WorkStation /> */}
-        {/* <Monitor vidSrc="/3Dassets/textures/codeScroll.mp4" /> */}
-      </Canvas>
-
+          {/* <WorkStation /> */}
+          {/* <Monitor vidSrc="/3Dassets/textures/codeScroll.mp4" /> */}
+        </Canvas>
+        <MobileControls />
+      </KeyboardControls>
       <HtmlInteractivity />
     </>
   );
