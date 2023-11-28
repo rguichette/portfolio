@@ -48,7 +48,7 @@ export default function Projects2() {
         <Plane args={[1, 1.9, 1]}>
           <meshStandardMaterial
             map={ridPostTexture}
-            emissive={"dff6fb"}
+            emissive={"#dff6fb"}
             metalness={0.1}
             side={DoubleSide}
           />

@@ -41,10 +41,28 @@ export default function CamView() {
       // console.log(e.code);
     };
 
-    onmousedown = () => {
-      spectating = true;
-      console.log("panning");
+    onmousedown = (e) => {
+      if ((e.target as HTMLElement).className.split("-")[0] != "joystick") {
+        spectating = true;
+        console.log("panning");
+      }
     };
+    ontouchstart = (e) => {
+      if ((e.target as HTMLElement).className.split("-")[0] != "joystick") {
+        spectating = true;
+        console.log("panning");
+      } else {
+        spectating = false;
+      }
+    };
+    // ontouchmove = (e) => {
+    //   if ((e.target as HTMLElement).className.split("-")[0] != "joystick") {
+    //     spectating = true;
+    //     console.log("panning");
+    //   } else {
+    //     spectating = false;
+    //   }
+    // };
 
     // onmouseup = () => {
     //   spectating = false;

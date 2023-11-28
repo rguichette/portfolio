@@ -34,6 +34,7 @@ import {
 } from "three";
 import { color, mix, rotateUV, sin } from "three/examples/jsm/nodes/Nodes.js";
 import {
+  duelJoyStickAtom,
   isCharacterMoving,
   showDetailsPopUp,
   showHelpPopUp,
@@ -50,6 +51,7 @@ enum Controls {
 let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
   let detailsWindow = useAtomValue(showDetailsPopUp);
   let helpWindow = useAtomValue(showHelpPopUp);
+  let joystick = useAtomValue(duelJoyStickAtom);
 
   let [_, get] = useKeyboardControls<Controls>();
 
@@ -73,14 +75,13 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
   );
 
   const { actions, mixer } = useAnimations(animations, character);
+  //mobile  input
 
-  //animation list
-  useEffect(() => {
-    // console.log("character: ", character);
-    // character.castShadow = true;
-    // character.children[0].castShadow = true;
-    // character.children[1].castShadow = true;
-  });
+  // useEffect(() => {
+  //   window.ontouchmove = () => {
+  //     console.log("hello from js player:", joystick);
+  //   };
+  // }, [joystick]);
 
   let idle = animations.find(
     (clip) => clip.name == "idle"
@@ -107,7 +108,7 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
   //     console.log("setting false");
   //   }
   // };
-
+  console.log("joystick", joystick);
   useFrame(({ clock, scene }) => {
     if (rbRef.current) {
       // Check if the "left" key is pressed
@@ -130,12 +131,20 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
         // Calculate the forward direction based on the current rotation
         direction.set(0, 0, 1);
         direction.applyQuaternion(rotation);
+        //handl mobile
 
-        // Set the linear velocity in the forward direction
-        if (get().forward && !helpWindow && !detailsWindow) {
+        // if (joystick.left as any) {
+        //   console.log("joy:", joystick);
+        // }
+        // Set the linear velocity in the forward direction <--> character movement
+        if (
+          (get().forward || (joystick.left as any).y > 5) &&
+          !helpWindow &&
+          !detailsWindow
+        ) {
           direction.multiplyScalar(speed);
           rbRef.current.setLinvel(direction, true);
-        } else if (get().back) {
+        } else if (get().back || (joystick.left as any).y < 0) {
           direction.multiplyScalar(-speed);
           rbRef.current.setLinvel(direction, true);
         }
@@ -147,11 +156,19 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
     //Character animations:
     let currentAnim: AnimationAction;
 
-    if (get().forward && !helpWindow && !detailsWindow) {
+    if (
+      (get().forward || (joystick.left as any).y > 5) &&
+      !helpWindow &&
+      !detailsWindow
+    ) {
       mixer.clipAction(walking).play();
       mixer.clipAction(walking).timeScale = 1;
       mixer.clipAction(idle).stop();
-    } else if (get().back && !helpWindow && !detailsWindow) {
+    } else if (
+      (get().back || (joystick.left as any).y < 0) &&
+      !helpWindow &&
+      !detailsWindow
+    ) {
       mixer.clipAction(walking).timeScale = -1;
       mixer.clipAction(walking).play();
     } else if (get().left) {

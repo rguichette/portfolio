@@ -5,6 +5,8 @@ declare module '*.glsl' {
     export default file;
   }
 
+declare module "joystick-controller"
+
 
 
 

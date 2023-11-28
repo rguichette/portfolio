@@ -21,13 +21,14 @@ import { Physics } from "@react-three/rapier";
 import City from "./Components/City";
 import PlayGound from "./playGround";
 import Player from "./Components/Player/Player";
-import { useAtomValue } from "jotai";
+import { Provider, useAtomValue } from "jotai";
 
 import DetailPopUp from "./Components/DetailPopUp";
 import HtmlInteractivity from "./Components/HtmlInteractivity/HtmlInteractivity";
 import { DefaultLoadingManager } from "three";
 import { enterWorld } from "./state";
 import MobileControls from "./Components/MobileControls";
+import TestAnything from "./Components/MobileControls/testAnything";
 
 enum Controls {
   forward = "forward",
@@ -54,23 +55,26 @@ function App() {
           worldEdtered && "hidden"
         }  left-0 bg-slate-900 w-screen h-screen  `}
       /> */}
-      <KeyboardControls map={co}>
-        <Canvas
-          className=" w-screen h-screen bg-green-300 "
-          shadows
+      <Provider>
+        <KeyboardControls map={co}>
+          <Canvas
+            className=" w-screen h-screen bg-green-300 "
+            shadows
 
-          // camera={{ fov: 24, position: [10, -1, 2] }}
-        >
-          {/* <LoadingPage /> */}
+            // camera={{ fov: 24, position: [10, -1, 2] }}
+          >
+            {/* <LoadingPage /> */}
+            <MobileControls />
+            <World />
+            {/* <LoadingPage /> */}
 
-          <World />
-          {/* <LoadingPage /> */}
+            {/* <WorkStation /> */}
+            {/* <Monitor vidSrc="/3Dassets/textures/codeScroll.mp4" /> */}
+          </Canvas>
 
-          {/* <WorkStation /> */}
-          {/* <Monitor vidSrc="/3Dassets/textures/codeScroll.mp4" /> */}
-        </Canvas>
-        <MobileControls />
-      </KeyboardControls>
+          <TestAnything />
+        </KeyboardControls>
+      </Provider>
       <HtmlInteractivity />
     </>
   );

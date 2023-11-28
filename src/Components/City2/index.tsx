@@ -53,7 +53,7 @@ export default function City() {
           </Box>
         </RigidBody>
 
-        <group name="city_energy_lights">
+        {/* <group name="city_energy_lights">
           <OrbLight
             position={[50, 7, -15]}
             scale={4}
@@ -78,7 +78,7 @@ export default function City() {
             intensity={30}
             shapeColor="yellow"
           />
-        </group>
+        </group> */}
         {/* <GltfInstances
           position={[1, 0, 4]}
           file={{
