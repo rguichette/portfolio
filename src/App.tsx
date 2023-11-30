@@ -1,7 +1,7 @@
 import { Canvas, useLoader } from "@react-three/fiber";
 import World from "./Components/World";
 import LoadingPage from "./Components/LoadingScreen";
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import WorkStation from "./Components/Workstation";
 import Monitor from "./Components/Monitor";
 
@@ -21,17 +21,19 @@ import { Physics } from "@react-three/rapier";
 import City from "./Components/City";
 import PlayGound from "./playGround";
 import Player from "./Components/Player/Player";
-import { Provider, useAtomValue } from "jotai";
+import { Provider, useAtom, useAtomValue } from "jotai";
 
 import DetailPopUp from "./Components/DetailPopUp";
 import HtmlInteractivity from "./Components/HtmlInteractivity/HtmlInteractivity";
 import { DefaultLoadingManager } from "three";
-import { enterWorld } from "./state";
+import { enterWorld, isMobileAtom } from "./state";
 import MobileControls from "./Components/MobileControls";
 import TestAnything, {
   countAtom,
 } from "./Components/MobileControls/testAnything";
 import MobileControls2 from "./Components/MobileControls2";
+
+import { isMobile } from "is-mobile";
 
 enum Controls {
   forward = "forward",
@@ -49,6 +51,16 @@ let co = [
   { name: Controls.jump, keys: ["Space"] },
 ];
 function App() {
+  let [_ismobile, setIsMobile] = useAtom(isMobileAtom);
+
+  useEffect(() => {
+    if (isMobile()) {
+      setIsMobile(true);
+    } else {
+      setIsMobile(false);
+    }
+  }, [_ismobile, setIsMobile]);
+
   let worldEdtered = useAtomValue(enterWorld);
 
   return (
@@ -63,12 +75,12 @@ function App() {
 
       <KeyboardControls map={co}>
         <Canvas
-          className=" w-screen h-screen bg-green-300 "
+          className=" w-screen h-screen "
           shadows
 
           // camera={{ fov: 24, position: [10, -1, 2] }}
         >
-          <MobileControls2 />
+          {_ismobile && <MobileControls2 />}
           <World />
           <LoadingPage />
 

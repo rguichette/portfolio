@@ -20,6 +20,7 @@
     "camera-controls": "^2.7.2",
     "gltfjsx": "^6.2.15",
     "i": "^0.3.7",
+    "is-mobile": "^4.0.0",
     "jotai": "^2.4.3",
     "jotai-optics": "^0.3.1",
     "joystick-controller": "^1.0.15",
