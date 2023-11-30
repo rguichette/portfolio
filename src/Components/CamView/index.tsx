@@ -1,12 +1,13 @@
-import { Box, OrbitControls, useKeyboardControls } from "@react-three/drei";
+import { OrbitControls } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
-import { useAtom, useAtomValue } from "jotai";
-import React, { useEffect, useRef } from "react";
-import THREE, { Mesh, Quaternion, Vector3 } from "three";
+import { useAtomValue } from "jotai";
+
+import { useEffect, useRef } from "react";
+import { Vector3 } from "three";
 
 import { OrbitControls as OcType } from "three-stdlib";
-import { isCharacterMoving, isPanning } from "../../state";
 import * as TWEEN from "three/examples/jsm/libs/tween.module.js";
+import { enterWorld } from "../../state";
 
 export default function CamView() {
   let characterMoving = false;
@@ -15,8 +16,11 @@ export default function CamView() {
 
   let orbitControlsRef = useRef<OcType>(null);
 
+  let enteredWorld = useAtomValue(enterWorld);
+
   let { scene, camera } = useThree();
 
+  //handle clean touch events to prevant false panning state
   useEffect(() => {
     if (orbitControlsRef.current) {
       let c = orbitControlsRef.current;
@@ -27,36 +31,37 @@ export default function CamView() {
       //init setup
       c.object.position.set(0, 1.7, -2);
     }
-    window.onkeydown = (e) => {
-      if (e.code == "ArrowDown" || "ArrowUp" || "KeyW" || "KeyS") {
-        characterMoving = true;
-        spectating = false;
-      }
-      // console.log(e.code);
-    };
-    window.onkeyup = (e) => {
-      if (e.code == "ArrowDown" || "ArrowUp" || "KeyW" || "KeyS") {
-        characterMoving = false;
-      }
-      // console.log(e.code);
-    };
+    if (enteredWorld) {
+      window.onkeydown = (e) => {
+        if (e.code == "ArrowDown" || "ArrowUp" || "KeyW" || "KeyS") {
+          characterMoving = true;
+          spectating = false;
+        }
+        // console.log(e.code);
+      };
+      window.onkeyup = (e) => {
+        if (e.code == "ArrowDown" || "ArrowUp" || "KeyW" || "KeyS") {
+          characterMoving = false;
+        }
+        // console.log(e.code);
+      };
 
-    window.onmousedown = (e) => {
-      if ((e.target as HTMLElement).className.split("-")[0] != "joystick") {
-        spectating = true;
-        console.log("panning");
-      }
-    };
+      window.onmousedown = (e) => {
+        if ((e.target as HTMLElement).className.split("-")[0] != "joystick") {
+          spectating = true;
+          console.log("panning");
+        }
+      };
 
-    window.ontouchstart = (e) => {
-      if ((e.target as HTMLElement).className.split("-")[0] != "joystick") {
-        spectating = true;
-        console.log("panning");
-      } else {
-        spectating = false;
-      }
-    };
-
+      window.ontouchstart = (e) => {
+        if ((e.target as HTMLElement).className.split("-")[0] != "joystick") {
+          spectating = true;
+          console.log("panning");
+        } else {
+          spectating = false;
+        }
+      };
+    }
     let character = scene.getObjectByName("charRigidBody");
   });
 
@@ -65,7 +70,7 @@ export default function CamView() {
 
   useFrame(({ scene, camera, clock }) => {
     let character = scene.getObjectByName("charRigidBody");
-    if (character)
+    if (character && enteredWorld)
       if (character && orbitControlsRef.current) {
         let offset = new Vector3(0, 1.7, -2);
 
@@ -73,7 +78,7 @@ export default function CamView() {
 
         let idealLookAt = new Vector3(0, 1.25, 0).add(charPos);
         offset.applyQuaternion(character.quaternion);
-
+        //handle offset off camera
         let idealCamPos = offset.add(charPos);
         if (characterMoving) {
           orbitControlsRef.current.object.position.lerp(idealCamPos, 0.5);
@@ -89,9 +94,5 @@ export default function CamView() {
     TWEEN.update();
   });
 
-  return (
-    <>
-      <OrbitControls ref={orbitControlsRef} />
-    </>
-  );
+  return <>{enteredWorld && <OrbitControls ref={orbitControlsRef} />}</>;
 }

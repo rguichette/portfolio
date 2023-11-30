@@ -1,12 +1,9 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { countAtom } from "../MobileControls/testAnything";
-import { useAtom, useAtomValue } from "jotai";
-import { duelJoyStickAtom } from "../../state";
-import { useFrame, useThree } from "@react-three/fiber";
-import { Html } from "@react-three/drei";
+import { useEffect } from "react";
+
 import { Object3D } from "three";
 
 import JoystickController from "joystick-controller";
+import { useThree } from "@react-three/fiber";
 
 interface jsOptions {
   x?: number;
@@ -87,16 +84,5 @@ export default function MobileControl2() {
     );
   }, []);
 
-  //handle clean touch events to prevant false panning state
-  useEffect(() => {}, []);
-
-  return (
-    <></>
-    // <Html>
-    //   <div className={"joystick-area absolute z-10 bg-slate-400"}>
-    //     MobileControl2
-    //     {/* <div>{_timer}</div> */}
-    //   </div>
-    // </Html>
-  );
+  return <></>;
 }

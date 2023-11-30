@@ -3,15 +3,13 @@ import { GlitchableElement, PowerGlitch } from "powerglitch";
 import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 // import { useGlitch, GlitchHandle } from "react-powerglitch";
 
-import { isMobile } from "react-device-detect";
-
 import "./animation.css";
 import { Html, useProgress } from "@react-three/drei";
 import { DefaultLoadingManager, LoadingManager } from "three";
 import { useAtom } from "jotai";
 
 import ProgressBar from "@ramonak/react-progress-bar";
-import { enterWorld } from "../../state";
+import { enterWorld, isMobileAtom } from "../../state";
 let isH = false;
 
 let displayBtnTimer: any;
@@ -51,7 +49,7 @@ let LoadingPage = () => {
 
   //   const glitch: GlitchHandle = useGlitch({});
   let pro = 0;
-  let [horizontal, setHorizontal] = useState(false);
+  let [horizontal, setHorizontal] = useAtom(isMobileAtom);
 
   let [displayContinue, setDisplayContinue] = useState(false);
 
@@ -130,7 +128,7 @@ let LoadingPage = () => {
     <Suspense>
       <Html center className={`${submit && "fade_away"} `}>
         <div
-          id="glitch"
+          id={`${horizontal && "glitch"} `}
           className=" z-20  bg-slate-900 w-screen h-screen flex flex-col justify-center items-center uppercas "
         >
           {!horizontal && !submit && (

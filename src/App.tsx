@@ -70,7 +70,7 @@ function App() {
         >
           <MobileControls2 />
           <World />
-          {/* <LoadingPage /> */}
+          <LoadingPage />
 
           {/* <WorkStation /> */}
           {/* <Monitor vidSrc="/3Dassets/textures/codeScroll.mp4" /> */}

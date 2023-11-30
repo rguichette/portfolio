@@ -1,43 +1,14 @@
-import {
-  Box,
-  Cone,
-  OrbitControls,
-  useAnimations,
-  useGLTF,
-  useKeyboardControls,
-} from "@react-three/drei";
+import { useAnimations, useGLTF, useKeyboardControls } from "@react-three/drei";
 import { MeshProps, useFrame } from "@react-three/fiber";
 import {
   CapsuleCollider,
-  CuboidCollider,
-  MeshCollider,
   RapierRigidBody,
   RigidBody,
-  euler,
-  quat,
-  vec3,
 } from "@react-three/rapier";
 import { useAtom, useAtomValue } from "jotai";
 import React, { forwardRef, useEffect, useRef } from "react";
-import {
-  AnimationAction,
-  AnimationClip,
-  Euler,
-  Group,
-  LoopOnce,
-  LoopRepeat,
-  MathUtils,
-  Mesh,
-  Quaternion,
-  Scene,
-  Vector3,
-} from "three";
-import { color, mix, rotateUV, sin } from "three/examples/jsm/nodes/Nodes.js";
-import {
-  isCharacterMoving,
-  showDetailsPopUp,
-  showHelpPopUp,
-} from "../../state";
+import { AnimationAction, Mesh, Quaternion, Scene, Vector3 } from "three";
+import { showDetailsPopUp, showHelpPopUp } from "../../state";
 import { duelJsUserDataType } from "../MobileControls2";
 
 enum Controls {
@@ -72,13 +43,6 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
   );
 
   const { actions, mixer } = useAnimations(animations, character);
-  //mobile  input
-
-  // useEffect(() => {
-  //   window.ontouchmove = () => {
-  //     console.log("hello from js player:", joystick);
-  //   };
-  // }, [joystick]);
 
   let idleAnimation = animations.find(
     (clip) => clip.name == "idle"
@@ -95,21 +59,8 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
     (clip) => clip.name == "walking"
   ) as THREE.AnimationClip;
 
-  //listen for key presses in to send "character moving message"
-  // onkeydown = () => {
-  //   if (get().forward || get().back) {
-  //     console.log("setting true");
-  //     setCharMoving(true);
-  //   } else {
-  //     setCharMoving(false);
-  //     console.log("setting false");
-  //   }
-  // };
-  // console.log("joystick", joystick);
-
-  // console.log("RE-RENDERING PLAYER? ");
   useFrame(({ clock, scene }) => {
-    // Joystick:
+    // Joystick: -- handles mobile input
     let joystick = scene.getObjectByName("Joystick_data")
       ?.userData as duelJsUserDataType;
 
@@ -137,10 +88,6 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
         direction.applyQuaternion(rotation);
         //handl mobile
 
-        // if (joystick.left as any) {
-        //   console.log("joy:", joystick);
-        // }
-        // Set the linear velocity in the forward direction <--> character movement
         if (
           (get().forward || joystick?.left?.y > 0) &&
           !helpWindow &&
@@ -152,22 +99,6 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
           direction.multiplyScalar(-speed);
           rbRef.current.setLinvel(direction, true);
         }
-
-        // console.log("joystick right: ",  );
-
-        // if (joystick x > 0) {
-        //   angle -= turnSpeed;
-        //   // Rotate based on user input
-        //   direction.set(0, 1, 0);
-        //   rotation.setFromAxisAngle(direction, angle);
-        //   rbRef.current.setRotation(rotation, true);
-        // } else if (joystick.x < 0) {
-        //   angle += turnSpeed;
-        //   // Rotate based on user input
-        //   direction.set(0, 1, 0);
-        //   rotation.setFromAxisAngle(direction, angle);
-        //   rbRef.current.setRotation(rotation, true);
-        // }
       }
     }
     scene.updateMatrixWorld();
