@@ -87,16 +87,16 @@ export default function MobileControl2() {
     );
   }, []);
 
-  useFrame(({ scene }) => {
-    // console.log(scene.getObjectByName("Joystick_data")?.userData);
-  });
+  //handle clean touch events to prevant false panning state
+  useEffect(() => {}, []);
 
   return (
-    <Html>
-      <div className={"joystick-area absolute z-10 bg-slate-400"}>
-        MobileControl2
-        {/* <div>{_timer}</div> */}
-      </div>
-    </Html>
+    <></>
+    // <Html>
+    //   <div className={"joystick-area absolute z-10 bg-slate-400"}>
+    //     MobileControl2
+    //     {/* <div>{_timer}</div> */}
+    //   </div>
+    // </Html>
   );
 }

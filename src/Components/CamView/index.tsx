@@ -47,37 +47,17 @@ export default function CamView() {
         console.log("panning");
       }
     };
+
     window.ontouchstart = (e) => {
       if ((e.target as HTMLElement).className.split("-")[0] != "joystick") {
         spectating = true;
         console.log("panning");
       } else {
-        // spectating = false;
+        spectating = false;
       }
     };
-    // ontouchmove = (e) => {
-    //   if ((e.target as HTMLElement).className.split("-")[0] != "joystick") {
-    //     spectating = true;
-    //     console.log("panning");
-    //   } else {
-    //     spectating = false;
-    //   }
-    // };
-
-    // onmouseup = () => {
-    //   spectating = false;
-    // };
 
     let character = scene.getObjectByName("charRigidBody");
-
-    // new TWEEN.Tween(camera.position)
-    //   .to({ x: character?.position.x, z: character?.position.z }, 1000)
-    //   .onUpdate(function () {
-    //     console.log(100, character?.position);
-    //   });
-
-    // .repeat(Infinity)
-    // .start();
   });
 
   var position = { x: 0, y: 300 };
@@ -101,9 +81,6 @@ export default function CamView() {
           if (!spectating)
             orbitControlsRef.current.object.position.lerp(idealCamPos, 0.05);
         }
-
-        // orbitControlsRef.current.object.position.x = idealCamPos.x;
-        // orbitControlsRef.current.object.position.z = idealCamPos.z;
 
         orbitControlsRef.current.target = idealLookAt;
         orbitControlsRef.current.update();
