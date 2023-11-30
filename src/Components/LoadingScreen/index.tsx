@@ -12,8 +12,6 @@ import ProgressBar from "@ramonak/react-progress-bar";
 import { enterWorld, isMobileAtom } from "../../state";
 let isH = false;
 
-let displayBtnTimer: any;
-
 let LoadingPage = () => {
   let [progress, setProgress] = useState(0);
   let [submit, setSubmit] = useAtom(enterWorld);
@@ -49,7 +47,7 @@ let LoadingPage = () => {
 
   //   const glitch: GlitchHandle = useGlitch({});
   let pro = 0;
-  let [horizontal, setHorizontal] = useAtom(isMobileAtom);
+  let [horizontal, setHorizontal] = useState(false);
 
   let [displayContinue, setDisplayContinue] = useState(false);
 
@@ -60,13 +58,14 @@ let LoadingPage = () => {
     // console.log(container);
     let glitchOptions = {
       shake: {
-        velocity: 3,
-        amplitudeX: 0,
-        amplitudeY: -0,
+        velocity: 1,
+        amplitudeX: -0.5,
+        amplitudeY: 0.3,
       },
     };
     if (horizontal) {
       PowerGlitch.glitch(container, glitchOptions);
+    } else {
     }
     function detectOri(e: Event) {
       if (portrait.matches && !submit) {
@@ -86,23 +85,6 @@ let LoadingPage = () => {
       setHorizontal(true);
     }
 
-    //listen to device orientation
-
-    // window.addEventListener("loadstart", detectOri);
-    // window.addEventListener("orientationchange", detectOri);
-
-    // let displayBtnTimer = setInterval(() => {
-    //   console.log("PROGRESS:", progress, "\n", "ContinueBtn: ", setProgress);
-    //   setDisplayContinue(true);
-    //   if (progress == 100) {
-    //   }
-    // }, 2000);
-
-    // displayBtnTimer;
-    // if (displayContinue) {
-    //   clearInterval("displayBtnTimer");
-    // }
-
     return function cleanupListener() {
       //   window.removeEventListener("orientationchange", detectOri);
     };
@@ -114,21 +96,22 @@ let LoadingPage = () => {
   var touchDevice = "ontouchstart" in document.documentElement;
 
   useEffect(() => {
-    displayBtnTimer = setTimeout(() => {
-      if (progress == 100) {
+    if (progress == 100) {
+      let displayBtnTimer = setTimeout(() => {
         setDisplayContinue(true);
-      } else setDisplayContinue(false);
-    }, 2000);
+      }, 2000);
 
-    console.log("TOUCH: ", touchDevice);
-    if (displayContinue) clearTimeout(displayBtnTimer);
-  }, [progress, touchDevice]);
+      if (displayContinue) clearTimeout(displayBtnTimer);
+    }
+
+    console.log("Progress: ", progress);
+  }, [progress, touchDevice, horizontal]);
 
   return (
     <Suspense>
       <Html center className={`${submit && "fade_away"} `}>
         <div
-          id={`${horizontal && "glitch"} `}
+          // id="glitch"
           className=" z-20  bg-slate-900 w-screen h-screen flex flex-col justify-center items-center uppercas "
         >
           {!horizontal && !submit && (
@@ -137,7 +120,7 @@ let LoadingPage = () => {
             </div>
           )}
 
-          <div className="arc absolute flex flex-col justify-center items-center rounded-full">
+          <div className="arc  absolute flex flex-col justify-center items-center rounded-full ">
             <span
               id="top"
               className="w-[370px] h-[380px] sm:h-[260px] sm:w-[260px]"
@@ -151,7 +134,7 @@ let LoadingPage = () => {
           </div>
 
           <div
-            id="circle"
+            id="glitch"
             className="p-4 flex flex-col rounded-full w-[300px] h-[300px] items-center justify-center border-4  border-purple-700 text-slate-200 uppercase sm:h-[200px] sm:w-[200px] "
           >
             {/* <h1 className="text-2xl  bg-slate-200" /> */}
@@ -167,20 +150,18 @@ let LoadingPage = () => {
               developer
             </p>
           </div>
+        </div>
 
-          {/*TODO:  pnce loaded - replace with btn */}
-          {/* <div className="block bg-slate-100 mt-8">Loading</div> */}
-          <div
-            className="m-4 sm:m-6 absolute bottom-0 mb-8 text-slate-200"
-            // onClick={() => {
-            //   console.log("Im in");
-            //   setInside(true);
-            // }}
-          >
-            {/* <h1>{Math.floor(progress)}</h1> */}
-
-            {/* {isMobile ? "Tap to continue" : "Click to continue"} */}
-          </div>
+        {/*TODO:  pnce loaded - replace with btn */}
+        {/* <div className="block bg-slate-100 mt-8">Loading</div> */}
+        <div
+          className="m-4 sm:m-6 absolute bottom-0 mb-8 text-slate-200"
+          // onClick={() => {
+          //   console.log("Im in");
+          //   setInside(true);
+          // }}
+        >
+          {/* <h1>{Math.floor(progress)}</h1> */}
         </div>
 
         {((touchDevice && horizontal) || !touchDevice) && (
@@ -196,7 +177,7 @@ let LoadingPage = () => {
             </span>
             {displayContinue && (
               <button
-                className="animate-pulse delay-2000  h-6 w-32 sm:p-2  md:p-0 "
+                className="animate-pulse delay-2000  h-6 w-32 sm:p-2  md:p-0 text-stone-100"
                 onClick={() => setSubmit(true)}
               >
                 CONTINUE
