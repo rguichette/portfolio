@@ -28,7 +28,10 @@ import HtmlInteractivity from "./Components/HtmlInteractivity/HtmlInteractivity"
 import { DefaultLoadingManager } from "three";
 import { enterWorld } from "./state";
 import MobileControls from "./Components/MobileControls";
-import TestAnything from "./Components/MobileControls/testAnything";
+import TestAnything, {
+  countAtom,
+} from "./Components/MobileControls/testAnything";
+import MobileControls2 from "./Components/MobileControls2";
 
 enum Controls {
   forward = "forward",
@@ -47,6 +50,7 @@ let co = [
 ];
 function App() {
   let worldEdtered = useAtomValue(enterWorld);
+
   return (
     <>
       {/* this acts as a blinder */}
@@ -55,26 +59,25 @@ function App() {
           worldEdtered && "hidden"
         }  left-0 bg-slate-900 w-screen h-screen  `}
       /> */}
-      <Provider>
-        <KeyboardControls map={co}>
-          <Canvas
-            className=" w-screen h-screen bg-green-300 "
-            shadows
+      {/* <MobileControls /> */}
 
-            // camera={{ fov: 24, position: [10, -1, 2] }}
-          >
-            {/* <LoadingPage /> */}
-            <MobileControls />
-            <World />
-            {/* <LoadingPage /> */}
+      <KeyboardControls map={co}>
+        <Canvas
+          className=" w-screen h-screen bg-green-300 "
+          shadows
 
-            {/* <WorkStation /> */}
-            {/* <Monitor vidSrc="/3Dassets/textures/codeScroll.mp4" /> */}
-          </Canvas>
+          // camera={{ fov: 24, position: [10, -1, 2] }}
+        >
+          <MobileControls2 />
+          <World />
+          {/* <LoadingPage /> */}
 
-          <TestAnything />
-        </KeyboardControls>
-      </Provider>
+          {/* <WorkStation /> */}
+          {/* <Monitor vidSrc="/3Dassets/textures/codeScroll.mp4" /> */}
+        </Canvas>
+
+        {/* <TestAnything /> */}
+      </KeyboardControls>
       <HtmlInteractivity />
     </>
   );

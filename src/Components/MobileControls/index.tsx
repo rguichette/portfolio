@@ -5,7 +5,7 @@ import { atom, useAtom, useAtomValue } from "jotai";
 import { duelJoyStickAtom, leftJsAtom, rightJsAtom } from "../../state";
 import { focusAtom } from "jotai-optics";
 import { Html } from "@react-three/drei";
-
+import "./style.css";
 // import { useJs, useTest } from "./mobileState";
 
 let dueljs = {
@@ -18,7 +18,7 @@ let rightJSdata = {};
 
 const _rightjs = new JoystickController(
   {
-    containerClass: "rightjs-container",
+    containerClass: "rightjs-container duel_js_controller",
     leftToRight: false,
     bottomToUp: true,
     x: "10%",
@@ -37,7 +37,7 @@ const _rightjs = new JoystickController(
 );
 const _leftjs = new JoystickController(
   {
-    containerClass: "leftjs-container",
+    containerClass: "duel_js_controller",
 
     leftToRight: false,
     bottomToUp: true,
@@ -81,7 +81,7 @@ export default function MobileControls() {
 
     window.ontouchend = (e) => {
       if (isLeftJoystick(e)) {
-        setLeftjs((oldLeftJs) => dueljs.left);
+        setLeftjs((_) => dueljs.left);
       }
       if (isRightJoystick(e)) {
         setRightjs((_) => dueljs.right);
@@ -92,12 +92,12 @@ export default function MobileControls() {
 
   return (
     <>
-      <Html>
-        <div className=" h-20 w-screen absolute   bottom-5 ">
-          <div className={"joystick_wrapper rightjs-container absolute"} />
-          <div className={"joystick_wrapper leftjs-container absolute"} />
-        </div>
-      </Html>
+      {/* <div className="joystick-parent-wrapper h-40 w-screen absolute z-10 bg-blue-600  bottom-5 opacity-25 "> */}
+      {/* <div
+        className={"joystick-wrapper rightjs-container bg-yellow-300 relative "}
+      /> */}
+      {/* <div className={"joystick_wrapper leftjs-container bg-yellow-800 h-32"} /> */}
+      {/* </div> */}
     </>
   );
 }

@@ -27,32 +27,32 @@ export default function CamView() {
       //init setup
       c.object.position.set(0, 1.7, -2);
     }
-    onkeydown = (e) => {
+    window.onkeydown = (e) => {
       if (e.code == "ArrowDown" || "ArrowUp" || "KeyW" || "KeyS") {
         characterMoving = true;
         spectating = false;
       }
       // console.log(e.code);
     };
-    onkeyup = (e) => {
+    window.onkeyup = (e) => {
       if (e.code == "ArrowDown" || "ArrowUp" || "KeyW" || "KeyS") {
         characterMoving = false;
       }
       // console.log(e.code);
     };
 
-    onmousedown = (e) => {
+    window.onmousedown = (e) => {
       if ((e.target as HTMLElement).className.split("-")[0] != "joystick") {
         spectating = true;
         console.log("panning");
       }
     };
-    ontouchstart = (e) => {
+    window.ontouchstart = (e) => {
       if ((e.target as HTMLElement).className.split("-")[0] != "joystick") {
         spectating = true;
         console.log("panning");
       } else {
-        spectating = false;
+        // spectating = false;
       }
     };
     // ontouchmove = (e) => {
@@ -96,7 +96,7 @@ export default function CamView() {
 
         let idealCamPos = offset.add(charPos);
         if (characterMoving) {
-          orbitControlsRef.current.object.position.lerp(idealCamPos, 0.1);
+          orbitControlsRef.current.object.position.lerp(idealCamPos, 0.5);
         } else {
           if (!spectating)
             orbitControlsRef.current.object.position.lerp(idealCamPos, 0.05);

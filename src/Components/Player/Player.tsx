@@ -34,11 +34,11 @@ import {
 } from "three";
 import { color, mix, rotateUV, sin } from "three/examples/jsm/nodes/Nodes.js";
 import {
-  duelJoyStickAtom,
   isCharacterMoving,
   showDetailsPopUp,
   showHelpPopUp,
 } from "../../state";
+import { duelJsUserDataType } from "../MobileControls2";
 
 enum Controls {
   forward = "forward",
@@ -51,11 +51,8 @@ enum Controls {
 let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
   let detailsWindow = useAtomValue(showDetailsPopUp);
   let helpWindow = useAtomValue(showHelpPopUp);
-  let joystick = useAtomValue(duelJoyStickAtom);
 
   let [_, get] = useKeyboardControls<Controls>();
-
-  let [charMoving, setCharMoving] = useAtom(isCharacterMoving);
 
   //  rgidBodyRef
   let rbRef = useRef<RapierRigidBody>(null!);
@@ -83,18 +80,18 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
   //   };
   // }, [joystick]);
 
-  let idle = animations.find(
+  let idleAnimation = animations.find(
     (clip) => clip.name == "idle"
   ) as THREE.AnimationClip;
 
-  let turnRight = animations.find(
+  let turnRightAnimation = animations.find(
     (clip) => clip.name == "turnRight"
   ) as THREE.AnimationClip;
 
   let typing = animations.find(
     (clip) => clip.name == "typing"
   ) as THREE.AnimationClip;
-  let walking = animations.find(
+  let walkingAnimation = animations.find(
     (clip) => clip.name == "walking"
   ) as THREE.AnimationClip;
 
@@ -108,19 +105,26 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
   //     console.log("setting false");
   //   }
   // };
-  console.log("joystick", joystick);
+  // console.log("joystick", joystick);
+
+  // console.log("RE-RENDERING PLAYER? ");
   useFrame(({ clock, scene }) => {
+    // Joystick:
+    let joystick = scene.getObjectByName("Joystick_data")
+      ?.userData as duelJsUserDataType;
+
     if (rbRef.current) {
       // Check if the "left" key is pressed
       if (!detailsWindow && !helpWindow) {
-        if (get().left) {
+        if (get().left || joystick?.right?.x < 0) {
           angle += turnSpeed;
           // Rotate based on user input
           direction.set(0, 1, 0);
           rotation.setFromAxisAngle(direction, angle);
           rbRef.current.setRotation(rotation, true);
         }
-        if (get().right) {
+
+        if (get().right || joystick?.right?.x > 0) {
           angle -= turnSpeed;
           // Rotate based on user input
           direction.set(0, 1, 0);
@@ -138,16 +142,32 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
         // }
         // Set the linear velocity in the forward direction <--> character movement
         if (
-          (get().forward || (joystick.left as any).y > 5) &&
+          (get().forward || joystick?.left?.y > 0) &&
           !helpWindow &&
           !detailsWindow
         ) {
           direction.multiplyScalar(speed);
           rbRef.current.setLinvel(direction, true);
-        } else if (get().back || (joystick.left as any).y < 0) {
+        } else if (get().back || joystick?.left?.y < 0) {
           direction.multiplyScalar(-speed);
           rbRef.current.setLinvel(direction, true);
         }
+
+        // console.log("joystick right: ",  );
+
+        // if (joystick x > 0) {
+        //   angle -= turnSpeed;
+        //   // Rotate based on user input
+        //   direction.set(0, 1, 0);
+        //   rotation.setFromAxisAngle(direction, angle);
+        //   rbRef.current.setRotation(rotation, true);
+        // } else if (joystick.x < 0) {
+        //   angle += turnSpeed;
+        //   // Rotate based on user input
+        //   direction.set(0, 1, 0);
+        //   rotation.setFromAxisAngle(direction, angle);
+        //   rbRef.current.setRotation(rotation, true);
+        // }
       }
     }
     scene.updateMatrixWorld();
@@ -156,30 +176,22 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
     //Character animations:
     let currentAnim: AnimationAction;
 
-    if (
-      (get().forward || (joystick.left as any).y > 5) &&
-      !helpWindow &&
-      !detailsWindow
-    ) {
-      mixer.clipAction(walking).play();
-      mixer.clipAction(walking).timeScale = 1;
-      mixer.clipAction(idle).stop();
-    } else if (
-      (get().back || (joystick.left as any).y < 0) &&
-      !helpWindow &&
-      !detailsWindow
-    ) {
-      mixer.clipAction(walking).timeScale = -1;
-      mixer.clipAction(walking).play();
+    if (get().forward && !helpWindow && !detailsWindow) {
+      mixer.clipAction(walkingAnimation).play();
+      mixer.clipAction(walkingAnimation).timeScale = 1;
+      mixer.clipAction(idleAnimation).stop();
+    } else if (get().back && !helpWindow && !detailsWindow) {
+      mixer.clipAction(walkingAnimation).timeScale = -1;
+      mixer.clipAction(walkingAnimation).play();
     } else if (get().left) {
       // mixer.clipAction(turnRight).timeScale = -0.9;
       // mixer.clipAction(turnRight).play();
     } else if (get().right) {
       // mixer.clipAction(turnRight).play();
     } else {
-      mixer.clipAction(idle).play();
-      mixer.clipAction(walking).stop();
-      mixer.clipAction(turnRight).stop();
+      mixer.clipAction(idleAnimation).play();
+      mixer.clipAction(walkingAnimation).stop();
+      mixer.clipAction(turnRightAnimation).stop();
     }
   });
 

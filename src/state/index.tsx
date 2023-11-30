@@ -10,13 +10,10 @@ export let isCharacterMoving = atom(false);
 export let enterWorld = atom(false);
 
 //mobile controls
-export let duelJoyStickAtom = atom({
-  left: {},
-  right: {},
-});
-export let leftJsAtom = focusAtom(duelJoyStickAtom, (optic) =>
-  optic.prop("left")
-);
-export let rightJsAtom = focusAtom(duelJoyStickAtom, (optic) =>
-  optic.prop("right")
-);
+export let duelJoyStickAtom = atom(0);
+// export let leftJsAtom = focusAtom(duelJoyStickAtom, (optic) =>
+//   optic.prop("left")
+// );
+// export let rightJsAtom = focusAtom(duelJoyStickAtom, (optic) =>
+//   optic.prop("right")
+// );
