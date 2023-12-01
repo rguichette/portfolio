@@ -6,7 +6,7 @@ import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import "./animation.css";
 import { Html, useProgress } from "@react-three/drei";
 import { DefaultLoadingManager, LoadingManager } from "three";
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 
 import ProgressBar from "@ramonak/react-progress-bar";
 import { enterWorld, isMobileAtom } from "../../state";
@@ -48,6 +48,7 @@ let LoadingPage = () => {
   //   const glitch: GlitchHandle = useGlitch({});
   let pro = 0;
   let [horizontal, setHorizontal] = useState(false);
+  let ismobile = useAtomValue(isMobileAtom);
 
   let [displayContinue, setDisplayContinue] = useState(false);
 
@@ -78,6 +79,7 @@ let LoadingPage = () => {
         }
       }
     }
+    console.log("isMobile: ", ismobile);
 
     portrait.addEventListener("change", detectOri);
 
@@ -114,7 +116,7 @@ let LoadingPage = () => {
           // id="glitch"
           className=" z-20  bg-slate-900 w-screen h-screen flex flex-col justify-center items-center uppercas "
         >
-          {!horizontal && !submit && (
+          {!horizontal && !submit && ismobile && (
             <div className=" bg-black absolute h-full w-full z-10 flex justify-center items-center">
               <img src="/rotate.gif" />
             </div>

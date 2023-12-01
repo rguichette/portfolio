@@ -82,13 +82,8 @@ function App() {
         >
           {_ismobile && <MobileControls2 />}
           <World />
-          <LoadingPage />
-
-          {/* <WorkStation /> */}
-          {/* <Monitor vidSrc="/3Dassets/textures/codeScroll.mp4" /> */}
+          {/* <LoadingPage /> */}
         </Canvas>
-
-        {/* <TestAnything /> */}
       </KeyboardControls>
       <HtmlInteractivity />
     </>
