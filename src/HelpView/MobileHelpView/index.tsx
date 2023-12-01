@@ -13,10 +13,10 @@ export default function MobileHelp() {
           <p className="-mt-4">Pan Around</p>
         </div>
         <div className="bg-blue-200-- h-20 flex  items-center pl-4 pr-4 justify-between mb-3 mr-3 ml-3">
-          <div className="w-16 h-16 bg-black-- border-black border-2 justify-center items-center rounded-full  flex text-2xl text-white  pb-1">
+          <div className="w-16 h-16 bg-black-- border-slate-300 border-2 justify-center items-center rounded-full  flex text-2xl text-white  pb-1">
             ↕
           </div>
-          <div className="w-16 h-16 bg-black-- border-black border-2 justify-center items-center rounded-full  flex text-2xl text-white pb-2  ">
+          <div className="w-16 h-16 bg-black-- border-slate-300 border-2 justify-center items-center rounded-full  flex text-2xl text-white pb-2  ">
             ⟷
           </div>
         </div>

@@ -1,16 +1,19 @@
-import { useAtom } from "jotai";
-import { showHelpPopUp } from "../state";
+import { useAtom, useAtomValue } from "jotai";
+import { isMobileAtom, showHelpPopUp } from "../state";
 import Key from "./Keys";
 import DesktopHelp from "./DesktopHelpView";
 import MobileHelp from "./MobileHelpView";
 
 export default function HelpView() {
   let [showHelp, setShowHelp] = useAtom(showHelpPopUp);
+  let isMobile = useAtomValue(isMobileAtom);
   return (
-    <div className="absolute top-0  w-full bg-slate-400 h-full  flex flex-col justify-center content-center text-center opacity-90">
+    <div className="absolute top-0  w-full bg-slate-400 h-full  flex flex-col justify-center content-center text-center text-opacity-95">
       <p className=" p-4 text-2xl ">Help</p>
       {/* <DesktopHelp /> */}
-      <MobileHelp />
+
+      {isMobile ? <MobileHelp /> : <DesktopHelp />}
+      {/* <MobileHelp /> */}
 
       <div className="">
         <button
