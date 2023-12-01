@@ -7,7 +7,14 @@ import {
 } from "@react-three/rapier";
 import { useAtom, useAtomValue } from "jotai";
 import React, { forwardRef, useEffect, useRef } from "react";
-import { AnimationAction, Mesh, Quaternion, Scene, Vector3 } from "three";
+import {
+  AnimationAction,
+  LoopOnce,
+  Mesh,
+  Quaternion,
+  Scene,
+  Vector3,
+} from "three";
 import { showDetailsPopUp, showHelpPopUp } from "../../state";
 import { duelJsUserDataType } from "../MobileControls2";
 
@@ -67,7 +74,38 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
     if (rbRef.current) {
       // Check if the "left" key is pressed
       if (!detailsWindow && !helpWindow) {
-        if (get().left || joystick?.right?.x < 0) {
+        //handle mobile
+        if (joystick) {
+          if (joystick?.left?.y) {
+            console.log("detected Joystick");
+            if (joystick?.left?.y > 0 && !helpWindow && !detailsWindow) {
+              direction.multiplyScalar(speed);
+              rbRef.current.setLinvel(direction, true);
+            } else if (joystick?.left?.y < 0) {
+              direction.multiplyScalar(-speed);
+              rbRef.current.setLinvel(direction, true);
+            }
+          }
+
+          if (joystick.right?.x) {
+            if (joystick.right?.x < 0) {
+              angle += turnSpeed;
+              // Rotate based on user input
+              direction.set(0, 1, 0);
+              rotation.setFromAxisAngle(direction, angle);
+              rbRef.current.setRotation(rotation, true);
+            } else if (joystick?.right?.x > 0) {
+              angle -= turnSpeed;
+              // Rotate based on user input
+              direction.set(0, 1, 0);
+              rotation.setFromAxisAngle(direction, angle);
+              rbRef.current.setRotation(rotation, true);
+            }
+          }
+        }
+
+        //handle desktop
+        if (get().left) {
           angle += turnSpeed;
           // Rotate based on user input
           direction.set(0, 1, 0);
@@ -75,7 +113,7 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
           rbRef.current.setRotation(rotation, true);
         }
 
-        if (get().right || joystick?.right?.x > 0) {
+        if (get().right) {
           angle -= turnSpeed;
           // Rotate based on user input
           direction.set(0, 1, 0);
@@ -88,14 +126,10 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
         direction.applyQuaternion(rotation);
         //handl mobile
 
-        if (
-          (get().forward || joystick?.left?.y > 0) &&
-          !helpWindow &&
-          !detailsWindow
-        ) {
+        if (get().forward && !helpWindow && !detailsWindow) {
           direction.multiplyScalar(speed);
           rbRef.current.setLinvel(direction, true);
-        } else if (get().back || joystick?.left?.y < 0) {
+        } else if (get().back) {
           direction.multiplyScalar(-speed);
           rbRef.current.setLinvel(direction, true);
         }
@@ -118,7 +152,9 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
       // mixer.clipAction(turnRight).timeScale = -0.9;
       // mixer.clipAction(turnRight).play();
     } else if (get().right) {
-      // mixer.clipAction(turnRight).play();
+      // let _anim = mixer.clipAction(turnRightAnimation).setLoop(LoopOnce, 8);
+      // _anim.clampWhenFinished = false;
+      // _anim.play();
     } else {
       mixer.clipAction(idleAnimation).play();
       mixer.clipAction(walkingAnimation).stop();

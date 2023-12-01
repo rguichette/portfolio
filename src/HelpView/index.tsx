@@ -10,10 +10,8 @@ export default function HelpView() {
   return (
     <div className="absolute top-0  w-full bg-slate-400 h-full  flex flex-col justify-center content-center text-center text-opacity-95">
       <p className=" p-4 text-2xl ">Help</p>
-      {/* <DesktopHelp /> */}
 
       {isMobile ? <MobileHelp /> : <DesktopHelp />}
-      {/* <MobileHelp /> */}
 
       <div className="">
         <button
