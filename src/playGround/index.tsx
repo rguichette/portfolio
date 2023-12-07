@@ -1,87 +1,106 @@
-import { Box, KeyboardControls, Plane, Sphere } from "@react-three/drei";
+import {
+  Box,
+  Detailed,
+  Gltf,
+  Instance,
+  Instances,
+  InstancesProps,
+  KeyboardControls,
+  Merged,
+  OrbitControls,
+  Plane,
+  Sphere,
+  useGLTF,
+} from "@react-three/drei";
 import {
   CuboidCollider,
+  InstancedRigidBodies,
+  InstancedRigidBodyProps,
   Physics,
   RapierRigidBody,
   RigidBody,
 } from "@react-three/rapier";
-import React, { useEffect, useRef } from "react";
-import Player2 from "../Components/Player/Player2";
-import { co } from "../Components/CharacterController";
-import { AmbientLight, Vector3 } from "three";
-import { useFrame } from "@react-three/fiber";
-import PlayerF from "../Components/Player/PlayerF";
+import React, { Suspense, useEffect, useMemo, useRef } from "react";
+
+import {
+  AmbientLight,
+  BoxGeometry,
+  BufferGeometry,
+  Euler,
+  InstancedMesh,
+  Mesh,
+  MeshBasicMaterial,
+  MeshPhongMaterial,
+  MeshStandardMaterial,
+  Object3D,
+  SphereGeometry,
+  Vector3,
+} from "three";
+import { InstancedMeshProps, extend, useFrame } from "@react-three/fiber";
+import * as BufferGeometryUtils from "three/addons/utils/BufferGeometryUtils.js";
+import { GLTF } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { instance } from "three/examples/jsm/nodes/Nodes.js";
+import { ForwardRefComponent } from "@react-three/drei/helpers/ts-utils";
+
+// import p from "/smallPlant.glb";
+
+type GLTFExtension = GLTF & {
+  nodes: any;
+};
 
 export default function PlayGound() {
-  useFrame(({ scene, camera }) => {
-    const charB = scene.getObjectByName("charRigidBody");
+  let t = useGLTF("/smallPlant.glb");
+  let COUNT = 2;
 
-    if (charB && camera) {
-      charB.add(camera);
-      camera.lookAt(charB.position);
-    }
-  });
+  const instancedMeshRef = useRef<InstancedMesh>();
+  console.log(instancedMeshRef.current);
 
-  let r_Ref = useRef<RapierRigidBody>(null);
+  let { nodes } = useGLTF("/smallPlant.glb") as GLTFExtension;
+
+  let meshPositions = [];
 
   useEffect(() => {
-    if (r_Ref.current) {
-      let t = r_Ref.current;
+    if (instancedMeshRef.current) {
+      console.log(instancedMeshRef.current.children);
+      instancedMeshRef.current.children.forEach((child) => {
+        return meshPositions.push(child.position);
+      });
     }
-  });
+  }, []);
 
-  const fixedRigidBodyRef = React.useRef<RapierRigidBody>(null);
+  const instances = useMemo(() => {
+    const instances: InstancedRigidBodyProps[] = [];
 
-  useFrame(() => {
-    // Update the position of the fixed RigidBody if needed
-    if (fixedRigidBodyRef.current) {
-      //   fixedRigidBodyRef.current.setTranslation(new Vector3(0, 0, 0), true);
-      //   console.log("Sleeping", fixedRigidBodyRef.current.isSleeping());
-    }
-  });
+    return instances;
+  }, []);
 
   return (
     <>
-      <ambientLight />
-      <Physics debug>
-        <KeyboardControls map={co}>
-          <Player2 />
-        </KeyboardControls>
+      <group>
+        <ambientLight />
+        <OrbitControls />
+      </group>
 
-        <RigidBody type="dynamic" colliders={false}>
-          <Box position={[3, 0, -1]}>
-            <meshBasicMaterial color={"purple"} />
-            <CuboidCollider args={[1, 1, 1]} name="TEST" />
-          </Box>
-        </RigidBody>
+      <Merged meshes={nodes}>
+        {() =>
+          Object.entries(nodes).map(([key, _Obj]) => {
+            let Obj = _Obj as Mesh;
+            // console.log(Obj);
+            return (
+              <Instances
+                args={[Obj.geometry, Obj.material, 1]}
+                ref={instancedMeshRef as any}
+              >
+                <Instance scale={0.2} />
+                <Instance scale={0.2} position={[100, 4, 300]} />
+                <Instance scale={0.2} position={[300, -8, 100]} />
+              </Instances>
+            );
+          })
+        }
+      </Merged>
 
-        <RigidBody
-          type="kinematicPosition"
-          position={[0, 0, 2]}
-          ccd={true}
-          //   enabledTranslations={[false, false, false]}
-        >
-          {/* Add the Box geometry and material here */}
-          <Box>
-            <meshBasicMaterial color={"red"} />
-          </Box>
-
-          {/* Attach a CuboidCollider to the red box */}
-          <CuboidCollider args={[1, 1, 1]} mass={10000} />
-        </RigidBody>
-
-        <RigidBody type="fixed">
-          <Box
-            // rotation={[-Math.PI / 2, 0, 0]}
-            scale={[100, 1, 100]}
-            position={[0, -2, 0]}
-          >
-            <CuboidCollider args={[100, 1, 100]} position={[0, -2, 0]} />
-
-            {/* <meshBasicMaterial color={"#cb416b"} wireframe /> */}
-          </Box>
-        </RigidBody>
-      </Physics>
+      {/* PHYSICS */}
     </>
   );
 }

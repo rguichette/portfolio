@@ -45,7 +45,8 @@ import { infoAtom } from "../../state/index.tsx";
 import DetailCard from "../Cards/detailCard.tsx";
 import CamView from "../CamView/index.tsx";
 import City2 from "../City2/index.tsx";
-import GltfInstances from "../GltfInstances/index.tsx";
+import Ground from "../Ground/index.tsx";
+import PlayGound from "../../playGround/index.tsx";
 
 CameraControls.install({ THREE: THREE });
 
@@ -81,21 +82,24 @@ let World = () => {
 
         {/* <fog attach="fog" near={1} far={75} color={"#53376c"} /> */}
 
-        <ambientLight intensity={0.9} />
+        <ambientLight intensity={1.2} />
         {/* /3Dassets/Environment/plants/alien_plant.glb
         public/3Dassets/Environment/plants/plants.glb
         public/3Dassets/Cogs.glb
 
 
 */}
-        <OrbitControls />
+        {/* <OrbitControls /> */}
         <Suspense>
           <group position={[-20, 0, -20]}></group>
         </Suspense>
-        {/* <CamView /> */}
+        <CamView />
 
         <Physics debug gravity={[0, -9.988, 0]}>
-          <Player position={[0, 1, 0]} ref={characterRef} />
+          <Ground />
+          <Suspense>
+            <Player position={[0, 1, 0]} ref={characterRef} />
+          </Suspense>
 
           <City2 />
         </Physics>

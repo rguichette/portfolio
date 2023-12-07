@@ -34,6 +34,7 @@ import TestAnything, {
 import MobileControls2 from "./Components/MobileControls2";
 
 import { isMobile } from "is-mobile";
+import City2 from "./Components/City2";
 
 enum Controls {
   forward = "forward",
@@ -41,6 +42,7 @@ enum Controls {
   left = "left",
   right = "right",
   jump = "jump",
+  run = "run",
 }
 
 let co = [
@@ -49,6 +51,10 @@ let co = [
   { name: Controls.left, keys: ["ArrowLeft", "KeyA"] },
   { name: Controls.right, keys: ["ArrowRight", "KeyD"] },
   { name: Controls.jump, keys: ["Space"] },
+  {
+    name: Controls.run,
+    keys: ["ShiftRight", "ShiftLeft"],
+  },
 ];
 function App() {
   let [_ismobile, setIsMobile] = useAtom(isMobileAtom);
@@ -80,9 +86,9 @@ function App() {
 
           // camera={{ fov: 24, position: [10, -1, 2] }}
         >
-          {_ismobile && <MobileControls2 />}
-          <World />
           {/* <LoadingPage /> */}
+          {/* {_ismobile && <MobileControls2 />} */}
+          <World />
         </Canvas>
       </KeyboardControls>
       <HtmlInteractivity />

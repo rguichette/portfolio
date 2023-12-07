@@ -24,6 +24,7 @@ enum Controls {
   left = "left",
   right = "right",
   jump = "jump",
+  run = "run",
 }
 
 let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
@@ -43,29 +44,30 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
 
   let angle = 0;
   let turnSpeed = 0.02;
-  let speed = 3;
 
-  let { scene: character, animations } = useGLTF(
-    "/3Dassets/character/charAnim.glb"
-  );
+  let { scene: character, animations } = useGLTF("public/PlayerMain.glb");
 
   const { actions, mixer } = useAnimations(animations, character);
+  console.log("ANIMATIONS: ", animations);
 
   let idleAnimation = animations.find(
-    (clip) => clip.name == "idle"
+    (clip) => clip.name == "Breathing_idle"
   ) as THREE.AnimationClip;
 
-  let turnRightAnimation = animations.find(
-    (clip) => clip.name == "turnRight"
+  let IdleHappy = animations.find(
+    (clip) => clip.name == "Idle_Happy"
   ) as THREE.AnimationClip;
 
-  let typing = animations.find(
-    (clip) => clip.name == "typing"
+  let run = animations.find(
+    (clip) => clip.name == "run"
   ) as THREE.AnimationClip;
+
   let walkingAnimation = animations.find(
-    (clip) => clip.name == "walking"
+    (clip) => clip.name == "Walk"
   ) as THREE.AnimationClip;
 
+  let speed = 3;
+  let runninng = false;
   useFrame(({ clock, scene }) => {
     // Joystick: -- handles mobile input
     let joystick = scene.getObjectByName("Joystick_data")
@@ -120,6 +122,13 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
           !helpWindow &&
           !detailsWindow
         ) {
+          if (runninng) {
+            // console.log("RUNNING!");
+            speed = 5.5;
+          } else {
+            speed = 3;
+          }
+          console.log("SPEED: ", speed);
           direction.multiplyScalar(speed);
           rbRef.current.setLinvel(direction, true);
         } else if (get().back || joystickBF < 0) {
@@ -135,9 +144,20 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
     let currentAnim: AnimationAction;
 
     if ((get().forward || joystickBF > 0) && !helpWindow && !detailsWindow) {
-      mixer.clipAction(walkingAnimation).play();
-      mixer.clipAction(walkingAnimation).timeScale = 1;
-      mixer.clipAction(idleAnimation).stop();
+      if (get().run) {
+        // console.log("RUNNING");
+        runninng = true;
+
+        mixer.clipAction(run).play();
+        mixer.clipAction(idleAnimation).stop();
+        mixer.clipAction(walkingAnimation).stop();
+      } else {
+        mixer.clipAction(walkingAnimation).play();
+        mixer.clipAction(walkingAnimation).timeScale = 1;
+        mixer.clipAction(idleAnimation).stop();
+        mixer.clipAction(run).stop();
+        runninng = false;
+      }
     } else if (
       (get().back || joystickBF < 0) &&
       !helpWindow &&
@@ -155,7 +175,8 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
     } else {
       mixer.clipAction(idleAnimation).play();
       mixer.clipAction(walkingAnimation).stop();
-      mixer.clipAction(turnRightAnimation).stop();
+      mixer.clipAction(run).stop();
+      // mixer.clipAction(turnRightAnimation).stop();
     }
   });
 
@@ -170,7 +191,7 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
     >
       <mesh {...props} ref={ref} name="Player">
         <group>
-          <mesh position={[0, -1.1, 0]} ref={charRef} castShadow>
+          <mesh scale={1.2} position={[0, -1.1, 0]} ref={charRef} castShadow>
             <primitive object={character} />
           </mesh>
         </group>

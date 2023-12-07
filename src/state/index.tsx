@@ -6,6 +6,7 @@ export let showEngageButton = atom(false);
 export let showDetailsPopUp = atom(false);
 export let showHelpPopUp = atom(false);
 export let isCharacterMoving = atom(false);
-export let enterWorld = atom(false);
+//TODO: SWITCH BACK TO FALSE
+export let enterWorld = atom(true);
 
 export let isMobileAtom = atom(false);

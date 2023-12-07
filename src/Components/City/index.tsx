@@ -88,11 +88,11 @@ export default function City() {
       >
         <Sphere />
       </RigidBody>
-
+      {/* 
       <Skills position={[1, 0, 65]} scale={1} />
       <Involvement position={[30, -0.7, -45]} />
 
-      <Projects2 />
+      <Projects2 /> */}
 
       <Domino
         randomRot={true}
@@ -136,6 +136,7 @@ export default function City() {
           count={2}
         />
       </InstancedRigidBodies> */}
+
       <RigidBody
         position={[-60, 0, -3]}
         rotation={[0, Math.PI / 2, 0]}

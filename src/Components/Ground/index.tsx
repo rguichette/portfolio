@@ -45,8 +45,9 @@ export default function Ground() {
           <planeGeometry args={[floorSize * 2, floorSize * 2]} />
           <MeshReflectorMaterial
             color={"#b7bbf5"}
-            mirror={0.23}
+            mirror={0}
             depthScale={5}
+            mixStrength={0.1}
             // mixStrength={0.25}
             // mixContrast={2}
             // metalness={0.2}

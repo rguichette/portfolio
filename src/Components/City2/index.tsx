@@ -120,9 +120,9 @@ export default function City() {
         <Sphere />
       </RigidBody>
 
-      <Involvement position={[25, 0, -45]} />
+      {/* <Involvement position={[25, 0, -45]} />
       <Projects2 />
-      <Skills />
+      <Skills /> */}
 
       <RigidBody
         position={[-60, 0, -3]}
