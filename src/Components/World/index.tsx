@@ -18,7 +18,6 @@ import {
 } from "@react-three/drei";
 import InfoCard from "../InfoCard";
 import { Suspense, useCallback, useEffect, useRef, useState } from "react";
-import City from "../City";
 import * as THREE from "three";
 import { useFrame, useThree } from "@react-three/fiber";
 
@@ -44,7 +43,7 @@ import { useAtom } from "jotai";
 import { infoAtom } from "../../state/index.tsx";
 import DetailCard from "../Cards/detailCard.tsx";
 import CamView from "../CamView/index.tsx";
-import City2 from "../City2/index.tsx";
+import City from "../City/index.tsx";
 import Ground from "../Ground/index.tsx";
 import PlayGound from "../../playGround/index.tsx";
 
@@ -89,19 +88,18 @@ let World = () => {
 
 
 */}
-        {/* <OrbitControls /> */}
-        <Suspense>
+        <OrbitControls />
+        {/* <Suspense>
           <group position={[-20, 0, -20]}></group>
-        </Suspense>
-        <CamView />
+        </Suspense> */}
+        {/* <CamView /> */}
 
         <Physics debug gravity={[0, -9.988, 0]}>
-          <Ground />
           <Suspense>
             <Player position={[0, 1, 0]} ref={characterRef} />
           </Suspense>
 
-          <City2 />
+          <City />
         </Physics>
       </Suspense>
     </>

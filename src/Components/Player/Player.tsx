@@ -173,9 +173,17 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
       // _anim.clampWhenFinished = false;
       // _anim.play();
     } else {
-      mixer.clipAction(idleAnimation).play();
-      mixer.clipAction(walkingAnimation).stop();
-      mixer.clipAction(run).stop();
+      //play Idle animations
+      let randInt = Math.floor(Math.random() * 100);
+      // console.log(randInt);
+      if (randInt % 2 == 0 && randInt % 3 == 0) {
+        // mixer.clipAction(IdleHappy).play();
+      } else {
+        mixer.clipAction(idleAnimation).play();
+        mixer.clipAction(walkingAnimation).stop();
+        mixer.clipAction(run).stop();
+      }
+
       // mixer.clipAction(turnRightAnimation).stop();
     }
   });

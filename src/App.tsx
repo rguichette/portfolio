@@ -18,23 +18,23 @@ import Portal from "./Components/portal";
 import * as THREE from "three";
 import Projects from "./Components/Resume/Projects";
 import { Physics } from "@react-three/rapier";
-import City from "./Components/City";
+
 import PlayGound from "./playGround";
 import Player from "./Components/Player/Player";
 import { Provider, useAtom, useAtomValue } from "jotai";
 
-import DetailPopUp from "./Components/DetailPopUp";
+// import DetailPopUp from "./Components/DetailPopUp";
 import HtmlInteractivity from "./Components/HtmlInteractivity/HtmlInteractivity";
 import { DefaultLoadingManager } from "three";
 import { enterWorld, isMobileAtom } from "./state";
-import MobileControls from "./Components/MobileControls";
-import TestAnything, {
-  countAtom,
-} from "./Components/MobileControls/testAnything";
-import MobileControls2 from "./Components/MobileControls2";
+// import MobileControls from "./Components/MobileControls";
+// import TestAnything, {
+//   countAtom,
+// } from "./Components/MobileControls/testAnything";
+// import MobileControls2 from "./Components/MobileControls2";
 
-import { isMobile } from "is-mobile";
-import City2 from "./Components/City2";
+// import { isMobile } from "is-mobile";
+import City2 from "./Components/City";
 
 enum Controls {
   forward = "forward",
@@ -57,15 +57,15 @@ let co = [
   },
 ];
 function App() {
-  let [_ismobile, setIsMobile] = useAtom(isMobileAtom);
+  // let [_ismobile, setIsMobile] = useAtom(isMobileAtom);
 
-  useEffect(() => {
-    if (isMobile()) {
-      setIsMobile(true);
-    } else {
-      setIsMobile(false);
-    }
-  }, [_ismobile, setIsMobile]);
+  // useEffect(() => {
+  //   if (isMobile()) {
+  //     setIsMobile(true);
+  //   } else {
+  //     setIsMobile(false);
+  //   }
+  // }, [_ismobile, setIsMobile]);
 
   let worldEdtered = useAtomValue(enterWorld);
 
@@ -91,7 +91,7 @@ function App() {
           <World />
         </Canvas>
       </KeyboardControls>
-      <HtmlInteractivity />
+      {/* <HtmlInteractivity /> */}
     </>
   );
 }
