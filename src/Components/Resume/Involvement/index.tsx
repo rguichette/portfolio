@@ -1,54 +1,37 @@
-import { Box, Text3D, useGLTF } from "@react-three/drei";
-import { MeshProps, useFrame } from "@react-three/fiber";
+import { Sphere, Text, useTexture } from "@react-three/drei";
 import { forwardRef, useRef } from "react";
-import { Mesh } from "three";
-import Portal from "../../portal";
-
-import * as THREE from "three";
-import { RigidBody } from "@react-three/rapier";
 import Library from "../../BuildingComponents/Library";
+import { texture } from "three/examples/jsm/nodes/Nodes.js";
+import { Mesh } from "three";
+import { GroupProps, useFrame } from "@react-three/fiber";
 
-// import entrance from "../../3Dassets/entrance.glb";
+let Involvement: React.FC<GroupProps> = forwardRef((props, ref) => {
+  let earthRef = useRef(null);
 
-type MProps = MeshProps & { Mcolor?: string };
-
-let Involvement: React.FC<MProps> = forwardRef((props, ref) => {
-  // let fl = new FontLoader()
-  let speechRef = useRef<Mesh>(null!);
-
-  //src/3Dassets/entrance2.glb
-
-  let ent = useGLTF("../../3Dassets/entrance2.glb");
-  let { scene: lang } = useGLTF("../../3Dassets/translate.glb");
+  //   useEffect(()=>{
+  // if (earthRef.current){
+  // (earthRef.current as Mesh).rotation.y =
+  // }
+  //   },[])
+  let texture = useTexture("/assets/involvement/earthTexture.jpeg");
 
   useFrame(({ clock }) => {
-    if (speechRef) {
-      speechRef.current.position.y =
-        (Math.sin(clock.elapsedTime * 1.2) + 5.5) * 0.3;
+    if (earthRef.current) {
+      (earthRef.current as unknown as Mesh).rotation.y =
+        clock.elapsedTime * 0.4;
     }
   });
 
   return (
     <>
-      <mesh {...props}>
-        <mesh scale={4.3} position={[0, 4.93, 0]}>
-          <Library />
-        </mesh>
-        {/* <Portal lightColor={new THREE.Color("white")} /> */}
+      {/* <Text>Involvement</Text> */}
+      <group {...props}>
+        <Library />
 
-        <mesh
-          scale={0.02125}
-          position={[8, -1.25, 2]}
-          rotation={[Math.PI / 2, 0, Math.PI / 2 - 1]}
-          name="speech"
-          ref={speechRef}
-        >
-          <primitive object={lang} />
-        </mesh>
-        <Box>
-          <meshBasicMaterial color={props.Mcolor} />
-        </Box>
-      </mesh>
+        <Sphere position={[-7, 1, -6]} ref={earthRef} scale={1.5}>
+          <meshBasicMaterial map={texture} transparent opacity={0.7} />
+        </Sphere>
+      </group>
     </>
   );
 });

@@ -1,126 +1,79 @@
-import { Box, Html, Plane, Text3D } from "@react-three/drei";
-import { MeshProps, Vector3, useThree } from "@react-three/fiber";
-import { RigidBody } from "@react-three/rapier";
-import { forwardRef, useEffect } from "react";
-import * as THREE from "three";
-type MProps = MeshProps & { Mcolor?: string };
+import { Box, Plane, useTexture } from "@react-three/drei";
+import React from "react";
+import { DoubleSide } from "three";
 
-let Projects: React.FC<MProps> = forwardRef((props, ref) => {
-  let th = useThree();
-  let character: THREE.Mesh | null = null;
-  useEffect(() => {
-    character = th.scene.getObjectByName("character") as THREE.Mesh;
+export default function Projects() {
+  let [breathe, dashboard, kel, listings, account, photos, post] = useTexture([
+    "public/assets/portfolio/breath-min.png",
+    "public/assets/portfolio/dashboard-min.png",
+    "public/assets/portfolio/Kel-min.png",
+    "public/assets/portfolio/Listings-min.png",
+    "public/assets/portfolio/RidAccount-min.png",
+    "public/assets/portfolio/RidPhotos-min.png",
+    "public/assets/portfolio/RidPost-min.png",
+  ]);
 
-    // console.log(th.scene.getObjectByName("character"));
-  });
-
-  // let fl = new FontLoader()
   return (
     <>
-      <mesh {...props}>
-        {/* <Plane args={[2, 2, 2, 2]} position={[1, 1, 1]} /> */}
-        {/* <Box>
-          <meshBasicMaterial side={THREE.DoubleSide} />
-        </Box> */}
-
-        <Html
-          scale={0.1}
-          as="div"
-          center
-          occlude="blending"
-          transform
-          rotation={[0, -Math.PI / 2 + 0.7, 0]}
-          position={[-4, 2.4, -4]}
+      <group position={[0, 0.5, 3.5]}>
+        <Plane
+          scale={[6, 3.2, 1]}
+          rotation={[0, -Math.PI, 0]}
+          position={[-5, 1, 30]}
         >
-          {/* <div style={{ backgroundColor: "red" }}>hello</div> */}
+          <meshBasicMaterial map={breathe} />
+          <Plane rotation={[0, -Math.PI, 0]} />
+        </Plane>
 
-          <img src="/webAssets/Listings.png" />
-        </Html>
-
-        <Html
-          scale={0.1}
-          as="div"
-          center
-          occlude="blending"
-          transform
-          rotation={[0, -Math.PI / 2 + 0.7, 0]}
-          position={[-4, 2.4, -6.5]}
+        <Plane
+          scale={[6, 3.2, 1]}
+          rotation={[0, -Math.PI, 0]}
+          position={[0, 1, 43]}
         >
-          {/* <div style={{ backgroundColor: "red" }}>hello</div> */}
-
-          <img src="/webAssets/RidAccount.png" />
-        </Html>
-
-        <Html
-          scale={0.1}
-          as="div"
-          center
-          occlude="blending"
-          transform
-          rotation={[0, -Math.PI / 2 + 0.7, 0]}
-          position={[2, 2.4, -6.5]}
+          <meshStandardMaterial map={dashboard} />
+          <Plane rotation={[0, -Math.PI, 0]} />
+        </Plane>
+        <Plane
+          scale={[6, 3.2, 1]}
+          rotation={[0, -Math.PI, 0]}
+          position={[-10, 1, 50]}
         >
-          {/* <div style={{ backgroundColor: "red" }}>hello</div> */}
-
-          <img src="/webAssets/RidPhotos.png" />
-        </Html>
-
-        <Html
-          scale={0.1}
-          as="div"
-          center
-          occlude="blending"
-          transform
-          rotation={[0, -Math.PI / 2 + 0.7, 0]}
-          position={[-0.5, 2.4, -9.5]}
+          <meshStandardMaterial map={kel} />
+          <Plane rotation={[0, -Math.PI, 0]} />
+        </Plane>
+        <Plane
+          scale={[2, 4.2, 1]}
+          rotation={[0, -Math.PI, 0]}
+          position={[10, 1, 50]}
         >
-          {/* <div style={{ backgroundColor: "red" }}>hello</div> */}
-
-          <img src="/webAssets/RidPost.png" />
-        </Html>
-
-        <Html
-          scale={0.5}
-          as="div"
-          center
-          occlude="blending"
-          transform
-          rotation={[0, -Math.PI / 2, 0]}
-          position={[0, 3, 3]}
+          <meshStandardMaterial map={listings} />
+          <Plane rotation={[0, -Math.PI, 0]} />
+        </Plane>
+        <Plane
+          scale={[2, 4.2, 1]}
+          rotation={[0, -Math.PI, 0]}
+          position={[18, 1, 40]}
         >
-          {/* <div style={{ backgroundColor: "red" }}>hello</div> */}
-
-          <img src="/webAssets/dashboard.png" />
-        </Html>
-        <Html
-          scale={0.5}
-          as="div"
-          center
-          occlude="blending"
-          transform
-          rotation={[0, -Math.PI / 2 - 0.9, 0]}
-          position={[-5, 3, 20]}
+          <meshStandardMaterial map={account} />
+          <Plane rotation={[0, -Math.PI, 0]} />
+        </Plane>
+        <Plane
+          scale={[2, 4.2, 1]}
+          rotation={[0, -Math.PI, 0]}
+          position={[17, 1, 55]}
         >
-          {/* <div style={{ backgroundColor: "red" }}>hello</div> */}
-
-          <img src="/webAssets/breath.png" />
-        </Html>
-        <Html
-          scale={0.5}
-          as="div"
-          center
-          occlude="blending"
-          transform
-          rotation={[0, -Math.PI / 2 - 0.9, 0]}
-          position={[5, 3, 20]}
+          <meshStandardMaterial map={photos} />
+          <Plane rotation={[0, -Math.PI, 0]} />
+        </Plane>
+        <Plane
+          scale={[2, 4.2, 1]}
+          rotation={[0, -Math.PI, 0]}
+          position={[-15, 1, 35]}
         >
-          <img src="/webAssets/Kel.png" />
-        </Html>
-
-        {/* <meshBasicMaterial side={THREE.DoubleSide} /> */}
-      </mesh>
+          <meshStandardMaterial map={post} />
+          <Plane rotation={[0, -Math.PI, 0]} />
+        </Plane>
+      </group>
     </>
   );
-});
-
-export default Projects;
+}

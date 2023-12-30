@@ -21,10 +21,10 @@ import Ground from "../Ground";
 
 export default function BluePrint() {
   let test = useGLTF("/Light4.glb");
-  let m = new MeshStandardMaterial();
-  m.emissive = new Color("red");
-  m.emissiveIntensity = 10;
-  m.toneMapped = false;
+  // let m = new MeshStandardMaterial();
+  // m.emissive = new Color("red");
+  // m.emissiveIntensity = 10;
+  // m.toneMapped = false;
 
   useEffect(() => {
     console.log("SCENE:", test.scene.children[0].children);
@@ -32,7 +32,7 @@ export default function BluePrint() {
 
   return (
     <>
-      <Box material={m} />
+      {/* <Box material={m} /> */}
 
       <mesh position={[0, 0, 4]}>
         <primitive object={test.scene} />

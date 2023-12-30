@@ -25,4 +25,4 @@ dist-ssr
 
 #project files
 GltfInstances2
-playGround/
+/src/playGround/
