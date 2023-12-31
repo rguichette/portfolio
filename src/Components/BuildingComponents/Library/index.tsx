@@ -14,8 +14,8 @@ import { GroupProps, MeshProps, useFrame } from "@react-three/fiber";
 
 import { forwardRef, useEffect, useRef } from "react";
 import { Mesh, Quaternion, Vector3 } from "three";
-import Seat from "../../Seats/Index";
-import Seats from "../../Seats/Index";
+import Seat from "../../Seats";
+import Seats from "../../Seats";
 
 let Library: React.FC<GroupProps> = forwardRef<any, GroupProps>(
   (props: GroupProps, ref) => {
