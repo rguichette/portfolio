@@ -20,19 +20,23 @@ import Projects from "../Resume/Projects";
 import Involvement from "../Resume/Involvement";
 import Seats from "../Seats";
 import Statues from "../Statues";
+import WorkExperience from "../Resume/WorkExperience";
+import Skills from "../Resume/Skills";
 
 export default function City() {
   return (
     <>
       {/* <BluePrint /> */}
 
-      <Statues />
-      {/* <Seats /> */}
+      {/* <Statues /> */}
 
       {/* ACTUAL CITY */}
 
-      {/* <Projects /> */}
-      {/* <Involvement position={[45, 0, 5]} rotation={[0, -Math.PI, 0]} /> */}
+      <Involvement position={[45, 0, 5]} rotation={[0, -Math.PI, 0]} />
+      <Projects />
+      <Skills />
+      {/* <WorkExperience /> */}
+
       <Plants />
       <Ground />
     </>

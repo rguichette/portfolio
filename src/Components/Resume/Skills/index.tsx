@@ -1,161 +1,192 @@
 import {
   Box,
+  Cylinder,
   Gltf,
-  Html,
+  Instance,
+  Instances,
   Plane,
-  Polyhedron,
-  Shape,
+  Ring,
+  Sphere,
+  Text,
+  useAnimations,
   useGLTF,
+  useVideoTexture,
 } from "@react-three/drei";
-import React, { Ref, forwardRef, useEffect, useRef } from "react";
+import React, { Suspense, useEffect, useRef } from "react";
 import WorkStation from "../../Workstation";
-import { Group, Material, Mesh, MeshStandardMaterial } from "three";
-import Monitor from "../../Monitor";
-import { MeshProps } from "@react-three/fiber";
-import Portal from "../../portal";
-
-import * as THREE from "three";
 import {
-  MeshCollider,
-  RapierCollider,
-  RigidBody,
-  CuboidCollider,
-  CapsuleCollider,
-  ConeCollider,
-  ConvexHullCollider,
-  RapierRigidBody,
-  useRapier,
-  AnyCollider,
-} from "@react-three/rapier";
-import { useAtom } from "jotai";
-import DetailCard from "../../Cards/detailCard";
-import { showEngageButton } from "../../../state";
+  AnimationClip,
+  BoxGeometry,
+  BufferAttribute,
+  BufferGeometry,
+  CylinderGeometry,
+  DoubleSide,
+  Float32BufferAttribute,
+  MeshBasicMaterial,
+  Vector3,
+} from "three";
+import { MeshProps, useFrame } from "@react-three/fiber";
+import CustomShaderMaterial from "three-custom-shader-material";
+import data from "../../../shaders/data/data.vert";
 
-let Skills: React.FC<MeshProps> = forwardRef((props, ref) => {
-  let [showEnBtn, setShowEnBtn] = useAtom(showEngageButton);
+type CylinderRingProps = MeshProps & {
+  /**
+   * the higher, the more inner thickness spreads
+   */
+  thickness?: number;
+  children?: React.ReactNode;
+};
 
-  let turbRef = useRef<Group>(null);
+interface CylinderRingProps {
+  thickness: number;
+  children: React.ReactNode;
+}
 
-  //public/3Dassets/technologies/gopher.glb
-  ///Users/ralphguichette/Development/porttfolio/public/3Dassets/technologies/gopher.glb
-  //public/3Dassets/technologies/mongo.glb
-  //public/3Dassets/technologies/Node.glb
-  //public/3Dassets/technologies/python.glb
-  //public/3Dassets/technologies/React.glb
-  //public/3Dassets/technologies/React.glb
+const CylinderRing = (props: CylinderRingProps) => {
+  const { thickness, children } = props;
 
-  // let { scene: turb, animations } = useGLTF("/3Dassets/Ventilator.glb");
-  let { scene: gopher } = useGLTF("/3Dassets/technologies/gopher.glb");
-  // let { scene: golang } = useGLTF("/3Dassets/technologies/golang.glb");
-  let { scene: redux } = useGLTF("/3Dassets/technologies/redux.glb");
-  let { scene: react } = useGLTF("/3Dassets/technologies/React.glb");
-  let { scene: python } = useGLTF("/3Dassets/technologies/python.glb");
-  let { scene: node } = useGLTF("/3Dassets/technologies/Node.glb");
-  let { scene: mongo } = useGLTF("/3Dassets/technologies/mongo.glb");
+  // Create a default material
+  const defaultMaterial = new MeshBasicMaterial({ color: "red" });
+  defaultMaterial.side = DoubleSide;
 
-  let gearRef = useRef<Mesh>(null);
-  let rbMill = useRef<RapierRigidBody>(null);
-  useEffect(() => {
-    if (gearRef.current) {
-      console.log("REF", gearRef.current);
-    }
+  console.log(children);
 
-    if (turbRef.current) {
-      let turbG = turbRef.current.children[1] as Mesh;
-      let tubM = turbG.material as MeshStandardMaterial;
-      tubM.color.set("a0c1da");
-      tubM.metalness = 0.8;
-      tubM.roughness = 0.33;
-      tubM.emissive.set("a3a3a3");
+  // Use the provided material or the default material
+  const material =
+    React.Children.count(children) > 0 ? (
+      React.Children.only(children) // Allow only one material as a child
+    ) : (
+      <meshBasicMaterial color={"red"} side={DoubleSide} />
+    );
 
-      console.log(tubM);
-    }
+  return (
+    <mesh {...props}>
+      <Ring
+        rotation={[-Math.PI / 2, 0, 0]}
+        position={[0, 0.5, 0]}
+        args={[thickness]}
+      >
+        {material}
+      </Ring>
+      <Ring
+        rotation={[-Math.PI / 2, 0, 0]}
+        // material={material}
+        position={[0, -0.5, 0]}
+        args={[thickness]}
+      >
+        {material}
+      </Ring>
+      <mesh>
+        <primitive
+          object={new CylinderGeometry(1, 1, 1, 20, 1, true, 0, 6.29)}
+        />
+        {material}
+      </mesh>
+    </mesh>
+  );
+};
 
-    if (rbMill) {
-      // rbMill.current?
-    }
+function Data(props: MeshProps) {
+  // let { scene: ring, animations } = useGLTF("/assets/skills/Ring.glb");
+  // const { actions, mixer } = useAnimations(animations, ring);
+  let uniforms = {
+    uTime: { value: 0 },
+  };
+  useEffect(() => {}, []);
+
+  useFrame(({ clock }) => {
+    uniforms.uTime.value = clock.elapsedTime;
   });
 
   return (
-    <>
-      <RigidBody position={[40, 0, 80]} rotation={[0, 1.5, 0]} type="fixed">
-        <mesh>
-          <primitive object={gopher} />
-        </mesh>
-      </RigidBody>
-      <RigidBody
-        position={[50, 0, 90]}
-        rotation={[0, -2.7, 0]}
-        scale={0.5}
-        type="fixed"
-      >
-        <mesh>
-          <primitive object={python} />
-        </mesh>
-      </RigidBody>
-      <RigidBody
-        position={[40, 0, 45]}
-        rotation={[0, -2.2, 0]}
-        scale={0.2}
-        type="fixed"
-      >
-        <mesh>
-          <primitive object={node} />
-        </mesh>
-      </RigidBody>
-
-      <RigidBody
-        position={[-25, 0, 80]}
-        rotation={[0, 2.8, 0]}
-        scale={1}
-        type="fixed"
-      >
-        <mesh>
-          <primitive object={mongo} />
-        </mesh>
-      </RigidBody>
-
-      {/* frontennd  */}
-      <RigidBody
-        position={[-40, 0, 40]}
-        rotation={[0, 2.4, 0]}
-        scale={0.3}
-        type="fixed"
-      >
-        <mesh>
-          <primitive object={react} />
-        </mesh>
-      </RigidBody>
-
-      <mesh position={[-25, 50, 60]} rotation={[0, 2.4, 0]} scale={7}>
-        <primitive object={redux} />
-      </mesh>
-
-      <mesh {...props}>
-        <group rotation={[0, 1.35, 0]}>
-          <CuboidCollider
-            args={[1.2, 1, 0.9]}
-            position={[-24.5, 0.2, 0]}
-            rotation={[0, 0.2, 0]}
-            sensor
-            onIntersectionEnter={(e) => {
-              console.log("interaction...", e);
-              setShowEnBtn(true);
-            }}
-            onIntersectionExit={() => {
-              setShowEnBtn(false);
-            }}
+    <mesh {...props}>
+      <mesh position={[0, 0.1, 0]}>
+        <Plane
+          args={[3.5, 3.5, 36, 36]}
+          rotation={[Math.PI / 2, 0, 0]}
+          position={[0, -0.7, 0]}
+        >
+          <CustomShaderMaterial
+            baseMaterial={MeshBasicMaterial}
+            wireframe
+            color={"blue"}
+            // side={DoubleSide}
+            vertexShader={data}
+            uniforms={uniforms}
           />
-          <WorkStation
-            rotation={[0, Math.PI / 1.8, 0]}
-            position={[-25, 0.2, 0]}
-          />
+        </Plane>
+
+        <group scale={[0.6, 0.7, 0.6]} position={[0, 0.6, 0]}>
+          <CylinderRing
+            thickness={0.85}
+            scale={[2, 0.1, 2]}
+            position={[0, -0.5, 0]}
+          >
+            <meshStandardMaterial
+              color={"gold"}
+              side={DoubleSide}
+              opacity={0.8}
+            />
+          </CylinderRing>
+          <CylinderRing
+            thickness={0.85}
+            scale={[2, 0.1, 2]}
+            position={[0, 0.1, 0]}
+          >
+            <meshStandardMaterial
+              color={"gold"}
+              side={DoubleSide}
+              opacity={0.8}
+            />
+          </CylinderRing>
+          <CylinderRing
+            thickness={0.85}
+            scale={[2, 0.1, 2]}
+            position={[0, 0.8, 0]}
+          >
+            <meshStandardMaterial
+              color={"gold"}
+              side={DoubleSide}
+              transparent
+              opacity={0.8}
+            />
+          </CylinderRing>
         </group>
       </mesh>
-
-      {/* dettails window after engage btn is clicked*/}
-    </>
+    </mesh>
   );
-});
+}
 
-export default Skills;
+export default function Skills() {
+  let AiData = useVideoTexture("public/AiScreen.mp4");
+
+  return (
+    <group>
+      <mesh scale={8}>
+        <Plane args={[1, 0.6, 1]} position={[1.4, 0.4, -1]}>
+          <meshBasicMaterial map={AiData} side={DoubleSide} />
+        </Plane>
+      </mesh>
+      <WorkStation position={[-4, 0.5, -6]} rotation={[0, -0.5, 0]} />
+      <Data position={[3, 0, -20]} />
+      <Gltf
+        src="/assets/skills/gopher.glb"
+        position={[13, -1.5, -15]}
+        rotation={[0, -0.4, 0]}
+      />
+      <Gltf
+        src="/assets/skills/python.glb"
+        position={[3, 0, -25]}
+        scale={0.1}
+      />
+
+      <Suspense fallback={<Text>Loading...</Text>}>
+        {/* <group scale={0.1} position={[0, -1.4, 0]}> */}
+        {/* <Gltf src="/assets/skills/python.glb" position={[0, 0, -40]} />
+          <Gltf src="/assets/skills/mongo.glb" position={[0, 0, 0]} />
+          <Gltf src="/assets/skills/Node.glb" position={[0, 0, 0]} /> */}
+        {/* </group> */}
+      </Suspense>
+    </group>
+  );
+}

@@ -69,16 +69,16 @@ let WorkStation: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>(
                 scale={0.2}
                 position={[3.3, 0, 0]}
                 rotation={[0, -0.8, 0]}
-                vidSrc={"/3Dassets/textures/codeScroll.mp4"}
-                vidOptions={{ muted: true }}
+                // vidSrc={"/3Dassets/textures/codeScroll.mp4"}
+                // vidOptions={{ muted: true }}
                 ref={monRefLeft}
               />
 
               <Monitor
                 scale={0.2}
                 position={[0, 0, -1.2]}
-                vidSrc={"/3Dassets/textures/codeScroll.mp4"}
-                vidOptions={{ muted: true }}
+                // vidSrc={"/3Dassets/textures/codeScroll.mp4"}
+                // vidOptions={{ muted: true }}
                 ref={monRef}
               />
 
@@ -87,8 +87,8 @@ let WorkStation: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>(
                 position={[-3.3, 0, 0]}
                 rotation={[0, 0.8, 0]}
                 ref={monRefRight}
-                vidSrc={"/3Dassets/textures/codeScroll.mp4"}
-                vidOptions={{ muted: true }}
+                // vidSrc={"/3Dassets/textures/codeScroll.mp4"}
+                // vidOptions={{ muted: true }}
               />
             </group>
           </group>
@@ -101,3 +101,5 @@ let WorkStation: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>(
 );
 
 export default WorkStation;
+
+// https://download-video.akamaized.net/v3-1/playback/f91fb381-7704-4033-8d94-31b4102f678b/00c87e31?__token__=st=1704219411~exp=1704233811~acl=%2Fv3-1%2Fplayback%2Ff91fb381-7704-4033-8d94-31b4102f678b%2F00c87e31%2A~hmac=d04e012b8a38d0f5e226e15d8760d91aa57f3b3deb360312e2537226c6070ac0&r=dXMtY2VudHJhbDE%3D
