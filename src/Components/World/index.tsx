@@ -90,11 +90,11 @@ let World = () => {
 
 
 */}
-        {/* <OrbitControls /> */}
+        <OrbitControls />
         {/* <Suspense>
           <group position={[-20, 0, -20]}></group>
         </Suspense> */}
-        <CamView />
+        {/* <CamView /> */}
 
         <Physics debug gravity={[0, -9.988, 0]}>
           <Suspense>

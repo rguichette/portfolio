@@ -25,9 +25,10 @@ import {
   MeshBasicMaterial,
   Vector3,
 } from "three";
-import { MeshProps, useFrame } from "@react-three/fiber";
+import { GroupProps, MeshProps, useFrame } from "@react-three/fiber";
 import CustomShaderMaterial from "three-custom-shader-material";
 import data from "../../../shaders/data/data.vert";
+import Contact from "../../contact/index.";
 
 type CylinderRingProps = MeshProps & {
   /**
@@ -157,11 +158,11 @@ function Data(props: MeshProps) {
   );
 }
 
-export default function Skills() {
+export default function Skills(props: GroupProps) {
   let AiData = useVideoTexture("public/AiScreen.mp4");
 
   return (
-    <group>
+    <group {...props}>
       <mesh scale={8}>
         <Plane args={[1, 0.6, 1]} position={[1.4, 0.4, -1]}>
           <meshBasicMaterial map={AiData} side={DoubleSide} />
@@ -181,12 +182,13 @@ export default function Skills() {
       />
 
       <Suspense fallback={<Text>Loading...</Text>}>
-        {/* <group scale={0.1} position={[0, -1.4, 0]}> */}
-        {/* <Gltf src="/assets/skills/python.glb" position={[0, 0, -40]} />
+        <group scale={0.1} position={[0, -1.4, 0]}>
+          {/* <Gltf src="/assets/skills/python.glb" position={[0, 0, -40]} />
           <Gltf src="/assets/skills/mongo.glb" position={[0, 0, 0]} />
           <Gltf src="/assets/skills/Node.glb" position={[0, 0, 0]} /> */}
-        {/* </group> */}
+        </group>
       </Suspense>
+      <Contact />
     </group>
   );
 }
