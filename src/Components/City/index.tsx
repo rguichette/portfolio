@@ -36,7 +36,7 @@ export default function City() {
 
       {/* <Statues /> */}
 
-      <Involvement position={[0, 0, 0]} rotation={[0, -Math.PI, 0]} />
+      {/* <Involvement position={[0, 0, 0]} rotation={[0, -Math.PI, 0]} /> */}
       {/* <Involvement position={[45, 0, 5]} rotation={[0, -Math.PI, 0]} /> */}
       {/* <Projects /> */}
       {/* <Skills position={[-30, 0, 0]} rotation={[0, Math.PI / 2, 0]} /> */}

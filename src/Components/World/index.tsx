@@ -102,10 +102,9 @@ let World = () => {
             {/* <Player position={[0, 1, 0]} ref={characterRef} /> */}
           </Suspense>
 
-          {/* <Contact
-            instances={[{ position: [1, 0, 3] }, { position: [0, 0, 2] }]}
-            count={1}
-          /> */}
+          <Contact
+            instances={[{ position: [1, 0, 6] }, { position: [0, 0, 4] }]}
+          />
 
           <City />
         </Physics>
