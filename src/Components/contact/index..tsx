@@ -83,20 +83,20 @@ export default function Contact(props: ContactInstanceMesh) {
 
   console.log(rt);
 
-  useEffect(() => {
-    let { Screen } = sb;
+  // useEffect(() => {
+  //   let { Screen } = sb;
 
-    if (sb) {
-      (sb.Screen as Mesh).material = new MeshPhysicalMaterial({
-        color: "red",
-        // map: txt,
-      });
-    }
+  //   if (sb) {
+  //     (sb.Screen as Mesh).material = new MeshPhysicalMaterial({
+  //       color: "red",
+  //       // map: txt,
+  //     });
+  //   }
 
-    console.log(c.getContext);
+  //   console.log(c.getContext);
 
-    // plane.material.color.set("green");
-  }, []);
+  //   // plane.material.color.set("green");
+  // }, []);
 
   return (
     <>
@@ -105,21 +105,22 @@ export default function Contact(props: ContactInstanceMesh) {
           let { count, instances } = props;
 
           return instances.map((instProps, k) => {
-            return Object.entries(items).map(([name, Part]) => {
-              // console.log("PART:", Part);
+            return (
+              <RigidBody {...instProps} key={k}>
+                {Object.entries(items).map(([name, Part]) => (
+                  // console.log("PART:", Part);
 
-              return (
-                <RigidBody {...instProps} key={name}>
-                  <Screen scale={1.09} key={"rigidInst" + name} />
+                  <>
+                    <Screen scale={1.09} key={"rigidInst" + name} />
 
-                  <Part key={name} />
-                  <CuboidCollider args={[0.5, 1, 0.5]} />
-                </RigidBody>
-              );
-            });
+                    <Part key={name} />
+                  </>
+                ))}
+
+                <CuboidCollider args={[0.5, 1, 0.08]} />
+              </RigidBody>
+            );
           });
-
-          console.log("Items: ", items);
         }}
       </Merged>
     </>

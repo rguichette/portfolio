@@ -103,7 +103,7 @@ let World = () => {
           </Suspense>
 
           <Contact
-            instances={[{ position: [1, 0, 6] }, { position: [0, 0, 4] }]}
+            instances={[{ position: [2, 0, 6] }, { position: [0, 0, 4] }]}
           />
 
           <City />
