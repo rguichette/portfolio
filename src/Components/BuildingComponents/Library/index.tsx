@@ -12,14 +12,41 @@ import {
 } from "@react-three/drei";
 import { GroupProps, MeshProps, useFrame } from "@react-three/fiber";
 
-import { forwardRef, useEffect, useRef } from "react";
+import { forwardRef, useEffect, useMemo, useRef } from "react";
 import { Mesh, Quaternion, Vector3 } from "three";
-import Seat from "../../Seats";
+import Seat, { InstancedChairProps } from "../../Seats";
 import Seats from "../../Seats";
+import { RigidBodyProps } from "@react-three/rapier";
 
 let Library: React.FC<GroupProps> = forwardRef<any, GroupProps>(
   (props: GroupProps, ref) => {
     let { scene: tblStand } = useGLTF("/assets/involvement/tableStand.glb");
+
+    let instances = useMemo(() => {
+      let chairInstance: RigidBodyProps[] = [
+        { position: [3.4, 0, 0], rotation: [0, 0.1, 0] },
+
+        {
+          position: [0.9, 0, 1.8],
+          rotation: [0, -0.8, 0],
+        },
+        {
+          position: [-1, 0, 2.2],
+          rotation: [0, 0, 0],
+        },
+
+        {
+          position: [1, 0, -1.6],
+          rotation: [0, 0.3, 0],
+        },
+
+        {
+          position: [-1, 0, -2],
+        },
+      ];
+
+      return chairInstance;
+    }, []);
 
     return (
       <>
@@ -75,7 +102,7 @@ let Library: React.FC<GroupProps> = forwardRef<any, GroupProps>(
               position={[0, -0.35, 0]}
             />
           </mesh>
-          <Gltf
+          {/* <Gltf
             src="/assets/involvement/bookcase.glb"
             position={[0, -1.3, 8]}
             rotation={[0, -Math.PI, 0]}
@@ -83,9 +110,9 @@ let Library: React.FC<GroupProps> = forwardRef<any, GroupProps>(
           <Gltf
             src="/assets/involvement/bookcase.glb"
             position={[0, -1.3, -8]}
-          />
+          /> */}
 
-          <Seats />
+          {/* <Seats instances={instances} /> */}
         </group>
       </>
     );

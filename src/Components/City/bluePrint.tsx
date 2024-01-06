@@ -34,9 +34,9 @@ export default function BluePrint() {
     <>
       {/* <Box material={m} /> */}
 
-      <mesh position={[0, 0, 4]}>
+      {/* <mesh position={[0, 0, 4]}>
         <primitive object={test.scene} />
-      </mesh>
+      </mesh> */}
       {/* play */}
       <group>
         <Ring
@@ -136,7 +136,7 @@ export default function BluePrint() {
 */}
 
         {/* DIRECTIONS --> STREET SIGNS */}
-        <mesh name="directions" position={[-4, 1.6, 3.5]} scale={0.5}>
+        {/* <mesh name="directions" position={[-4, 1.6, 3.5]} scale={0.5}>
           <Box
             position={[0, 2.5, -1]}
             scale={[2, 0.7, 0.1]}
@@ -179,7 +179,7 @@ export default function BluePrint() {
           position={[32, 4, -15]}
           scale={[3.5, 1, 0.5]}
           rotation={[0, 1, 0]}
-        />
+        /> */}
 
         {/* end SIGNS */}
 

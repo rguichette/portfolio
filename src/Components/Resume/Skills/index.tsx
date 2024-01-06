@@ -30,15 +30,18 @@ import CustomShaderMaterial from "three-custom-shader-material";
 import data from "../../../shaders/data/data.vert";
 import Contact from "../../contact/index.";
 
-type CylinderRingProps = MeshProps & {
+// type CylinderRingProps = MeshProps & {
+//   /**
+//    * the higher, the more inner thickness spreads
+//    */
+//   thickness?: number;
+//   children?: React.ReactNode;
+// };
+
+interface CylinderRingProps extends MeshProps {
   /**
    * the higher, the more inner thickness spreads
    */
-  thickness?: number;
-  children?: React.ReactNode;
-};
-
-interface CylinderRingProps {
   thickness: number;
   children: React.ReactNode;
 }
@@ -168,7 +171,7 @@ export default function Skills(props: GroupProps) {
           <meshBasicMaterial map={AiData} side={DoubleSide} />
         </Plane>
       </mesh>
-      <WorkStation position={[-4, 0.5, -6]} rotation={[0, -0.5, 0]} />
+      <WorkStation position={[-4, 0.5, 5]} rotation={[0, -0.5, 0]} />
       <Data position={[3, 0, -20]} />
       <Gltf
         src="/assets/skills/gopher.glb"
@@ -188,7 +191,6 @@ export default function Skills(props: GroupProps) {
           <Gltf src="/assets/skills/Node.glb" position={[0, 0, 0]} /> */}
         </group>
       </Suspense>
-      <Contact />
     </group>
   );
 }

@@ -48,6 +48,7 @@ import CamView from "../CamView/index.tsx";
 import City from "../City/index.tsx";
 import Ground from "../Ground/index.tsx";
 import PlayGound from "../../playGround/index.tsx";
+import Contact from "../contact/index..tsx";
 
 CameraControls.install({ THREE: THREE });
 
@@ -64,7 +65,7 @@ let World = () => {
   return (
     <>
       <Suspense>
-        <Stars
+        {/* <Stars
           radius={70}
           count={2000}
           factor={4}
@@ -79,7 +80,7 @@ let World = () => {
           color={new THREE.Color("yellow")}
           position={[0, 5, 0]}
           noise={50}
-        />
+        /> */}
 
         {/* <fog attach="fog" near={1} far={75} color={"#53376c"} /> */}
 
@@ -98,8 +99,13 @@ let World = () => {
 
         <Physics debug gravity={[0, -9.988, 0]}>
           <Suspense>
-            <Player position={[0, 1, 0]} ref={characterRef} />
+            {/* <Player position={[0, 1, 0]} ref={characterRef} /> */}
           </Suspense>
+
+          {/* <Contact
+            instances={[{ position: [1, 0, 3] }, { position: [0, 0, 2] }]}
+            count={1}
+          /> */}
 
           <City />
         </Physics>
