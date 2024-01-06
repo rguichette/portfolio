@@ -112,7 +112,7 @@ let Library: React.FC<GroupProps> = forwardRef<any, GroupProps>(
             position={[0, -1.3, -8]}
           /> */}
 
-          {/* <Seats instances={instances} /> */}
+          <Seats instances={instances} />
         </group>
       </>
     );

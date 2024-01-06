@@ -7,12 +7,7 @@ import {
   useGLTF,
 } from "@react-three/drei";
 import { GroupProps, MeshProps } from "@react-three/fiber";
-import {
-  CuboidCollider,
-  RigidBody,
-  RigidBodyProps,
-  RigidBodyProps,
-} from "@react-three/rapier";
+import { CuboidCollider, RigidBody, RigidBodyProps } from "@react-three/rapier";
 import React, { Ref, forwardRef, useEffect, useMemo, useRef } from "react";
 import {
   Group,
@@ -44,23 +39,20 @@ let Seats = forwardRef(function SeatModel(props: InstancedChairProps, ref) {
         {(ChairParts: any) => {
           let { instances } = props;
 
-          console.log("Instances: ", instances);
-
           return instances.map((chairInstanceProps, k) => {
-            console.log("C...P:", chairInstanceProps);
             return (
               <RigidBody {...chairInstanceProps} key={k}>
-                <mesh position={[0, -1, 0]}>
+                <mesh position={[0, -1, 0]} key={k}>
                   {Object.entries(ChairParts).map(
-                    ([k, Part]: [string, any]) => {
-                      return <Part key={k} />;
+                    ([ky, Part]: [string, any]) => {
+                      return <Part key={ky} />;
                     }
                   )}
                 </mesh>
                 <CuboidCollider
                   args={[1, 1, 1]}
                   scale={[0.7, 1, 0.7]}
-                  key={k}
+                  key={"Cubeoid_" + k}
                 />
               </RigidBody>
             );
@@ -70,28 +62,6 @@ let Seats = forwardRef(function SeatModel(props: InstancedChairProps, ref) {
     </>
   );
 });
-
-// export default function Seats() {
-//   let cs = 0.02;
-//   return (
-//     <>
-//       <SeatModel scale={cs} position={[3.4, -1.3, 0]} rotation={[0, 0.1, 0]} />
-//       {/* <SeatModel
-//         scale={cs}
-//         position={[0.9, -1.3, 1.8]}
-//         rotation={[0, -0.8, 0]}
-//       />
-//       <SeatModel
-//         scale={cs}
-//         position={[-1, -1.3, 2.2]}
-//         rotation={[0, -1.2, 0]}
-//       /> */}
-//       {/* left */}
-//       {/* <SeatModel scale={cs} position={[1, -1.3, -1.6]} rotation={[0, 0.3, 0]} />
-//       <SeatModel scale={cs} position={[-1, -1.3, -2]} /> */}
-//     </>
-//   );
-// }
 
 export default Seats;
 
