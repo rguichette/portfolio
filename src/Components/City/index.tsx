@@ -29,9 +29,44 @@ import { Physics, RigidBody } from "@react-three/rapier";
 import Contact from "../contact/index.";
 
 export default function City() {
+  let contactScale = 0.3;
   return (
     <>
-      {/* <BluePrint /> */}
+      <Contact
+        position={[0, 0.5, 0]}
+        instances={[
+          {
+            position: [0, 0, 27],
+            rotation: [0, Math.PI, 0],
+            scale: contactScale,
+          },
+          {
+            position: [-16, 0, -18],
+            rotation: [0, Math.PI, 0],
+            scale: contactScale,
+          },
+          {
+            position: [17, 0, -21],
+            rotation: [0, Math.PI, 0],
+            scale: contactScale,
+          },
+          {
+            position: [24, 0, 0],
+            rotation: [0, Math.PI, 0],
+            scale: contactScale,
+          },
+          {
+            position: [-24, 0, 0],
+            rotation: [0, Math.PI, 0],
+            scale: contactScale,
+          },
+        ]}
+      />
+
+      <Contact
+        instances={[{ position: [0, 0, 3.5], rotation: [0, Math.PI, 0] }]}
+      />
+      <BluePrint />
       {/* <DesktopInstructions /> */}
 
       {/* <Statues /> */}

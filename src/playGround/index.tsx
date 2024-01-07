@@ -1,106 +1,51 @@
-import {
-  Box,
-  Detailed,
-  Gltf,
-  Instance,
-  Instances,
-  InstancesProps,
-  KeyboardControls,
-  Merged,
-  OrbitControls,
-  Plane,
-  Sphere,
-  useGLTF,
-} from "@react-three/drei";
-import {
-  CuboidCollider,
-  InstancedRigidBodies,
-  InstancedRigidBodyProps,
-  Physics,
-  RapierRigidBody,
-  RigidBody,
-} from "@react-three/rapier";
-import React, { Suspense, useEffect, useMemo, useRef } from "react";
-
-import {
-  AmbientLight,
-  BoxGeometry,
-  BufferGeometry,
-  Euler,
-  InstancedMesh,
-  Mesh,
-  MeshBasicMaterial,
-  MeshPhongMaterial,
-  MeshStandardMaterial,
-  Object3D,
-  SphereGeometry,
-  Vector3,
-} from "three";
-import { InstancedMeshProps, extend, useFrame } from "@react-three/fiber";
-import * as BufferGeometryUtils from "three/addons/utils/BufferGeometryUtils.js";
-import { GLTF } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { instance } from "three/examples/jsm/nodes/Nodes.js";
-import { ForwardRefComponent } from "@react-three/drei/helpers/ts-utils";
-
 // import p from "/smallPlant.glb";
 
-type GLTFExtension = GLTF & {
-  nodes: any;
-};
+import { Box, OrbitControls } from "@react-three/drei";
+import {
+  BoxGeometry,
+  CanvasTexture,
+  ClampToEdgeWrapping,
+  Mesh,
+  MeshBasicMaterial,
+  SphereGeometry,
+} from "three";
+import Contact from "../Components/contact/index.";
 
 export default function PlayGound() {
-  let t = useGLTF("/smallPlant.glb");
-  let COUNT = 2;
+  let c = document.createElement("canvas");
+  c.width = 10;
 
-  const instancedMeshRef = useRef<InstancedMesh>();
-  console.log(instancedMeshRef.current);
+  let ctx = c.getContext("2d");
+  let txt = new CanvasTexture(c);
 
-  let { nodes } = useGLTF("/smallPlant.glb") as GLTFExtension;
+  txt.center.set(0.5, 0.5);
+  // txt.repeat.set(0.5, 50);
+  txt.wrapS = ClampToEdgeWrapping;
+  txt.wrapT = ClampToEdgeWrapping;
 
-  let meshPositions = [];
+  if (ctx) {
+    const grd = ctx.createLinearGradient(0, 0, 200, 0);
+    grd.addColorStop(0, "yellow");
+    grd.addColorStop(1, "white");
 
-  useEffect(() => {
-    if (instancedMeshRef.current) {
-      console.log(instancedMeshRef.current.children);
-      instancedMeshRef.current.children.forEach((child) => {
-        return meshPositions.push(child.position);
-      });
-    }
-  }, []);
+    ctx.fillStyle = grd;
+    ctx.fillRect(0, 0, 300, 200);
+  }
 
-  const instances = useMemo(() => {
-    const instances: InstancedRigidBodyProps[] = [];
+  let geo = new SphereGeometry(75, 16, 8, 0, 2, 1, 1.2);
+  let m = new MeshBasicMaterial();
 
-    return instances;
-  }, []);
+  let myMesh = new Mesh(geo, m);
+
+  let box = new BoxGeometry();
 
   return (
     <>
-      <group>
-        <ambientLight />
-        <OrbitControls />
-      </group>
-
-      <Merged meshes={nodes}>
-        {() =>
-          Object.entries(nodes).map(([key, _Obj]) => {
-            let Obj = _Obj as Mesh;
-            // console.log(Obj);
-            return (
-              <Instances
-                args={[Obj.geometry, Obj.material, 1]}
-                ref={instancedMeshRef as any}
-              >
-                <Instance scale={0.2} />
-                <Instance scale={0.2} position={[100, 4, 300]} />
-                <Instance scale={0.2} position={[300, -8, 100]} />
-              </Instances>
-            );
-          })
-        }
-      </Merged>
-
-      {/* PHYSICS */}
+      {/* <Box scale={[3, 1, 1]}>
+        <meshBasicMaterial map={txt} />
+      </Box> */}
+      {/* <mesh geometry={myMesh.geometry} material={m} /> */}
+      <Contact instances={[{ rotation: [0, Math.PI, 0] }]} />
     </>
   );
 }
