@@ -1,38 +1,25 @@
 import * as THREE from "three";
 import Ground from "../Ground";
-import {
-  Box,
-  Gltf,
-  Merged,
-  Plane,
-  Ring,
-  RoundedBox,
-  Text,
-  useGLTF,
-  useVideoTexture,
-} from "@react-three/drei";
 
 import BluePrint from "./bluePrint";
 import Plants from "../Plants";
-import { DoubleSide, Material, Mesh, MeshBasicMaterial, Vector3 } from "three";
-import { color } from "three/examples/jsm/nodes/Nodes.js";
-import { Suspense, useEffect } from "react";
+
 import Projects from "../Resume/Projects";
 import Involvement from "../Resume/Involvement";
-import Seats from "../Seats";
 import Statues from "../Statues";
 import WorkExperience from "../Resume/WorkExperience";
 import Skills from "../Resume/Skills";
-import { DesktopInstructions } from "../Controlls";
+import { Instructions } from "../ControllsInstructions";
 import Sign from "../Sign";
-import { Physics, RigidBody } from "@react-three/rapier";
+import { RigidBody } from "@react-three/rapier";
 import Contact from "../contact/index.";
+import PlayGound from "../../playGround";
 
 export default function City() {
   let contactScale = 0.3;
   return (
     <>
-      <Contact
+      {/* <Contact
         position={[0, 0.5, 0]}
         instances={[
           {
@@ -61,17 +48,17 @@ export default function City() {
             scale: contactScale,
           },
         ]}
-      />
+      /> */}
 
       <Contact
         instances={[{ position: [0, 0, 3.5], rotation: [0, Math.PI, 0] }]}
       />
-      <BluePrint />
-      {/* <DesktopInstructions /> */}
+      {/* <BluePrint /> */}
+      <Instructions scale={2.7} position={[5, 1.5, 6]} />
 
       {/* <Statues /> */}
 
-      {/* <Involvement position={[0, 0, 0]} rotation={[0, -Math.PI, 0]} /> */}
+      <Involvement position={[0, 0, 0]} rotation={[0, -Math.PI, 0]} />
       {/* <Involvement position={[45, 0, 5]} rotation={[0, -Math.PI, 0]} /> */}
       {/* <Projects /> */}
       {/* <Skills position={[-30, 0, 0]} rotation={[0, Math.PI / 2, 0]} /> */}
@@ -86,7 +73,7 @@ export default function City() {
             intensity={5}
             rotation={[0, Math.PI / 2, 0]}
             title="< Pojects"
-            boardScale={new Vector3(5, 1, 0.1)}
+            boardScale={[5, 1, 0.1] as any}
             color="green"
           />
           <Sign
@@ -95,7 +82,7 @@ export default function City() {
             intensity={5}
             rotation={[0, Math.PI, 0]}
             title="Skills >"
-            boardScale={new Vector3(5, 1, 0.1)}
+            boardScale={[5, 1, 0.1] as any}
             color="gold"
           />
           <Sign
@@ -104,7 +91,7 @@ export default function City() {
             intensity={7}
             rotation={[0, Math.PI, 0]}
             title="< Involvement"
-            boardScale={new Vector3(7, 1.5, 0.1)}
+            boardScale={[7, 1.5, 0.1] as any}
             color="#AA336A"
           />
         </group>

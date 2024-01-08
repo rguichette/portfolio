@@ -33,19 +33,38 @@ let Seats = forwardRef(function SeatModel(props: InstancedChairProps, ref) {
     "public/assets/involvement/office_chair.glb"
   ) as GltfExtend;
 
+  let refT = useRef(null);
+
+  Object.entries(nodes).forEach(([_, node]) => {
+    console.log(node);
+    (node as Mesh).frustumCulled = false;
+  });
+
+  useEffect(() => {
+    if (refT.current) {
+      console.log(nodes);
+
+      // nodes.forEach((node) => {
+      //   console.log("Nodes", node);
+      // });
+    }
+  }, []);
+
+  console.log("CP: ", nodes);
+
   return (
     <>
-      <Merged meshes={nodes} ref={ref as any}>
+      <Merged meshes={nodes} ref={refT} frustumCulled={false}>
         {(ChairParts: any) => {
           let { instances } = props;
 
           return instances.map((chairInstanceProps, k) => {
             return (
               <RigidBody {...chairInstanceProps} key={k}>
-                <mesh position={[0, -1, 0]} key={k}>
+                <mesh position={[0, -1, 0]} key={k} frustumCulled={false}>
                   {Object.entries(ChairParts).map(
                     ([ky, Part]: [string, any]) => {
-                      return <Part key={ky} />;
+                      return <Part key={ky} frustumCulled={false} />;
                     }
                   )}
                 </mesh>

@@ -33,7 +33,7 @@ import { enterWorld, isMobileAtom } from "./state";
 // } from "./Components/MobileControls/testAnything";
 // import MobileControls2 from "./Components/MobileControls2";
 
-// import { isMobile } from "is-mobile";
+import { isMobile } from "is-mobile";
 import City2 from "./Components/City";
 
 enum Controls {
@@ -57,6 +57,11 @@ let co = [
   },
 ];
 function App() {
+  // if (isMobile()) {
+  //   console.log("MOBILE!");
+  // } else {
+  //   console.log("NOT MOBILE");
+  // }
   // let [_ismobile, setIsMobile] = useAtom(isMobileAtom);
 
   // useEffect(() => {

@@ -12,6 +12,7 @@ import {
   OrbitControlsProps,
   PerspectiveCamera,
   Plane,
+  Preload,
   Sparkles,
   Sphere,
   Stars,
@@ -65,7 +66,7 @@ let World = () => {
   return (
     <>
       <Suspense>
-        {/* <Stars
+        <Stars
           radius={70}
           count={2000}
           factor={4}
@@ -80,7 +81,7 @@ let World = () => {
           color={new THREE.Color("yellow")}
           position={[0, 5, 0]}
           noise={50}
-        /> */}
+        />
 
         {/* <fog attach="fog" near={1} far={75} color={"#53376c"} /> */}
 
@@ -91,19 +92,21 @@ let World = () => {
 
 
 */}
-        <OrbitControls />
+        {/* <OrbitControls /> */}
         {/* <Suspense>
           <group position={[-20, 0, -20]}></group>
         </Suspense> */}
-        {/* <CamView /> */}
+        <CamView />
 
         <Physics debug gravity={[0, -9.988, 0]}>
           <Suspense>
-            {/* <Player position={[0, 1, 0]} ref={characterRef} /> */}
+            <Player position={[0, 1, 0]} ref={characterRef} />
           </Suspense>
-          <PlayGound />
-          {/* <City /> */}
+          {/* <PlayGound /> */}
+          <City />
         </Physics>
+
+        <Preload all />
       </Suspense>
     </>
   );

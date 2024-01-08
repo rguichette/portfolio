@@ -66,6 +66,8 @@ export default function Contact(props: ContactInstanceMesh) {
 
   const canvas = document.createElement("canvas");
   const texture = new CanvasTexture(canvas);
+  const ctx = canvas.getContext("2d", { willReadFrequently: true });
+
   texture.needsUpdate = true;
   var days = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"];
   var months = [
@@ -85,8 +87,6 @@ export default function Contact(props: ContactInstanceMesh) {
 
   const phoneAnimatedTexture = () => {
     let imageUrl = "phonebg.jpeg";
-
-    const ctx = canvas.getContext("2d");
 
     texture.wrapS = RepeatWrapping;
     texture.wrapT = RepeatWrapping;
@@ -119,15 +119,15 @@ export default function Contact(props: ContactInstanceMesh) {
       } ${dayInfo.getDate()}`;
 
       //dayInfo.getSeconds()
+      if (ctx) {
+        ctx.font = "600px Comic Sans MS";
+        ctx.fillStyle = "white";
+        ctx.textAlign = "center";
+        ctx.fillText(timeL1.toString(), canvas.width / 2, canvas.height / 3.5);
 
-      ctx.font = "600px Comic Sans MS";
-      ctx.fillStyle = "white";
-      ctx.textAlign = "center";
-      ctx.fillText(timeL1.toString(), canvas.width / 2, canvas.height / 3.5);
-
-      ctx.font = "400px Comic Sans MS";
-      ctx.fillText(timeL2.toString(), canvas.width / 2, canvas.height / 2.7);
-
+        ctx.font = "400px Comic Sans MS";
+        ctx.fillText(timeL2.toString(), canvas.width / 2, canvas.height / 2.7);
+      }
       // ctx.fillText("My TEXT!", canvas.width, canvas.height);
     });
 
@@ -135,9 +135,11 @@ export default function Contact(props: ContactInstanceMesh) {
   };
 
   let txt2 = phoneAnimatedTexture();
+
+  //  TODO: get the time correct without the perfomranc hit.
   useFrame(() => {
-    txt2 = phoneAnimatedTexture();
-    txt2.needsUpdate = true;
+    // txt2 = phoneAnimatedTexture();
+    // txt2.needsUpdate = true;
   });
 
   //------------------------ end canvas -------------
@@ -161,7 +163,7 @@ export default function Contact(props: ContactInstanceMesh) {
   return (
     <>
       <mesh {...props}>
-        <Merged meshes={{ ...fb, ...cb }}>
+        <Merged meshes={{ ...fb, ...cb }} frustumCulled={false}>
           {({ Screen, ...items }) => {
             console.log(items);
 
@@ -183,8 +185,6 @@ export default function Contact(props: ContactInstanceMesh) {
           }}
         </Merged>
       </mesh>
-
-      {/* <mesh geometry={Screen.geometry} material={plnM} position={[2, 0, 0]} /> */}
     </>
   );
 }
