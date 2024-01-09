@@ -5,14 +5,13 @@ import {
   RapierRigidBody,
   RigidBody,
 } from "@react-three/rapier";
-import { useAtom, useAtomValue } from "jotai";
-import React, { forwardRef, useEffect, useRef } from "react";
+import { useAtomValue } from "jotai";
+import React, { forwardRef, useRef } from "react";
 import {
   AnimationAction,
-  LoopOnce,
+  AnimationClip,
   Mesh,
   Quaternion,
-  Scene,
   Vector3,
 } from "three";
 import { showDetailsPopUp, showHelpPopUp } from "../../state";
@@ -52,19 +51,17 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
 
   let idleAnimation = animations.find(
     (clip) => clip.name == "Breathing_idle"
-  ) as THREE.AnimationClip;
+  ) as AnimationClip;
 
   let IdleHappy = animations.find(
     (clip) => clip.name == "Idle_Happy"
-  ) as THREE.AnimationClip;
+  ) as AnimationClip;
 
-  let run = animations.find(
-    (clip) => clip.name == "run"
-  ) as THREE.AnimationClip;
+  let run = animations.find((clip) => clip.name == "run") as AnimationClip;
 
   let walkingAnimation = animations.find(
     (clip) => clip.name == "Walk"
-  ) as THREE.AnimationClip;
+  ) as AnimationClip;
 
   let speed = 3;
   let runninng = false;

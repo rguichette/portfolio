@@ -1,18 +1,12 @@
-import { Sphere, Text, useGLTF, useTexture } from "@react-three/drei";
+import { Sphere, useGLTF, useTexture } from "@react-three/drei";
 import { forwardRef, useRef } from "react";
-import Library from "../../BuildingComponents/Library";
-import { texture } from "three/examples/jsm/nodes/Nodes.js";
+import Library from "../../Library";
 import { Mesh } from "three";
 import { GroupProps, useFrame } from "@react-three/fiber";
 
 let Involvement: React.FC<GroupProps> = forwardRef((props, ref) => {
   let earthRef = useRef(null);
 
-  //   useEffect(()=>{
-  // if (earthRef.current){
-  // (earthRef.current as Mesh).rotation.y =
-  // }
-  //   },[])
   let texture = useTexture("/assets/involvement/earthTexture.jpeg");
 
   let { scene: resume } = useGLTF("/resumeSheet.glb");

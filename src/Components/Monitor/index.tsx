@@ -1,10 +1,6 @@
 import { Box, Plane, useVideoTexture } from "@react-three/drei";
 import { MeshProps } from "@react-three/fiber";
-import {
-  CuboidCollider,
-  RigidBody,
-  RigidBodyTypeString,
-} from "@react-three/rapier";
+import { RigidBody, RigidBodyTypeString } from "@react-three/rapier";
 import { forwardRef, useEffect, useRef } from "react";
 import * as THREE from "three";
 import { DoubleSide, Mesh, MeshBasicMaterial } from "three";

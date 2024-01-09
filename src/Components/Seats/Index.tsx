@@ -1,22 +1,8 @@
-import {
-  Box,
-  Gltf,
-  Instance,
-  Instances,
-  Merged,
-  useGLTF,
-} from "@react-three/drei";
-import { GroupProps, MeshProps } from "@react-three/fiber";
+import { Merged, useGLTF } from "@react-three/drei";
+import { MeshProps } from "@react-three/fiber";
 import { CuboidCollider, RigidBody, RigidBodyProps } from "@react-three/rapier";
-import React, { Ref, forwardRef, useEffect, useMemo, useRef } from "react";
-import {
-  Group,
-  InstancedMesh,
-  Material,
-  Mesh,
-  MeshBasicMaterial,
-  Object3D,
-} from "three";
+import { forwardRef, useEffect, useRef } from "react";
+import { Mesh } from "three";
 import { GLTF } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 type GltfExtend = GLTF & {

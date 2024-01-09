@@ -2,25 +2,13 @@ import { Canvas, useLoader } from "@react-three/fiber";
 import World from "./Components/World";
 import LoadingPage from "./Components/LoadingScreen";
 import { Suspense, useEffect, useState } from "react";
-import WorkStation from "./Components/Workstation";
-import Monitor from "./Components/Monitor";
 
-import {
-  Box,
-  Html,
-  KeyboardControls,
-  OrbitControls,
-  Plane,
-  useProgress,
-} from "@react-three/drei";
-import Portal from "./Components/portal";
+import { KeyboardControls } from "@react-three/drei";
 
 import * as THREE from "three";
 import Projects from "./Components/Resume/Projects";
 import { Physics } from "@react-three/rapier";
 
-import PlayGound from "./playGround";
-import Player from "./Components/Player/Player";
 import { Provider, useAtom, useAtomValue } from "jotai";
 
 // import DetailPopUp from "./Components/DetailPopUp";
@@ -34,7 +22,6 @@ import { enterWorld, isMobileAtom } from "./state";
 // import MobileControls2 from "./Components/MobileControls2";
 
 import { isMobile } from "is-mobile";
-import City2 from "./Components/City";
 
 enum Controls {
   forward = "forward",

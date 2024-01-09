@@ -1,6 +1,4 @@
-import { Box, Plane, useTexture } from "@react-three/drei";
-import React from "react";
-import { DoubleSide } from "three";
+import { Plane, useTexture } from "@react-three/drei";
 
 export default function Projects() {
   let [breathe, dashboard, kel, listings, account, photos, post] = useTexture([

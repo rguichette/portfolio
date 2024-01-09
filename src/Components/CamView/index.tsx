@@ -18,7 +18,7 @@ export default function CamView() {
 
   let enteredWorld = useAtomValue(enterWorld);
 
-  let { scene, camera } = useThree();
+  let { scene } = useThree();
 
   //handle clean touch events to prevant false panning state
   useEffect(() => {

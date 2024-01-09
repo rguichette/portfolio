@@ -1,52 +1,21 @@
-import {
-  Box,
-  Html,
-  Instance,
-  InstanceProps,
-  Instances,
-  Merged,
-  Plane,
-  RoundedBox,
-  Sphere,
-  Tube,
-  useGLTF,
-} from "@react-three/drei";
+import { Merged, useGLTF } from "@react-three/drei";
 import { MeshProps, useFrame } from "@react-three/fiber";
-import {
-  CuboidCollider,
-  InstancedRigidBodies,
-  InstancedRigidBodyProps,
-  RapierRigidBody,
-  RigidBody,
-  RigidBodyProps,
-} from "@react-three/rapier";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { CuboidCollider, RigidBody, RigidBodyProps } from "@react-three/rapier";
 import {
   BoxGeometry,
   CanvasTexture,
-  ClampToEdgeWrapping,
-  Color,
-  ConeGeometry,
   DoubleSide,
   EdgesGeometry,
   ImageLoader,
-  InstancedMesh,
   LineBasicMaterial,
   LineSegments,
-  Material,
   Mesh,
-  MeshBasicMaterial,
   MeshPhongMaterial,
-  MeshPhysicalMaterial,
-  MeshStandardMaterial,
-  Object3D,
-  PlaneGeometry,
   RepeatWrapping,
 } from "three";
-import { RoundedBoxGeometry } from "three-stdlib";
+import { GLTF } from "three-stdlib";
 
 import * as BufferGeometryUtils from "three/addons/utils/BufferGeometryUtils.js";
-import { cubeTexture } from "three/examples/jsm/nodes/Nodes.js";
 
 interface ContactInstanceMesh extends MeshProps {
   instances: RigidBodyProps[];
@@ -55,10 +24,6 @@ interface ContactInstanceMesh extends MeshProps {
 export default function Contact(props: ContactInstanceMesh) {
   const boxGeometry = new BoxGeometry(1, 1, 1, 8, 8, 8);
   const boxEdges = new EdgesGeometry(boxGeometry);
-  const roundedBoxEdges = new LineSegments(
-    boxEdges,
-    new LineBasicMaterial({ color: 0xffffff })
-  );
 
   BufferGeometryUtils.mergeVertices(boxEdges);
 
@@ -98,9 +63,9 @@ export default function Contact(props: ContactInstanceMesh) {
 
       canvas.width = image.width;
       canvas.height = image.height;
-      ctx.clearRect(0.0, 0.0, canvas.width, canvas.height);
+      ctx?.clearRect(0.0, 0.0, canvas.width, canvas.height);
 
-      ctx.drawImage(image, 0.0, 0.0, image.width, image.height);
+      ctx?.drawImage(image, 0.0, 0.0, image.width, image.height);
 
       // text --- where date information is stored
 
@@ -147,24 +112,26 @@ export default function Contact(props: ContactInstanceMesh) {
   let { nodes: fb } = useGLTF("/phoneBez.glb") as any;
   let { nodes: sb } = useGLTF("/phoneScreenBack.glb") as any;
 
-  let { nodes: cb } = useGLTF("/cubeTest.glb");
+  let { nodes: cb } = useGLTF("/cubeTest.glb") as GLTF & {
+    nodes: any;
+  };
 
   let { instances } = props;
 
   //change property from cb before it reaches Merged
-  let mtl = ((cb.Screen as Mesh).material = new MeshPhongMaterial({
+  (cb.Screen as Mesh).material = new MeshPhongMaterial({
     side: DoubleSide,
     emissive: "#0a0a0a",
     map: txt2,
     specular: "#ffffff",
     shininess: 69.5,
-  }));
+  });
 
   return (
     <>
       <mesh {...props}>
         <Merged meshes={{ ...fb, ...cb }} frustumCulled={false}>
-          {({ Screen, ...items }) => {
+          {({ Screen, ...items }: { Screen: any }) => {
             console.log(items);
 
             return instances.map((instProps, k) => {

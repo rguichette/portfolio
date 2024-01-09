@@ -1,7 +1,5 @@
 import { useAtom } from "jotai";
-import React from "react";
 
-import InfoCard from "../InfoCard";
 import DetailCard from "../Cards/detailCard";
 import { showDetailsPopUp } from "../../state";
 

@@ -1,13 +1,11 @@
-import { Box, Text, useHelper } from "@react-three/drei";
-import { GroupProps, MeshProps, useFrame } from "@react-three/fiber";
-import React, { useEffect, useRef } from "react";
+import { Box, Text } from "@react-three/drei";
+import { GroupProps, useFrame } from "@react-three/fiber";
+import { useEffect, useRef } from "react";
 import {
   DoubleSide,
   Group,
   MeshStandardMaterial,
   PointLight,
-  PointLightHelper,
-  SpotLightHelper,
   Vector3,
 } from "three";
 
@@ -42,25 +40,10 @@ export default function Sign(props: SignProps) {
     let pl = scene.getObjectByName("signLight") as PointLight;
 
     if (signMaterialRef.current) {
-      // console.log(
-      //   "SIGN: ",
-      //   (signMaterialRef.current as MeshStandardMaterial).opacity
-      // );
-
       let randomBrightness = Math.random();
 
-      // console.log(pl);
-
-      // console.log(randomBrightness);
       if (randomBrightness > 0.87 && randomBrightness < 96) {
         let subtract = randomBrightness - Math.random() + 0.3;
-
-        // if (textgroupRef.current) {
-        //   console.log(textgroupRef.current);
-        //   textgroupRef.current.children.forEach((t) => {
-        //     // console.log(t);
-        //   });
-        // }
 
         (signMaterialRef.current as MeshStandardMaterial).opacity =
           subtract * 0.8;

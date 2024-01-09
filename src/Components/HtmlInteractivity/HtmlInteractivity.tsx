@@ -1,5 +1,4 @@
 import { useAtom, useAtomValue } from "jotai";
-import React from "react";
 import {
   enterWorld,
   showDetailsPopUp,

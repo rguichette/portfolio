@@ -9,7 +9,7 @@ import Involvement from "../Resume/Involvement";
 import Statues from "../Statues";
 import WorkExperience from "../Resume/WorkExperience";
 import Skills from "../Resume/Skills";
-import { Instructions } from "../ControllsInstructions";
+// import { Instructions } from "../ControllsInstructions";
 import Sign from "../Sign";
 import { RigidBody } from "@react-three/rapier";
 import Contact from "../contact/index.";
@@ -19,7 +19,7 @@ export default function City() {
   let contactScale = 0.3;
   return (
     <>
-      {/* <Contact
+      <Contact
         position={[0, 0.5, 0]}
         instances={[
           {
@@ -48,17 +48,17 @@ export default function City() {
             scale: contactScale,
           },
         ]}
-      /> */}
-
-      <Contact
-        instances={[{ position: [0, 0, 3.5], rotation: [0, Math.PI, 0] }]}
       />
+
+      {/* <Contact
+        instances={[{ position: [0, 0, 3.5], rotation: [0, Math.PI, 0] }]}
+      /> */}
       {/* <BluePrint /> */}
-      <Instructions scale={2.7} position={[5, 1.5, 6]} />
+      {/* <Instructions scale={2.7} position={[5, 1.5, 6]} /> */}
 
       {/* <Statues /> */}
 
-      <Involvement position={[0, 0, 0]} rotation={[0, -Math.PI, 0]} />
+      {/* <Involvement position={[0, 0, 0]} rotation={[0, -Math.PI, 0]} /> */}
       {/* <Involvement position={[45, 0, 5]} rotation={[0, -Math.PI, 0]} /> */}
       {/* <Projects /> */}
       {/* <Skills position={[-30, 0, 0]} rotation={[0, Math.PI / 2, 0]} /> */}
@@ -96,7 +96,7 @@ export default function City() {
           />
         </group>
       </RigidBody> */}
-
+      <Sign />
       {/* <Plants /> */}
       <Ground />
     </>

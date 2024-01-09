@@ -1,34 +1,10 @@
-import {
-  Box,
-  Cylinder,
-  Gltf,
-  Instance,
-  Instances,
-  Plane,
-  Ring,
-  Sphere,
-  Text,
-  useAnimations,
-  useGLTF,
-  useVideoTexture,
-} from "@react-three/drei";
-import React, { Suspense, useEffect, useRef } from "react";
+import { Gltf, Plane, Ring, Text, useVideoTexture } from "@react-three/drei";
+import React, { Suspense, useEffect } from "react";
 import WorkStation from "../../Workstation";
-import {
-  AnimationClip,
-  BoxGeometry,
-  BufferAttribute,
-  BufferGeometry,
-  CylinderGeometry,
-  DoubleSide,
-  Float32BufferAttribute,
-  MeshBasicMaterial,
-  Vector3,
-} from "three";
+import { CylinderGeometry, DoubleSide, MeshBasicMaterial } from "three";
 import { GroupProps, MeshProps, useFrame } from "@react-three/fiber";
 import CustomShaderMaterial from "three-custom-shader-material";
 import data from "../../../shaders/data/data.vert";
-import Contact from "../../contact/index.";
 
 // type CylinderRingProps = MeshProps & {
 //   /**
@@ -91,8 +67,6 @@ const CylinderRing = (props: CylinderRingProps) => {
 };
 
 function Data(props: MeshProps) {
-  // let { scene: ring, animations } = useGLTF("/assets/skills/Ring.glb");
-  // const { actions, mixer } = useAnimations(animations, ring);
   let uniforms = {
     uTime: { value: 0 },
   };
