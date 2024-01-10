@@ -7,6 +7,7 @@ import {
   MeshPhysicalMaterial,
   MeshStandardMaterial,
 } from "three";
+import BookStatue from "../StatueComponents/BookStatue";
 
 let Statues = () => {
   let { scene: dynamic } = useGLTF("/poses/dynamic.glb");
@@ -46,7 +47,7 @@ let Statues = () => {
 
   return (
     <>
-      <mesh
+      {/* <mesh
         scale={14}
         position={[-38, -4, 9]}
         material={new MeshStandardMaterial({ color: "green" })}
@@ -90,7 +91,7 @@ let Statues = () => {
           </Plane>
           <Box scale={[2, 0.1, 2]} position={[0, -0.2, 0]} />
         </mesh>
-      </Suspense>
+      </Suspense> */}
     </>
   );
 };

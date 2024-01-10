@@ -14,6 +14,11 @@ import Sign from "../Sign";
 import { RigidBody } from "@react-three/rapier";
 import Contact from "../contact/index.";
 import PlayGound from "../../playGround";
+import { Instructions } from "../Controlls";
+import SuccessStatue from "../StatueComponents/SuccessStatue";
+import BookStatue from "../StatueComponents/BookStatue";
+import BenchStatue from "../StatueComponents/WorkoutStatue";
+import DynamicStatue from "../StatueComponents/DynamicStatue";
 
 export default function City() {
   let contactScale = 0.3;
@@ -57,15 +62,21 @@ export default function City() {
       {/* <Instructions scale={2.7} position={[5, 1.5, 6]} /> */}
 
       {/* <Statues /> */}
+      <PlayGound />
 
-      {/* <Involvement position={[0, 0, 0]} rotation={[0, -Math.PI, 0]} /> */}
-      {/* <Involvement position={[45, 0, 5]} rotation={[0, -Math.PI, 0]} /> */}
+      <SuccessStatue scale={3.5} position={[6.5, 0, 35]} />
+      <BookStatue position={[40, -1.3, -7]} />
+      <BenchStatue scale={1.6} position={[8, 0.7, -40]} />
+      <DynamicStatue scale={14} position={[-38, -4, 9]} />
+
+      {/* <Involvement position={[0, 0, 7]} rotation={[0, -Math.PI, 0]} /> */}
+      <Involvement position={[45, 0, 5]} rotation={[0, -Math.PI, 0]} />
       {/* <Projects /> */}
       {/* <Skills position={[-30, 0, 0]} rotation={[0, Math.PI / 2, 0]} /> */}
       {/* <WorkExperience /> */}
 
       {/* signs */}
-      {/* <RigidBody type="fixed" position={[-4, 0, 1]}>
+      <RigidBody type="fixed" position={[-4, 0, 1]}>
         <group position={[0, 0.8, 0]}>
           <Sign
             scale={0.3}
@@ -95,9 +106,8 @@ export default function City() {
             color="#AA336A"
           />
         </group>
-      </RigidBody> */}
-      <Sign />
-      {/* <Plants /> */}
+      </RigidBody>
+      <Plants />
       <Ground />
     </>
   );

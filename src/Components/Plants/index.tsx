@@ -65,6 +65,7 @@ export default function Plants() {
             key={key}
             position={[0, -1.3, 0]}
             ref={plantRef}
+            frustumCulled={false}
           >
             <Instance
               position={[-10, 0, -1]}

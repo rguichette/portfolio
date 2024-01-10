@@ -26,7 +26,6 @@ import { useFrame, useThree } from "@react-three/fiber";
 
 import WorkStation from "../Workstation";
 import Keyboard from "../Keyboard";
-import Portal from "../portal/index.tsx";
 
 import Skills from "../Resume/Skills/index.tsx";
 
@@ -65,6 +64,7 @@ let World = () => {
 
   return (
     <>
+      <Preload all />
       <Suspense>
         <Stars
           radius={70}
@@ -83,7 +83,7 @@ let World = () => {
           noise={50}
         />
 
-        {/* <fog attach="fog" near={1} far={75} color={"#53376c"} /> */}
+        <fog attach="fog" color={"#53376c"} />
 
         <ambientLight intensity={1.2} />
         {/* /3Dassets/Environment/plants/alien_plant.glb
@@ -92,11 +92,11 @@ let World = () => {
 
 
 */}
-        <OrbitControls />
+        {/* <OrbitControls /> */}
         {/* <Suspense>
           <group position={[-20, 0, -20]}></group>
         </Suspense> */}
-        {/* <CamView /> */}
+        <CamView />
 
         <Physics debug gravity={[0, -9.988, 0]}>
           <Suspense>
@@ -105,8 +105,6 @@ let World = () => {
           {/* <PlayGound /> */}
           <City />
         </Physics>
-
-        <Preload all />
       </Suspense>
     </>
   );
