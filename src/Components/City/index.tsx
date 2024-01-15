@@ -6,15 +6,14 @@ import Plants from "../Plants";
 
 import Projects from "../Resume/Projects";
 import Involvement from "../Resume/Involvement";
-import Statues from "../Statues";
 import WorkExperience from "../Resume/WorkExperience";
 import Skills from "../Resume/Skills";
 // import { Instructions } from "../ControllsInstructions";
 import Sign from "../Sign";
-import { RigidBody } from "@react-three/rapier";
+import { CuboidCollider, RigidBody } from "@react-three/rapier";
 import Contact from "../contact/index.";
 import PlayGound from "../../playGround";
-import { Instructions } from "../Controlls";
+import { Instructions } from "../Controls";
 import SuccessStatue from "../StatueComponents/SuccessStatue";
 import BookStatue from "../StatueComponents/BookStatue";
 import BenchStatue from "../StatueComponents/WorkoutStatue";
@@ -60,9 +59,7 @@ export default function City() {
       /> */}
       {/* <BluePrint /> */}
       {/* <Instructions scale={2.7} position={[5, 1.5, 6]} /> */}
-
       {/* <Statues /> */}
-      <PlayGound />
 
       <SuccessStatue scale={3.5} position={[6.5, 0, 35]} />
       <BookStatue position={[40, -1.3, -7]} />
@@ -73,6 +70,7 @@ export default function City() {
       <Involvement position={[45, 0, 5]} rotation={[0, -Math.PI, 0]} />
       {/* <Projects /> */}
       {/* <Skills position={[-30, 0, 0]} rotation={[0, Math.PI / 2, 0]} /> */}
+      <Skills position={[-15, 0, 0]} rotation={[0, Math.PI / 2, 0]} />
       {/* <WorkExperience /> */}
 
       {/* signs */}

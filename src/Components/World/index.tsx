@@ -102,7 +102,7 @@ let World = () => {
           <Suspense>
             <Player position={[0, 1, 0]} ref={characterRef} />
           </Suspense>
-          {/* <PlayGound /> */}
+          <PlayGound />
           <City />
         </Physics>
       </Suspense>

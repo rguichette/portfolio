@@ -5,6 +5,7 @@ import { CylinderGeometry, DoubleSide, MeshBasicMaterial } from "three";
 import { GroupProps, MeshProps, useFrame } from "@react-three/fiber";
 import CustomShaderMaterial from "three-custom-shader-material";
 import data from "../../../shaders/data/data.vert";
+import { CuboidCollider, RigidBody } from "@react-three/rapier";
 
 // type CylinderRingProps = MeshProps & {
 //   /**
@@ -147,16 +148,28 @@ export default function Skills(props: GroupProps) {
       </mesh>
       <WorkStation position={[-4, 0.5, 5]} rotation={[0, -0.5, 0]} />
       <Data position={[3, 0, -20]} />
-      <Gltf
-        src="/assets/skills/gopher.glb"
+      <RigidBody
+        type={"fixed"}
+        colliders={"cuboid"}
+        scale={3}
         position={[13, -1.5, -15]}
         rotation={[0, -0.4, 0]}
-      />
-      <Gltf
-        src="/assets/skills/python.glb"
+      >
+        <Gltf src="/assets/skills/gopher.glb">
+          {/* <CuboidCollider args={[0.45, 1, 1.5]} position={[-0.4, 0, -0.13]} /> */}
+        </Gltf>
+      </RigidBody>
+
+      <RigidBody
+        type="fixed"
+        colliders={false}
+        scale={3}
         position={[3, 0, -25]}
-        scale={0.1}
-      />
+      >
+        <Gltf src="/assets/skills/python.glb">
+          <CuboidCollider args={[1, 1, 0.2]} />
+        </Gltf>
+      </RigidBody>
 
       <Suspense fallback={<Text>Loading...</Text>}>
         <group scale={0.1} position={[0, -1.4, 0]}>

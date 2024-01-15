@@ -25,7 +25,7 @@ import Monitor from "../Monitor";
 import Keyboard from "../Keyboard";
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
 import { useAtomValue } from "jotai";
-import { showEngageButton } from "../../state";
+// import { showEngageButton } from "../../state";
 
 // import desk from "../../3Dassets/glassDesk.glb";
 
@@ -37,28 +37,28 @@ let WorkStation: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>(
 
     let monGroupRef = useRef<THREE.Group>(null);
 
-    let toggle = useAtomValue(showEngageButton);
+    // let toggle = useAtomValue(showEngageButton);
 
-    useEffect(() => {
-      //turn on and off
+    // useEffect(() => {
+    //   //turn on and off
 
-      if (monGroupRef.current) {
-        if (monGroupRef.current.children) {
-          monGroupRef.current.children.map((c) => {
-            // console.log("child: ", c);
-            if (toggle) {
-              (
-                (c.children[0] as Mesh).material as MeshBasicMaterial
-              ).color.setRGB(1, 1, 1);
-            } else {
-              (
-                (c.children[0] as Mesh).material as MeshBasicMaterial
-              ).color.setRGB(0, 0, 0);
-            }
-          });
-        }
-      }
-    }, [toggle]);
+    //   if (monGroupRef.current) {
+    //     if (monGroupRef.current.children) {
+    //       monGroupRef.current.children.map((c) => {
+    //         // console.log("child: ", c);
+    //         if (toggle) {
+    //           (
+    //             (c.children[0] as Mesh).material as MeshBasicMaterial
+    //           ).color.setRGB(1, 1, 1);
+    //         } else {
+    //           (
+    //             (c.children[0] as Mesh).material as MeshBasicMaterial
+    //           ).color.setRGB(0, 0, 0);
+    //         }
+    //       });
+    //     }
+    //   }
+    // }, [toggle]);
 
     return (
       <>
