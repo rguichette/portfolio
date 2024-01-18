@@ -30,7 +30,6 @@ import Keyboard from "../Keyboard";
 import Skills from "../Resume/Skills/index.tsx";
 
 import { log, vec3 } from "three/examples/jsm/nodes/Nodes.js";
-import Experience from "../Experience/index.tsx";
 import Projects from "../Resume/Projects/index.tsx";
 import Involvement from "../Resume/Involvement/index.tsx";
 import { CuboidCollider, Physics, RigidBody } from "@react-three/rapier";
@@ -43,7 +42,6 @@ import { OrbitControls as OCtype } from "three-stdlib";
 import CameraControls from "camera-controls";
 import { useAtom } from "jotai";
 import { infoAtom } from "../../state/index.tsx";
-import DetailCard from "../Cards/detailCard.tsx";
 import CamView from "../CamView/index.tsx";
 import City from "../City/index.tsx";
 import Ground from "../Ground/index.tsx";
@@ -99,7 +97,7 @@ let World = () => {
         </Suspense> */}
         <CamView />
 
-        <Physics debug gravity={[0, -9.988, 0]}>
+        <Physics gravity={[0, -9.988, 0]}>
           <Suspense>
             <Player position={[0, 1, 0]} ref={characterRef} />
           </Suspense>

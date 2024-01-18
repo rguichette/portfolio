@@ -163,7 +163,7 @@ export default function Skills(props: GroupProps) {
           <meshBasicMaterial map={AiData} side={DoubleSide} />
         </Plane>
       </mesh>
-      <WorkStation position={[-10, 0.5, -2]} rotation={[0, 0.3, 0]} />
+      <WorkStation position={[15, 0.5, 5]} rotation={[0, 0.3, 0]} />
       <Data position={[3, 0, -20]} />
       <RigidBody
         type={"fixed"}

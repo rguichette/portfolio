@@ -36,7 +36,7 @@ export default function BookStatue(props: RigidBodyProps) {
 
   return (
     <>
-      <RigidBody colliders={false} type={"fixed"} {...props}>
+      <RigidBody colliders={false} type={"fixed"} {...props} scale={3}>
         <mesh geometry={newMesh.geometry} material={newMesh.material} />
 
         {/* <mesh geometry={nodes.Book} /> */}
