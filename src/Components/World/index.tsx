@@ -49,6 +49,7 @@ import City from "../City/index.tsx";
 import Ground from "../Ground/index.tsx";
 import PlayGound from "../../playGround/index.tsx";
 import Contact from "../contact/index..tsx";
+import BluePrint from "../City/bluePrint.tsx";
 
 CameraControls.install({ THREE: THREE });
 
@@ -102,7 +103,6 @@ let World = () => {
           <Suspense>
             <Player position={[0, 1, 0]} ref={characterRef} />
           </Suspense>
-          <PlayGound />
           <City />
         </Physics>
       </Suspense>

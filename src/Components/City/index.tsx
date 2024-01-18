@@ -18,6 +18,9 @@ import SuccessStatue from "../StatueComponents/SuccessStatue";
 import BookStatue from "../StatueComponents/BookStatue";
 import BenchStatue from "../StatueComponents/WorkoutStatue";
 import DynamicStatue from "../StatueComponents/DynamicStatue";
+import Bowling from "../bowling";
+import Dominos from "../Domino";
+import BoxStack from "../stack";
 
 export default function City() {
   let contactScale = 0.3;
@@ -54,10 +57,12 @@ export default function City() {
         ]}
       />
 
-      {/* <Contact
+      <Contact
         instances={[{ position: [0, 0, 3.5], rotation: [0, Math.PI, 0] }]}
-      /> */}
+      />
+      {/* <PlayGound/> */}
       {/* <BluePrint /> */}
+
       {/* <Instructions scale={2.7} position={[5, 1.5, 6]} /> */}
       {/* <Statues /> */}
 
@@ -68,11 +73,13 @@ export default function City() {
 
       {/* <Involvement position={[0, 0, 7]} rotation={[0, -Math.PI, 0]} /> */}
       <Involvement position={[45, 0, 5]} rotation={[0, -Math.PI, 0]} />
-      {/* <Projects /> */}
-      {/* <Skills position={[-30, 0, 0]} rotation={[0, Math.PI / 2, 0]} /> */}
-      <Skills position={[-15, 0, 0]} rotation={[0, Math.PI / 2, 0]} />
+      <Projects />
+      <Skills position={[-30, 0, 0]} rotation={[0, Math.PI / 2, 0]} />
+      {/* <Skills position={[-15, 0, 0]} rotation={[0, Math.PI / 2, 0]} /> */}
       {/* <WorkExperience /> */}
-
+      {/* <Bowling scale={1.5} position={[0, 1, 0]} /> */}
+      <Dominos />
+      <BoxStack />
       {/* signs */}
       <RigidBody type="fixed" position={[-4, 0, 1]}>
         <group position={[0, 0.8, 0]}>

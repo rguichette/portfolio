@@ -8,6 +8,7 @@ export let showHelpPopUp = atom(false);
 export let isCharacterMoving = atom(false);
 
 export type InfoCardArgs = {
+  display: boolean;
   title: string;
   summary: string;
   learnMore: boolean;
@@ -15,12 +16,13 @@ export type InfoCardArgs = {
 
 //handle info card
 export let infoCardAtom = atom({
+  display: false,
   title: "Tiltle from state",
   summary:
     "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Recusandae eaque beatae dolores atque nostrum. Saepe necessitatibus rem numquam culpa eum repellendus libero rerum aperiam tenetur. ",
   learnMore: true,
 });
-export let showInfoWindow = atom(false);
+// export let showInfoWindow = atom(false);
 //TODO: SWITCH BACK TO FALSE
 export let enterWorld = atom(true);
 

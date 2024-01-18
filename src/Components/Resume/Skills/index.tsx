@@ -6,6 +6,10 @@ import { GroupProps, MeshProps, useFrame } from "@react-three/fiber";
 import CustomShaderMaterial from "three-custom-shader-material";
 import data from "../../../shaders/data/data.vert";
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
+import { useAtom } from "jotai";
+import { infoCardAtom } from "../../../state";
+import summeries from "../../../statements";
+// import { showInfoWindow } from "../../../state";
 
 // type CylinderRingProps = MeshProps & {
 //   /**
@@ -68,6 +72,8 @@ const CylinderRing = (props: CylinderRingProps) => {
 };
 
 function Data(props: MeshProps) {
+  let [info, setInfo] = useAtom(infoCardAtom);
+
   let uniforms = {
     uTime: { value: 0 },
   };
@@ -132,6 +138,17 @@ function Data(props: MeshProps) {
           </CylinderRing>
         </group>
       </mesh>
+
+      <CuboidCollider
+        args={[1, 1, 1]}
+        sensor
+        onIntersectionEnter={() => {
+          setInfo(summeries.data);
+        }}
+        onIntersectionExit={() => {
+          setInfo((i) => ({ ...i, display: false }));
+        }}
+      />
     </mesh>
   );
 }
@@ -146,7 +163,7 @@ export default function Skills(props: GroupProps) {
           <meshBasicMaterial map={AiData} side={DoubleSide} />
         </Plane>
       </mesh>
-      <WorkStation position={[-4, 0.5, 5]} rotation={[0, -0.5, 0]} />
+      <WorkStation position={[-10, 0.5, -2]} rotation={[0, 0.3, 0]} />
       <Data position={[3, 0, -20]} />
       <RigidBody
         type={"fixed"}
