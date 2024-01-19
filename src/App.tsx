@@ -23,6 +23,7 @@ import { enterWorld, isMobileAtom } from "./state";
 
 import { isMobile } from "is-mobile";
 import InfoCrad from "./Components/InfoCard";
+import SkillsDetails from "./Components/SkillsDetails";
 
 enum Controls {
   forward = "forward",
@@ -73,6 +74,7 @@ function App() {
       {/* <MobileControls /> */}
 
       <InfoCrad />
+      <SkillsDetails />
 
       <KeyboardControls map={co}>
         <Canvas

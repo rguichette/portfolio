@@ -48,6 +48,7 @@ import Ground from "../Ground/index.tsx";
 import PlayGound from "../../playGround/index.tsx";
 import Contact from "../contact/index..tsx";
 import BluePrint from "../City/bluePrint.tsx";
+import SkillsDetails from "../SkillsDetails/index.tsx";
 
 CameraControls.install({ THREE: THREE });
 
@@ -96,7 +97,6 @@ let World = () => {
           <group position={[-20, 0, -20]}></group>
         </Suspense> */}
         <CamView />
-
         <Physics gravity={[0, -9.988, 0]}>
           <Suspense>
             <Player position={[0, 1, 0]} ref={characterRef} />
