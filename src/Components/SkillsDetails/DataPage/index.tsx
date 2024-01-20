@@ -1,5 +1,5 @@
-import React from "react";
+import React, { HTMLAttributes } from "react";
 
-export default function Data() {
-  return <div>DataSpeaks, friend</div>;
+export default function Data(props: HTMLAttributes<HTMLDivElement>) {
+  return <div {...props}>DataSpeaks, friend</div>;
 }

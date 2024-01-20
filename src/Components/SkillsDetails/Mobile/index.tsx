@@ -1,5 +1,5 @@
-import React from "react";
+import React, { HTMLAttributes } from "react";
 
-export default function Mobile() {
-  return <div>Mobile is king</div>;
+export default function Mobile(props: HTMLAttributes<HTMLDivElement>) {
+  return <div {...props}>Mobile is king</div>;
 }

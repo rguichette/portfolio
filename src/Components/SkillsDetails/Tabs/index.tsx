@@ -1,8 +1,10 @@
 import React, {
   HTMLAttributes,
+  HtmlHTMLAttributes,
   MouseEventHandler,
   ReactElement,
   ReactNode,
+  ReactPropTypes,
   SyntheticEvent,
   useEffect,
   useRef,
@@ -18,7 +20,7 @@ export default function Nav() {
   return <Tabs />;
 }
 
-function Tabs() {
+function Tabs(props: HTMLAttributes<HTMLDivElement>) {
   let pRef = useRef<HTMLDivElement>(null);
   let tabNames: string[] = [];
   let [selected, setActive] = useState("Frontend");
@@ -93,19 +95,18 @@ function Tab({ Tabtitle, displayEl, active, ...props }: TabProps) {
     <>
       <div {...props}>
         <p
-          className={`button justify-center align-middle flex flex-1 m-1 ${
+          className={`button justify-center align-middle flex flex-1 m-1  ${
             active && " bg-teal-400 drop-shadow-lg"
           }`}
         >
           {Tabtitle}
         </p>
 
-        {/* <div>Test data</div> */}
-        <div>
-          <div className="absolute left-0 w-screen text-slate-50">
-            {active && displayEl}
+        {active && (
+          <div className="absolute top-20 left-1/2 transform -translate-x-1/2  w-10/12 h-4/6 text-slate-50  bg-red-700 ml-auto mr-auto p-4 border-2 ">
+            {displayEl}
           </div>
-        </div>
+        )}
       </div>
     </>
   );
