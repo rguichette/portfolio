@@ -1,0 +1,16 @@
+[data-scope="accordion"][data-part="item-indicator"][data-state="open"] {
+  rotate: 90deg;
+  padding: .5rem;
+}
+
+[data-scope="accordion"][data-part="item-trigger"] {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+[data-scope="accordion"][data-part="item-trigger"] svg {
+  width: 1.5em;
+  height: 1.5em;
+filter: invert() sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%)
+}

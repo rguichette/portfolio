@@ -52,7 +52,7 @@ function Tabs(props: HTMLAttributes<HTMLDivElement>) {
   };
 
   return (
-    <div ref={pRef} className="  flex flex-row w-screen justify-evenly ">
+    <div ref={pRef} className="  flex flex-row w-screen justify-evenly  ">
       <Tab
         Tabtitle="Frontend"
         displayEl={<FrontEnd />}
@@ -95,7 +95,7 @@ function Tab({ Tabtitle, displayEl, active, ...props }: TabProps) {
     <>
       <div {...props}>
         <p
-          className={`button justify-center align-middle flex flex-1 m-1  ${
+          className={`button justify-center align-middle flex flex-1 m-1  cursor-pointer hover:animate-pulse hover:bg-[#8be3df] ${
             active && " bg-teal-400 drop-shadow-lg"
           }`}
         >
@@ -103,7 +103,7 @@ function Tab({ Tabtitle, displayEl, active, ...props }: TabProps) {
         </p>
 
         {active && (
-          <div className="absolute top-20 left-1/2 transform -translate-x-1/2  w-10/12 h-4/6 text-slate-50  bg-red-700 ml-auto mr-auto p-4 border-2 ">
+          <div className="absolute top-20 left-1/2 transform -translate-x-1/2  w-10/12 h-4/6 text-slate-50  bg-red--700 ml-auto mr-auto p-4 border-2 overflow-scroll">
             {displayEl}
           </div>
         )}
