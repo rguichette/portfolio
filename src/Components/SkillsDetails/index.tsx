@@ -6,8 +6,12 @@ import Nav from "./Tabs";
 
 export default function SkillsDetails(props?: ReactPropTypes) {
   //sm:h-[500px] md:h-screen
+  // [radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#23486F] via-[#192532] to-[#10131C]
   return (
-    <div className="absolute z-10 w-screen --bg-slate-950 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#23486F] via-[#192532] to-[#10131C] ">
+    <div
+      className="background absolute z-10 w-screen 
+    "
+    >
       <Particles />
       <div className="--bg-yellow-200 sm:w-[600px] sm:h-screen md:w-[850px] lg:w-[900px] m-auto ">
         <p className=" text-cyan-300 font-medium m-2 p-2 text-lg">Isidore</p>

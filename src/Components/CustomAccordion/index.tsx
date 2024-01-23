@@ -36,9 +36,8 @@ export default function CustomAccordion({ items }: AccProps) {
             <RenderIfVisible>
               <Typewriter
                 options={{
-                  delay: 5,
+                  delay: 2,
                   // strings: [item.summary],
-                  // autoStart: true,
                   // deleteSpeed: 0,
                 }}
                 onInit={(typewriter) => {

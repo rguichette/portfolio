@@ -103,7 +103,7 @@ function Tab({ Tabtitle, displayEl, active, ...props }: TabProps) {
         </p>
 
         {active && (
-          <div className="absolute top-20 left-1/2 transform -translate-x-1/2  w-10/12 h-4/6 text-slate-50  bg-red--700 ml-auto mr-auto p-4 border-2 overflow-scroll">
+          <div className="detail_container absolute top-20 left-1/2 transform -translate-x-1/2  w-10/12 h-4/6 text-slate-50  bg-red--700 ml-auto mr-auto p-4 border-2 overflow-scroll ">
             {displayEl}
           </div>
         )}

@@ -1,3 +1,17 @@
+.background {
+  background: radial-gradient(
+    circle,
+    rgba(6, 54, 106, 1) 47%,
+    rgba(8, 11, 89, 1) 96%
+  );
+  background: -moz-radial-gradient(
+    circle,
+    rgba(6, 54, 106, 1) 47%,
+    rgba(8, 11, 89, 1) 96%
+  );
+  /* height: 160vh; */
+}
+
 .glass {
   /* From https://css.glass */
   background: rgba(255, 255, 255, 0.2);
@@ -23,14 +37,33 @@
   clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 0 100%);
   padding: 4px;
   background-color: aqua;
-  opacity:.75;
-  
+  opacity: 0.75;
 }
 
-
-
 .ok_btn {
-    clip-path: polygon(0 0,calc(100% - 14.66px) 0,calc(100% - 10px) 10px,100% 14.66px,100% 100%,0 100%);
-    background-color: aqua;
+  clip-path: polygon(
+    0 0,
+    calc(100% - 14.66px) 0,
+    calc(100% - 10px) 10px,
+    100% 14.66px,
+    100% 100%,
+    0 100%
+  );
+  background-color: aqua;
+}
 
+@media not all and (min-resolution: 0.001dpcm) {
+  .detail_container {
+    /* background: blueviolet; */
+    /* display: inline-block; */
+    max-width: 40rem;
+    max-height: 17rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+
+    position: relative;
+    margin-top: 8rem;
+    /* top:40px;
+        left: 400px; */
+  }
 }
