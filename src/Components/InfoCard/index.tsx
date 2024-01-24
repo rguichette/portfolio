@@ -19,7 +19,7 @@ export default function InfoCard() {
 
   return (
     display && (
-      <div className="absolute z-10 m-4">
+      <div className="absolute z-10 m-4 top-0">
         <div className="  flex flex-col justify-center content-center p-4 rounded-xl bg-[#002020] text-[#04FFFF] drop-shadow-2xl opacity-90 h-60">
           <div
             className=" h-7 w-7 -top-3 -right-3   border-solid border-white border-2 absolute rounded-full bg-[#325257] cursor-pointer"

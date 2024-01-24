@@ -73,7 +73,7 @@ export default function City() {
 
       {/* <Involvement position={[45, 0, 5]} rotation={[0, -Math.PI, 0]} /> */}
       {/* <Projects /> */}
-      {/* <Skills position={[-30, 0, 0]} rotation={[0, Math.PI / 2, 0]} /> */}
+      <Skills position={[-30, 0, 0]} rotation={[0, Math.PI / 2, 0]} />
       {/* <WorkExperience /> */}
       {/* <Bowling scale={1.5} position={[0, 1, 0]} /> */}
       {/* <Dominos /> */}

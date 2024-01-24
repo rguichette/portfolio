@@ -63,8 +63,7 @@ function App() {
   //   }
   // }, [_ismobile, setIsMobile]);
 
-  let worldEdtered = useAtomValue(enterWorld);
-  let showSkills = useAtomValue(showSkillsSummary);
+  // let worldEdtered = useAtomValue(enterWorld);
 
   return (
     <>
@@ -76,8 +75,8 @@ function App() {
       /> */}
       {/* <MobileControls /> */}
 
-      <InfoCrad />
-      {showSkills && <SkillsDetails />}
+      {/* <InfoCrad /> */}
+      {/* {showSkills && <SkillsDetails />} */}
 
       <KeyboardControls map={co}>
         <Canvas
@@ -86,13 +85,13 @@ function App() {
 
           // camera={{ fov: 24, position: [10, -1, 2] }}
         >
-          <LoadingPage />
+          {/* <LoadingPage /> */}
+
           <MobileControls2 />
-          {/* {isMobile && <MobileControls2 />} */}
           <World />
         </Canvas>
+        <HtmlInteractivity />
       </KeyboardControls>
-      {/* <HtmlInteractivity /> */}
     </>
   );
 }

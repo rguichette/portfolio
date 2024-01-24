@@ -21,7 +21,7 @@ import {
 // } from "../../state";
 import { duelJsUserDataType } from "../MobileControls2";
 import isMobile from "is-mobile";
-import { showSkillsSummary } from "../../state";
+import { enterWorld, showSkillsSummary } from "../../state";
 
 enum Controls {
   forward = "forward",
@@ -38,6 +38,7 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
 
   let [_, get] = useKeyboardControls<Controls>();
   let showSkills = useAtomValue(showSkillsSummary);
+  let enteredWorld = useAtomValue(enterWorld);
 
   //  rgidBodyRef
   let rbRef = useRef<RapierRigidBody>(null!);
@@ -73,6 +74,10 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
   let speed = 3;
   let runningSpeed = 5.5;
 
+  if (!enterWorld) {
+    return;
+  }
+
   // let [ismobile, setIsMobile] = useState(isMobile());
 
   // useEffect(() => {
@@ -80,6 +85,7 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
   // }, [ismobile]);
 
   let runninng = false;
+
   useFrame(({ clock, scene }) => {
     // Joystick: -- handles mobile input
     let joystick = scene.getObjectByName("Joystick_data")
@@ -144,7 +150,8 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
 
           // console.log("Dist: ", joystick.left?.leveledY);
           if (joystick.left?.leveledY && isMobile()) {
-            speed = (joystick.left.leveledY / 10) * 5.5;
+            if (joystick.left.leveledY > 0)
+              speed = (joystick.left.leveledY / 10) * 5.5;
           } else {
             speed = 3;
           }

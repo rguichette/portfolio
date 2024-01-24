@@ -3,13 +3,17 @@ import React, { Children, ReactNode, ReactPropTypes } from "react";
 import "./style.css";
 import "./particle.css";
 import Nav from "./Tabs";
+import { useAtom } from "jotai";
+import { showSkillsSummary } from "../../state";
 
 export default function SkillsDetails() {
+  let [showSkills, setShowSkills] = useAtom(showSkillsSummary);
+
   //sm:h-[500px] md:h-screen
   // [radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#23486F] via-[#192532] to-[#10131C]
   return (
     <div
-      className="background absolute z-10 w-screen  opacity-5
+      className="background absolute z-10 w-screen  top-0 left-0
     "
     >
       <Particles />
@@ -23,7 +27,12 @@ export default function SkillsDetails() {
             <Nav />
           </div>
         </div>
-        <div className="ok_btn h-10 w-20  bottom-0 right-0 mb-4 mr-10  flex  justify-center items-center text-slate-700 ml-auto cursor-pointer">
+        <div
+          className="ok_btn h-10 w-20  bottom-0 right-0 mb-4 mr-10  flex  justify-center items-center text-slate-700 ml-auto cursor-pointer"
+          onClick={() => {
+            setShowSkills(false);
+          }}
+        >
           OK
         </div>
       </div>
