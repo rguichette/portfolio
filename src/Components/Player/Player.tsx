@@ -6,7 +6,7 @@ import {
   RigidBody,
 } from "@react-three/rapier";
 import { useAtomValue } from "jotai";
-import React, { forwardRef, useRef } from "react";
+import React, { forwardRef, useEffect, useRef, useState } from "react";
 import {
   AnimationAction,
   AnimationClip,
@@ -73,6 +73,12 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
   let speed = 3;
   let runningSpeed = 5.5;
 
+  // let [ismobile, setIsMobile] = useState(isMobile());
+
+  // useEffect(() => {
+  //   console.log("EFFECT RAN:");
+  // }, [ismobile]);
+
   let runninng = false;
   useFrame(({ clock, scene }) => {
     // Joystick: -- handles mobile input
@@ -135,16 +141,14 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
           // !detailsWindow
         ) {
           //handle mobile speed
-          if (isMobile()) {
-            // console.log("Dist: ", joystick.left?.leveledY);
-            if (joystick.left?.leveledY)
-              speed = (joystick.left.leveledY / 10) * 5.5;
-            // console.log("speed: ", speed);
 
-            if (speed > 3.5) {
-              // runninng = true;
-            }
+          // console.log("Dist: ", joystick.left?.leveledY);
+          if (joystick.left?.leveledY && isMobile()) {
+            speed = (joystick.left.leveledY / 10) * 5.5;
+          } else {
+            speed = 3;
           }
+          // console.log("speed: ", speed);
 
           // if (!isMobile()) {
           //   if (runninng) {

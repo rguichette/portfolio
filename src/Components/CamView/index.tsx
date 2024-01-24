@@ -8,6 +8,7 @@ import { Vector3 } from "three";
 import { OrbitControls as OcType } from "three-stdlib";
 import * as TWEEN from "three/examples/jsm/libs/tween.module.js";
 import { enterWorld } from "../../state";
+import isMobile from "is-mobile";
 
 export default function CamView() {
   let characterMoving = false;
@@ -81,7 +82,10 @@ export default function CamView() {
         //handle offset off camera
         let idealCamPos = offset.add(charPos);
         if (characterMoving) {
-          orbitControlsRef.current.object.position.lerp(idealCamPos, 0.5);
+          if (isMobile()) {
+            orbitControlsRef.current.object.position.lerp(idealCamPos, 0.7);
+          } else
+            orbitControlsRef.current.object.position.lerp(idealCamPos, 0.5);
         } else {
           if (!spectating)
             orbitControlsRef.current.object.position.lerp(idealCamPos, 0.05);
