@@ -14,9 +14,14 @@ import {
   Quaternion,
   Vector3,
 } from "three";
-import { showDetailsPopUp, showHelpPopUp } from "../../state";
+// import {
+//   showDetailsPopUp,
+
+//   // ,showHelpPopUp
+// } from "../../state";
 import { duelJsUserDataType } from "../MobileControls2";
 import isMobile from "is-mobile";
+import { showSkillsSummary } from "../../state";
 
 enum Controls {
   forward = "forward",
@@ -28,10 +33,11 @@ enum Controls {
 }
 
 let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
-  let detailsWindow = useAtomValue(showDetailsPopUp);
-  let helpWindow = useAtomValue(showHelpPopUp);
+  // let detailsWindow = useAtomValue(showDetailsPopUp);
+  // let helpWindow = useAtomValue(showHelpPopUp);
 
   let [_, get] = useKeyboardControls<Controls>();
+  let showSkills = useAtomValue(showSkillsSummary);
 
   //  rgidBodyRef
   let rbRef = useRef<RapierRigidBody>(null!);
@@ -76,7 +82,12 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
     let joystickLR = 0;
     if (rbRef.current) {
       // Check if the "left" key is pressed
-      if (!detailsWindow && !helpWindow) {
+      if (
+        !showSkills
+        // !detailsWindow
+
+        // && !helpWindow
+      ) {
         //joystick back and forth
 
         //handle mobile
@@ -118,9 +129,10 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
 
         if (
           //bf- back/forward
-          (get().forward || joystickBF > 0) &&
-          !helpWindow &&
-          !detailsWindow
+          (get().forward && !showSkills) ||
+          (joystickBF > 0 && !showSkills)
+          // !helpWindow &&
+          // !detailsWindow
         ) {
           //handle mobile speed
           if (isMobile()) {
@@ -130,20 +142,21 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
             // console.log("speed: ", speed);
 
             if (speed > 3.5) {
-              runninng = true;
+              // runninng = true;
             }
           }
 
-          if (!isMobile()) {
-            if (runninng) {
-              // console.log("RUNNING!");
-              //for computer input
+          // if (!isMobile()) {
+          //   if (runninng) {
+          //     // console.log("RUNNING!");
+          //     //for computer input
 
-              speed = runningSpeed;
-            } else {
-              speed = 3;
-            }
-          }
+          //     speed = 3;
+          //     //runningSpeed;
+          //   } else {
+          //     speed = 3;
+          //   }
+          // }
 
           console.log("SPEED: ", speed);
           direction.multiplyScalar(speed);
@@ -160,8 +173,14 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
     //Character animations:
     let currentAnim: AnimationAction;
 
-    if ((get().forward || joystickBF > 0) && !helpWindow && !detailsWindow) {
-      if (get().run || runninng) {
+    if (
+      (get().forward && !showSkills) ||
+      joystickBF > 0
+      // //  && !helpWindow
+
+      // !detailsWindow
+    ) {
+      if (get().run || speed > 3.5) {
         // console.log("RUNNING");
         runninng = true;
 
@@ -176,9 +195,10 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
         runninng = false;
       }
     } else if (
-      (get().back || joystickBF < 0) &&
-      !helpWindow &&
-      !detailsWindow
+      (get().back && !showSkills) ||
+      joystickBF < 0
+      // !helpWindow &&
+      // !detailsWindow
     ) {
       mixer.clipAction(walkingAnimation).timeScale = -1;
       mixer.clipAction(walkingAnimation).play();

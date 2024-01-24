@@ -9,7 +9,7 @@ export default function SkillsDetails() {
   // [radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#23486F] via-[#192532] to-[#10131C]
   return (
     <div
-      className="background absolute z-10 w-screen 
+      className="background absolute z-10 w-screen  opacity-5
     "
     >
       <Particles />

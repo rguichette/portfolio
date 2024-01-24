@@ -1,10 +1,11 @@
 import { atom } from "jotai";
 import { focusAtom } from "jotai-optics";
 
-export let infoAtom = atom(true);
+export let infoAtom = atom(true); //rename later
 export let showEngageButton = atom(false);
-export let showDetailsPopUp = atom(false);
-export let showHelpPopUp = atom(false);
+// export let showDetailsPopUp = atom(false);
+export let showSkillsSummary = atom(false);
+// export let showHelpPopUp = atom(false);
 export let isCharacterMoving = atom(false);
 
 export type InfoCardArgs = {
@@ -20,7 +21,7 @@ export let infoCardAtom = atom({
   title: "Tiltle from state",
   summary:
     "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Recusandae eaque beatae dolores atque nostrum. Saepe necessitatibus rem numquam culpa eum repellendus libero rerum aperiam tenetur. ",
-  learnMore: true,
+  learnMore: false,
 });
 // export let showInfoWindow = atom(false);
 //TODO: SWITCH BACK TO FALSE

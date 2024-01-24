@@ -14,7 +14,7 @@ import { Provider, useAtom, useAtomValue } from "jotai";
 // import DetailPopUp from "./Components/DetailPopUp";
 import HtmlInteractivity from "./Components/HtmlInteractivity/HtmlInteractivity";
 import { DefaultLoadingManager } from "three";
-import { enterWorld } from "./state";
+import { enterWorld, showSkillsSummary } from "./state";
 // import MobileControls from "./Components/MobileControls";
 // import TestAnything, {
 //   countAtom,
@@ -24,7 +24,7 @@ import { enterWorld } from "./state";
 import { isMobile } from "is-mobile";
 import InfoCrad from "./Components/InfoCard";
 import SkillsDetails from "./Components/SkillsDetails";
-import MobileControls from "./Components/MobileControls";
+import MobileControls from "./Components/__MobileControls";
 import MobileControls2 from "./Components/MobileControls2";
 
 enum Controls {
@@ -64,6 +64,7 @@ function App() {
   // }, [_ismobile, setIsMobile]);
 
   let worldEdtered = useAtomValue(enterWorld);
+  let showSkills = useAtomValue(showSkillsSummary);
 
   return (
     <>
@@ -76,7 +77,7 @@ function App() {
       {/* <MobileControls /> */}
 
       <InfoCrad />
-      {/* <SkillsDetails /> */}
+      {showSkills && <SkillsDetails />}
 
       <KeyboardControls map={co}>
         <Canvas
