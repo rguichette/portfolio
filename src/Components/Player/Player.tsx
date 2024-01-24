@@ -16,6 +16,7 @@ import {
 } from "three";
 import { showDetailsPopUp, showHelpPopUp } from "../../state";
 import { duelJsUserDataType } from "../MobileControls2";
+import isMobile from "is-mobile";
 
 enum Controls {
   forward = "forward",
@@ -64,6 +65,8 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
   ) as AnimationClip;
 
   let speed = 3;
+  let runningSpeed = 5.5;
+
   let runninng = false;
   useFrame(({ clock, scene }) => {
     // Joystick: -- handles mobile input
@@ -92,7 +95,6 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
           }
         }
 
-        //handle desktop
         if (get().left || joystickLR < 0) {
           angle += turnSpeed;
           // Rotate based on user input
@@ -115,16 +117,34 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
         //handl mobile
 
         if (
+          //bf- back/forward
           (get().forward || joystickBF > 0) &&
           !helpWindow &&
           !detailsWindow
         ) {
-          if (runninng) {
-            // console.log("RUNNING!");
-            speed = 5.5;
-          } else {
-            speed = 3;
+          //handle mobile speed
+          if (isMobile()) {
+            // console.log("Dist: ", joystick.left?.leveledY);
+            if (joystick.left?.leveledY)
+              speed = (joystick.left.leveledY / 10) * 5.5;
+            // console.log("speed: ", speed);
+
+            if (speed > 3.5) {
+              runninng = true;
+            }
           }
+
+          if (!isMobile()) {
+            if (runninng) {
+              // console.log("RUNNING!");
+              //for computer input
+
+              speed = runningSpeed;
+            } else {
+              speed = 3;
+            }
+          }
+
           console.log("SPEED: ", speed);
           direction.multiplyScalar(speed);
           rbRef.current.setLinvel(direction, true);
@@ -141,7 +161,7 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
     let currentAnim: AnimationAction;
 
     if ((get().forward || joystickBF > 0) && !helpWindow && !detailsWindow) {
-      if (get().run) {
+      if (get().run || runninng) {
         // console.log("RUNNING");
         runninng = true;
 

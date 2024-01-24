@@ -23,7 +23,7 @@ export function Instructions(props: MeshProps) {
               rotation={[Math.PI / 2, 0, Math.PI]}
             >
               <meshBasicMaterial
-                map={touch}
+                // map={touch}
                 transparent
                 opacity={0.58}
                 color={"#f6a2e8"}

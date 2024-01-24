@@ -14,7 +14,7 @@ import { Provider, useAtom, useAtomValue } from "jotai";
 // import DetailPopUp from "./Components/DetailPopUp";
 import HtmlInteractivity from "./Components/HtmlInteractivity/HtmlInteractivity";
 import { DefaultLoadingManager } from "three";
-import { enterWorld, isMobileAtom } from "./state";
+import { enterWorld } from "./state";
 // import MobileControls from "./Components/MobileControls";
 // import TestAnything, {
 //   countAtom,
@@ -24,6 +24,8 @@ import { enterWorld, isMobileAtom } from "./state";
 import { isMobile } from "is-mobile";
 import InfoCrad from "./Components/InfoCard";
 import SkillsDetails from "./Components/SkillsDetails";
+import MobileControls from "./Components/MobileControls";
+import MobileControls2 from "./Components/MobileControls2";
 
 enum Controls {
   forward = "forward",
@@ -74,7 +76,7 @@ function App() {
       {/* <MobileControls /> */}
 
       <InfoCrad />
-      <SkillsDetails />
+      {/* <SkillsDetails /> */}
 
       <KeyboardControls map={co}>
         <Canvas
@@ -83,8 +85,9 @@ function App() {
 
           // camera={{ fov: 24, position: [10, -1, 2] }}
         >
-          {/* <LoadingPage /> */}
-          {/* {_ismobile && <MobileControls2 />} */}
+          <LoadingPage />
+          <MobileControls2 />
+          {/* {isMobile && <MobileControls2 />} */}
           <World />
         </Canvas>
       </KeyboardControls>

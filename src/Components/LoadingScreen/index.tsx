@@ -9,7 +9,9 @@ import { DefaultLoadingManager, LoadingManager } from "three";
 import { useAtom, useAtomValue } from "jotai";
 
 import ProgressBar from "@ramonak/react-progress-bar";
-import { enterWorld, isMobileAtom } from "../../state";
+import { enterWorld } from "../../state";
+import { isMobile } from "is-mobile";
+
 let isH = false;
 
 let LoadingPage = () => {
@@ -48,7 +50,7 @@ let LoadingPage = () => {
   //   const glitch: GlitchHandle = useGlitch({});
   let pro = 0;
   let [horizontal, setHorizontal] = useState(false);
-  let ismobile = useAtomValue(isMobileAtom);
+  let ismobile = isMobile();
 
   let [displayContinue, setDisplayContinue] = useState(false);
 

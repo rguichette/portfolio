@@ -4,7 +4,7 @@ import "./style.css";
 import "./particle.css";
 import Nav from "./Tabs";
 
-export default function SkillsDetails(props?: ReactPropTypes) {
+export default function SkillsDetails() {
   //sm:h-[500px] md:h-screen
   // [radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#23486F] via-[#192532] to-[#10131C]
   return (
