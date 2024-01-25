@@ -115,7 +115,9 @@ export default function CamView() {
           }
           //character not moving
         } else {
-          orbitControlsRef.current.object.position.lerp(idealCamPos, 0.5);
+          if (!spectating) {
+            orbitControlsRef.current.object.position.lerp(idealCamPos, 0.5);
+          }
         }
 
         // else {
