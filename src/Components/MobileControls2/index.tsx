@@ -31,56 +31,22 @@ let joystickData: duelJsUserDataType = {
 };
 
 export default function MobileControl2() {
-  let [ismobile, setIsMobile] = useState(isMobile());
-
-  useEffect(() => {
-    window.onresize = () => {
-      // console.log("RESIZE state change -- mobile!: ");
-      setIsMobile(isMobile());
-    };
-
-    let ctnr = document.getElementsByClassName("joystick-container");
-    // console.log(ctnr);
-    if (ctnr && !ismobile) {
-      // console.log("FOUND!");
-      for (let i = 0; i < ctnr.length; i++) {
-        // console.log(ctnr[i]);
-
-        (ctnr[i] as HTMLElement).style.display = "none";
-      }
-    }
-  }, [ismobile]);
-
-  // console.log("RESIZE state change -- mobile!: ", ismobile);
-
-  return <>{ismobile && <Controller />}</>;
-}
-
-export function Controller() {
   let { scene } = useThree();
+  let [ismobile, setIsMobile] = useState(false);
+  // window.onresize = () => {
+  //   console.log("RESIZE!");
+  //   setIsMobile(isMobile());
+  // };
 
-  // let [ismobile, setIsMobile] = useState(isMobile());
+  // if (!ismobile) {
+  //   console.log("No JS")
+  //   return;
+  // }
+  let rightJs;
+  let leftJs: unknown;
 
-  // useEffect(() => {
-  //   window.onresize = () => {
-  //     console.log("RESIZE!");
-  //   };
-  // }, [ismobile]);
-
-  useEffect(() => {
-    // window.onresize = () => {
-    //   console.log("RESIZE!");
-    //   setIsMobile(isMobile());
-    // };
-
-    // if (!ismobile) {
-    //   console.log("No JS")
-    //   return;
-    // }
-
-    scene.add(duelJswithData);
-
-    new JoystickController(
+  if (ismobile) {
+    rightJs = new JoystickController(
       {
         maxRange: 70,
         level: 10,
@@ -105,8 +71,7 @@ export function Controller() {
         // duelJswithData.userData = joystickData;
       }
     );
-
-    new JoystickController(
+    leftJs = new JoystickController(
       {
         maxRange: 70,
         level: 10,
@@ -119,6 +84,7 @@ export function Controller() {
         controllerClass: "joystick-controller",
         joystickClass: "joystick",
         distortion: true,
+
         x: "15%",
         y: "25%",
         mouseClickButton: "ALL",
@@ -129,11 +95,24 @@ export function Controller() {
         duelJswithData.userData = joystickData;
       }
     );
+  }
 
-    // document.querySelectorAll("joystick-container").forEach((ctrl) => {
-    //   console.log("ctrl", ctrl);
-    // });
-  }, []);
+  scene.add(duelJswithData);
+
+  useEffect(() => {
+    window.onresize = () => {
+      console.log("RESIZE!");
+      setIsMobile(isMobile());
+    };
+
+    if (!ismobile) {
+      document
+        .querySelectorAll(".joystick-container")
+        .forEach((el) => el.remove());
+
+      return;
+    }
+  }, [ismobile]);
 
   return <></>;
 }

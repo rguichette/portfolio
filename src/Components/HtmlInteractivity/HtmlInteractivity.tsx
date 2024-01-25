@@ -6,7 +6,6 @@ import "./style.css";
 import LoadingPage from "../LoadingScreen";
 import InfoCard from "../InfoCard";
 import SkillsDetails from "../SkillsDetails";
-import MobileControls2 from "../MobileControls2";
 import isMobile from "is-mobile";
 import { useEffect, useState } from "react";
 
