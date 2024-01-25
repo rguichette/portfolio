@@ -19,7 +19,7 @@ export default function HtmlInteractivity() {
 
       {showSkills && <SkillsDetails />}
 
-      {/* {!worldEdtered && <LoadingPage />} */}
+      {!worldEdtered && <LoadingPage />}
     </div>
   );
 }

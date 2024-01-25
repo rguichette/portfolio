@@ -32,7 +32,7 @@ let joystickData: duelJsUserDataType = {
 
 export default function MobileControl2() {
   let { scene } = useThree();
-  let [ismobile, setIsMobile] = useState(false);
+  let [ismobile, setIsMobile] = useState(isMobile());
   // window.onresize = () => {
   //   console.log("RESIZE!");
   //   setIsMobile(isMobile());

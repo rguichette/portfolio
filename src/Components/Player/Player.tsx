@@ -32,7 +32,7 @@ enum Controls {
   run = "run",
 }
 
-let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
+const Player = forwardRef<Mesh, MeshProps>(function Player(props, ref) {
   // let detailsWindow = useAtomValue(showDetailsPopUp);
   // let helpWindow = useAtomValue(showHelpPopUp);
 
@@ -74,10 +74,6 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
   let speed = 3;
   let runningSpeed = 5.5;
 
-  if (!enterWorld) {
-    return;
-  }
-
   // let [ismobile, setIsMobile] = useState(isMobile());
 
   // useEffect(() => {
@@ -87,6 +83,10 @@ let Player: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>((props, ref) => {
   let runninng = false;
 
   useFrame(({ clock, scene }) => {
+    if (!enteredWorld) {
+      console.log("World NOT entered");
+      return;
+    }
     // Joystick: -- handles mobile input
     let joystick = scene.getObjectByName("Joystick_data")
       ?.userData as duelJsUserDataType;
