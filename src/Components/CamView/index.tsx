@@ -76,6 +76,20 @@ export default function CamView() {
         let offset = new Vector3(0, 1.7, -2);
 
         let charPos = character.position;
+        let charSpeed =
+          scene.getObjectByName("charInfo")?.userData.characterSpeed;
+
+        let joystickData = scene.getObjectByName("Joystick_data")?.userData;
+        //handle joystick input data
+        if (joystickData && isMobile()) {
+          // console.log("JOYSTICK: ", joystickData.right);
+          //
+          if (joystickData.right.x != 0 || joystickData.left?.y != 0) {
+            characterMoving = true;
+          } else {
+            characterMoving = false;
+          }
+        }
 
         let idealLookAt = new Vector3(0, 1.25, 0).add(charPos);
         offset.applyQuaternion(character.quaternion);
@@ -83,18 +97,36 @@ export default function CamView() {
         let idealCamPos = offset.add(charPos);
         if (characterMoving) {
           if (isMobile()) {
-            orbitControlsRef.current.object.position.lerp(idealCamPos, 0.7);
-          } else
-            orbitControlsRef.current.object.position.lerp(idealCamPos, 0.5);
+            // console.log("JOYSTICK ", joystickData);
+            //detect if character is moving forward
+            if (joystickData?.left.y || joystickData?.right.x > 0) {
+              // camera.zoom = 2.2;
+              orbitControlsRef.current.object.position.lerp(idealCamPos, 0.8);
+            } else if (joystickData?.left.y < 0 || joystickData?.right.x < 0) {
+              orbitControlsRef.current.object.position.lerp(idealCamPos, 0.9);
+              //else x is moving for mobile
+            }
+            // orbitControlsRef.current.object.position.lerp(idealCamPos, 0.7);
+          } else {
+            if (characterMoving && !spectating)
+              orbitControlsRef.current.object.position.lerp(idealCamPos, 0.5);
+            // if (!spectating)
+            //   orbitControlsRef.current.object.position.lerp(idealCamPos, 0.05);
+          }
+          //character not moving
         } else {
-          if (!spectating)
-            orbitControlsRef.current.object.position.lerp(idealCamPos, 0.05);
+          orbitControlsRef.current.object.position.lerp(idealCamPos, 0.5);
         }
+
+        // else {
+        //   if (!spectating)
+        //     orbitControlsRef.current.object.position.lerp(idealCamPos, 0.05);
+        // }
 
         orbitControlsRef.current.target = idealLookAt;
         orbitControlsRef.current.update();
+        console.log("SPEED!:::cam ", charSpeed);
       }
-
     TWEEN.update();
   });
 

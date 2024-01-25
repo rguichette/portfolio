@@ -1,16 +1,17 @@
 import { useAnimations, useGLTF, useKeyboardControls } from "@react-three/drei";
-import { MeshProps, useFrame } from "@react-three/fiber";
+import { MeshProps, useFrame, useThree } from "@react-three/fiber";
 import {
   CapsuleCollider,
   RapierRigidBody,
   RigidBody,
 } from "@react-three/rapier";
 import { useAtomValue } from "jotai";
-import React, { forwardRef, useEffect, useRef, useState } from "react";
+import React, { forwardRef, useEffect, useMemo, useRef, useState } from "react";
 import {
   AnimationAction,
   AnimationClip,
   Mesh,
+  Object3D,
   Quaternion,
   Vector3,
 } from "three";
@@ -32,9 +33,18 @@ enum Controls {
   run = "run",
 }
 
+let charInfo = new Object3D();
+charInfo.name = "charInfo";
+
 const Player = forwardRef<Mesh, MeshProps>(function Player(props, ref) {
   // let detailsWindow = useAtomValue(showDetailsPopUp);
   // let helpWindow = useAtomValue(showHelpPopUp);
+  let speed = 3;
+  let normalSpeed = 3;
+  let runningSpeed = 5.5;
+  let { scene } = useThree();
+
+  charInfo.userData = { charSpeed: speed };
 
   let [_, get] = useKeyboardControls<Controls>();
   let showSkills = useAtomValue(showSkillsSummary);
@@ -70,9 +80,6 @@ const Player = forwardRef<Mesh, MeshProps>(function Player(props, ref) {
   let walkingAnimation = animations.find(
     (clip) => clip.name == "Walk"
   ) as AnimationClip;
-
-  let speed = 3;
-  let runningSpeed = 5.5;
 
   // let [ismobile, setIsMobile] = useState(isMobile());
 
@@ -150,11 +157,14 @@ const Player = forwardRef<Mesh, MeshProps>(function Player(props, ref) {
 
           // console.log("Dist: ", joystick.left?.leveledY);
           if (joystick.left?.leveledY && isMobile()) {
-            if (joystick.left.leveledY > 0)
+            if (joystick.left.leveledY > 0) {
               speed = (joystick.left.leveledY / 10) * 5.5;
-          } else {
-            speed = 3;
+            }
           }
+
+          // character.userData = { characterSpeed: speed };
+
+          // console.log("character speed", character.userData);
           // console.log("speed: ", speed);
 
           // if (!isMobile()) {
@@ -173,11 +183,16 @@ const Player = forwardRef<Mesh, MeshProps>(function Player(props, ref) {
           direction.multiplyScalar(speed);
           rbRef.current.setLinvel(direction, true);
         } else if (get().back || joystickBF < 0) {
+          if (isMobile()) {
+            speed = normalSpeed;
+            console.log("less: ", speed);
+          }
           direction.multiplyScalar(-speed);
           rbRef.current.setLinvel(direction, true);
         }
       }
     }
+    // console.log("SPEED!:: ", character.userData);
     scene.updateMatrixWorld();
     charRef.current?.updateMatrixWorld();
 
@@ -234,7 +249,12 @@ const Player = forwardRef<Mesh, MeshProps>(function Player(props, ref) {
 
       // mixer.clipAction(turnRightAnimation).stop();
     }
+    charInfo.updateMatrix();
+    charInfo.userData = { characterSpeed: speed };
+
+    // console.log("SPEED---", speed);
   });
+  scene.add(charInfo);
 
   return (
     <RigidBody
