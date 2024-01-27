@@ -7,7 +7,7 @@ import { Vector3 } from "three";
 
 import { OrbitControls as OcType } from "three-stdlib";
 import * as TWEEN from "three/examples/jsm/libs/tween.module.js";
-import { enterWorld } from "../../state";
+import { enterWorld, showSkillsSummary } from "../../state";
 import isMobile from "is-mobile";
 
 export default function CamView() {
@@ -18,6 +18,7 @@ export default function CamView() {
   let orbitControlsRef = useRef<OcType>(null);
 
   let enteredWorld = useAtomValue(enterWorld);
+  let viewSkills = useAtomValue(showSkillsSummary);
 
   let { scene } = useThree();
 
@@ -48,19 +49,27 @@ export default function CamView() {
       };
 
       window.onmousedown = (e) => {
-        if ((e.target as HTMLElement).className.split("-")[0] != "joystick") {
+        if (
+          (e.target as HTMLElement).className.split("-")[0] != "joystick" &&
+          !viewSkills
+        ) {
           spectating = true;
           console.log("panning");
         }
       };
 
       window.ontouchstart = (e) => {
-        if ((e.target as HTMLElement).className.split("-")[0] != "joystick") {
+        if (
+          (e.target as HTMLElement).className.split("-")[0] != "joystick" &&
+          !viewSkills
+        ) {
           spectating = true;
-          console.log("panning");
+          // console.log("panning");
         } else {
           spectating = false;
         }
+
+        // console.log("E: ", e.target);
       };
     }
     let character = scene.getObjectByName("charRigidBody");
@@ -105,8 +114,9 @@ export default function CamView() {
             } else if (joystickData?.left.y < 0 || joystickData?.right.x < 0) {
               orbitControlsRef.current.object.position.lerp(idealCamPos, 0.9);
               //else x is moving for mobile
+            } else {
+              orbitControlsRef.current.object.position.lerp(idealCamPos, 0.7);
             }
-            // orbitControlsRef.current.object.position.lerp(idealCamPos, 0.7);
           } else {
             if (characterMoving && !spectating)
               orbitControlsRef.current.object.position.lerp(idealCamPos, 0.5);
@@ -127,7 +137,6 @@ export default function CamView() {
 
         orbitControlsRef.current.target = idealLookAt;
         orbitControlsRef.current.update();
-        console.log("SPEED!:::cam ", charSpeed);
       }
     TWEEN.update();
   });

@@ -11,10 +11,25 @@ export default function SkillsDetails() {
 
   //sm:h-[500px] md:h-screen
   // [radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#23486F] via-[#192532] to-[#10131C]
+  // return (
+  //   <div className="background absolute z-40 w-screen bg-black h-screen top-0 left-0 ">
+  //     <div className="w-10 flex flex-wrap overflow-scroll ">
+  //       Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla quam nam
+  //       consequuntur ex, et facilis laboriosam iusto doloribus beatae recusandae
+  //       laborum facere in fugit repellendus accusantium, error molestias fugiat
+  //       possimus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla
+  //       quam nam consequuntur ex, et facilis laboriosam iusto doloribus beatae
+  //       recusandae laborum facere in fugit repellendus accusantium, error
+  //       molestias fugiat possimus.
+  //     </div>
+  //   </div>
+  // );
+
   return (
     <div
-      className="background absolute z-10 w-screen  top-0 left-0
-    "
+      className="background absolute z-10 w-screen  top-0 left-0 
+     overflow-scroll
+      "
     >
       <Particles />
       <div className="--bg-yellow-200 sm:w-[600px] sm:h-screen md:w-[850px] lg:w-[900px] m-auto ">

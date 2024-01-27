@@ -1,12 +1,15 @@
 import { Box, useTexture } from "@react-three/drei";
 import { MeshProps, useFrame } from "@react-three/fiber";
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
+import { useAtom } from "jotai";
 import React, { Ref, forwardRef, useEffect, useRef } from "react";
-import { Group, Mesh, MeshBasicMaterial } from "three";
+import { Group, Mesh, MeshBasicMaterial, MeshStandardMaterial } from "three";
+import { showEngageButton } from "../../state";
 
 let Keyboard: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>(
   (props, ref) => {
-    let keyboardRef = useRef<MeshBasicMaterial>(null!);
+    let keyboardRef = useRef<MeshStandardMaterial>(null!);
+    let [showEngagebtn, setshowEngagebtn] = useAtom(showEngageButton);
 
     useEffect(() => {
       if (keyboardRef.current) {

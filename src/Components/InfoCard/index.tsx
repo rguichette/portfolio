@@ -34,15 +34,14 @@ export default function InfoCard() {
             <img src="/close.png" className=" invert p-1" />
           </div>
 
-          <div className=" glitch absolute -z-20 top-0 left-0 rounded-xl bg-yellow-200 h-full w-full opacity-10 bg-[#002020]" />
+          <div className=" glitch absolute -z-20 top-0 left-0 rounded-xl -bg-yellow-200 h-full w-full opacity-10 bg-[#002020]" />
           <h2 className="flex content-center justify-center p-4 font-semibold">
             {title}
           </h2>
-          <p className=" m-2 p-4 w-60 overflow-scroll max-h-44  flex-1 border-gray-50 border-solid border-2">
+
+          <div className=" m-2 p-4 w-60 overflow-scroll max-h-44  flex-1 border-gray-50 border-solid border-2">
             {summary}
-            {summary}
-            {summary}
-          </p>
+          </div>
 
           {learnMore && <button className="m-4">learn more</button>}
         </div>

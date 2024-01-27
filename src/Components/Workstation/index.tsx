@@ -24,7 +24,8 @@ import * as THREE from "three";
 import Monitor from "../Monitor";
 import Keyboard from "../Keyboard";
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
-import { useAtomValue } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
+import { showEngageButton } from "../../state";
 // import { showEngageButton } from "../../state";
 
 // import desk from "../../3Dassets/glassDesk.glb";
@@ -37,28 +38,7 @@ let WorkStation: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>(
 
     let monGroupRef = useRef<THREE.Group>(null);
 
-    // let toggle = useAtomValue(showEngageButton);
-
-    // useEffect(() => {
-    //   //turn on and off
-
-    //   if (monGroupRef.current) {
-    //     if (monGroupRef.current.children) {
-    //       monGroupRef.current.children.map((c) => {
-    //         // console.log("child: ", c);
-    //         if (toggle) {
-    //           (
-    //             (c.children[0] as Mesh).material as MeshBasicMaterial
-    //           ).color.setRGB(1, 1, 1);
-    //         } else {
-    //           (
-    //             (c.children[0] as Mesh).material as MeshBasicMaterial
-    //           ).color.setRGB(0, 0, 0);
-    //         }
-    //       });
-    //     }
-    //   }
-    // }, [toggle]);
+    let [showEngBtn, setEngBtn] = useAtom(showEngageButton);
 
     return (
       <>
@@ -69,16 +49,16 @@ let WorkStation: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>(
                 scale={0.2}
                 position={[3.3, 0, 0]}
                 rotation={[0, -0.8, 0]}
-                // vidSrc={"/3Dassets/textures/codeScroll.mp4"}
-                // vidOptions={{ muted: true }}
+                vidSrc={"/assets/videoTextures/blue.mp4"}
+                vidOptions={{ muted: true }}
                 ref={monRefLeft}
               />
 
               <Monitor
                 scale={0.2}
                 position={[0, 0, -1.2]}
-                // vidSrc={"/3Dassets/textures/codeScroll.mp4"}
-                // vidOptions={{ muted: true }}
+                vidSrc={"/assets/videoTextures/data.mp4"}
+                vidOptions={{ muted: true }}
                 ref={monRef}
               />
 
@@ -87,13 +67,25 @@ let WorkStation: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>(
                 position={[-3.3, 0, 0]}
                 rotation={[0, 0.8, 0]}
                 ref={monRefRight}
-                // vidSrc={"/3Dassets/textures/codeScroll.mp4"}
-                // vidOptions={{ muted: true }}
+                vidSrc={"/assets/videoTextures/green.mp4"}
+                vidOptions={{ muted: true }}
               />
             </group>
           </group>
 
           <Keyboard position={[0, -0.5, 0]} scale={2} rotation={[-0.7, 0, 0]} />
+
+          <CuboidCollider
+            args={[1, 1, 1]}
+            sensor
+            onIntersectionEnter={() => {
+              setEngBtn(true);
+              console.log("collision....");
+            }}
+            onIntersectionExit={() => {
+              setEngBtn(false);
+            }}
+          />
         </mesh>
       </>
     );
@@ -102,4 +94,7 @@ let WorkStation: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>(
 
 export default WorkStation;
 
-// https://download-video.akamaized.net/v3-1/playback/f91fb381-7704-4033-8d94-31b4102f678b/00c87e31?__token__=st=1704219411~exp=1704233811~acl=%2Fv3-1%2Fplayback%2Ff91fb381-7704-4033-8d94-31b4102f678b%2F00c87e31%2A~hmac=d04e012b8a38d0f5e226e15d8760d91aa57f3b3deb360312e2537226c6070ac0&r=dXMtY2VudHJhbDE%3D
+// Video by <a href="https://pixabay.com/users/skarletmotion-6385614/?utm_source=link-attribution&utm_medium=referral&utm_campaign=video&utm_content=178565">Skarlet Motion</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=video&utm_content=178565">Pixabay</a>
+// Video by <a href="https://pixabay.com/users/republica-24347/?utm_source=link-attribution&utm_medium=referral&utm_campaign=video&utm_content=171">Republica</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=video&utm_content=171">Pixabay</a>
+
+// Video by <a href="https://pixabay.com/users/skarletmotion-6385614/?utm_source=link-attribution&utm_medium=referral&utm_campaign=video&utm_content=177220">Skarlet Motion</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=video&utm_content=177220">Pixabay</a>

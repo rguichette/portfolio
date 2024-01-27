@@ -6,6 +6,7 @@ import { forwardRef, useMemo } from "react";
 import { RigidBody, RigidBodyProps } from "@react-three/rapier";
 import Table from "../Table";
 import Seats from "../Seats";
+import Bookcase from "../Bookcase";
 
 let Library: React.FC<GroupProps> = forwardRef<any, GroupProps>(
   (props: GroupProps, ref) => {
@@ -67,6 +68,8 @@ let Library: React.FC<GroupProps> = forwardRef<any, GroupProps>(
 
           <Table position={[0, -1.3, 1]} />
           <Seats instances={instances} frustumCulled={false} />
+
+          <Bookcase position={[3, 0.2, -8]} scale={1.5} />
         </group>
       </>
     );

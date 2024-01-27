@@ -1,11 +1,15 @@
 import { Box, RoundedBox, useGLTF } from "@react-three/drei";
 import { MeshProps } from "@react-three/fiber";
-import { RigidBody } from "@react-three/rapier";
+import { CuboidCollider, RigidBody } from "@react-three/rapier";
 import React from "react";
+import { showDownload } from "../../state";
+import { useAtom } from "jotai";
 
 export default function Table(props: MeshProps) {
   let ts = useGLTF("/assets/involvement/tableStand.glb");
   let { scene: resume } = useGLTF("/resumeSheet.glb");
+
+  let [showDownloadbtn, setShowDownloadBtn] = useAtom(showDownload);
 
   return (
     <>
@@ -28,8 +32,23 @@ export default function Table(props: MeshProps) {
             />
           </RoundedBox>
           <primitive object={ts.scene} />
-          <mesh scale={0.2} position={[0, 0.84, 0.5]} rotation={[0.0, 0, 0]}>
+          <mesh scale={0.2} position={[1.3, 0.84, 0.4]} rotation={[0.0, 0, 0]}>
             <primitive object={resume} />
+            <CuboidCollider
+              args={[1, 1, 1]}
+              position={[25, 15, 15]}
+              sensor
+              onIntersectionEnter={(e: any) => {
+                console.log("downloading Resume...2 success, ", e);
+
+                if (e.rigidBodyObject.name == "charRigidBody") {
+                  setShowDownloadBtn(true);
+                }
+              }}
+              onIntersectionExit={() => {
+                setShowDownloadBtn(false);
+              }}
+            />
           </mesh>
         </RigidBody>
       </mesh>

@@ -1,5 +1,10 @@
 import { useAtom, useAtomValue } from "jotai";
-import { enterWorld, showEngageButton, showSkillsSummary } from "../../state";
+import {
+  enterWorld,
+  showDownload,
+  showEngageButton,
+  showSkillsSummary,
+} from "../../state";
 // import DetailPopUp from "../DetailPopUp";
 // import HelpView from "../../HelpView";
 import "./style.css";
@@ -8,10 +13,16 @@ import InfoCard from "../InfoCard";
 import SkillsDetails from "../SkillsDetails";
 import isMobile from "is-mobile";
 import { useEffect, useState } from "react";
+import EngageBtn from "../EngageBtn";
+import Download from "../DownloadBtn";
 
 export default function HtmlInteractivity() {
   let showSkills = useAtomValue(showSkillsSummary);
-  let worldEdtered = useAtomValue(enterWorld);
+  let worldEntered = useAtomValue(enterWorld);
+  let showEngBtn = useAtomValue(showEngageButton);
+  let showDownloadBtn = useAtomValue(showDownload);
+
+  console.log("showDownloadBtn: ", showDownloadBtn);
 
   return (
     <div>
@@ -19,7 +30,9 @@ export default function HtmlInteractivity() {
 
       {showSkills && <SkillsDetails />}
 
-      {!worldEdtered && <LoadingPage />}
+      {!worldEntered && <LoadingPage />}
+      {showEngBtn && <EngageBtn />}
+      {showDownloadBtn && <Download />}
     </div>
   );
 }

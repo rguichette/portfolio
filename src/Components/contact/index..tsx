@@ -16,6 +16,12 @@ import {
 import { GLTF } from "three-stdlib";
 
 import * as BufferGeometryUtils from "three/addons/utils/BufferGeometryUtils.js";
+import { infoCardAtom } from "../../state";
+import { useAtom } from "jotai";
+import { useEffect } from "react";
+import phoneIcon from "/assets/icons/phoneIcon.svg";
+import emailIcon from "/assets/icons/email.svg";
+import linkedInIcon from "/assets/icons/linkedin.svg";
 
 interface ContactInstanceMesh extends MeshProps {
   instances: RigidBodyProps[];
@@ -112,6 +118,8 @@ export default function Contact(props: ContactInstanceMesh) {
   let { nodes: fb } = useGLTF("/phoneBez.glb") as any;
   let { nodes: sb } = useGLTF("/phoneScreenBack.glb") as any;
 
+  let [info, setInfo] = useAtom(infoCardAtom);
+
   let { nodes: cb } = useGLTF("/cubeTest.glb") as GLTF & {
     nodes: any;
   };
@@ -126,6 +134,28 @@ export default function Contact(props: ContactInstanceMesh) {
     specular: "#ffffff",
     shininess: 69.5,
   });
+
+  let contactInfo = (
+    <div className="flex flex-col bg-slate-100-- h-full items-center content-center justify-center">
+      <div className="flex  w-full -justify-center justify-between items-center  ">
+        <img className="flex w-6 mr-auto invert  " src={phoneIcon} alt="" />
+        <a href="tel:617-230-3689">617-309-3609</a>
+      </div>
+
+      <div className="flex  w-full -justify-center justify-between items-center  ">
+        <img className="flex w-6 invert mt-2 mb-2 " src={emailIcon} alt="" />
+        <a className="flex  text-sm" href="mailto:ralphIsidore@gmail.com">
+          RalphIsidore@gmail.com
+        </a>
+      </div>
+      <div className="flex  w-full -justify-center justify-between items-center   ">
+        <img className="flex w-6 invert " src={linkedInIcon} alt="" />
+        <a href="https://www.linkedin.com/in/ralphguichette" target="_blank">
+          LinkedIn
+        </a>
+      </div>
+    </div>
+  );
 
   return (
     <>
@@ -145,7 +175,25 @@ export default function Contact(props: ContactInstanceMesh) {
                     </mesh>
                   ))}
 
-                  <CuboidCollider args={[0.5, 1, 0.08]} key={"cuboid_" + k} />
+                  <CuboidCollider
+                    args={[0.5, 1, 0.14]}
+                    key={"cuboid_" + k}
+                    sensor
+                    onIntersectionEnter={() => {
+                      console.log("CONTACT..");
+                      setInfo({
+                        display: true,
+                        title: "Contact",
+                        summary: contactInfo as unknown as string,
+                        learnMore: false,
+                      });
+                    }}
+                    onIntersectionExit={() => {
+                      setInfo({
+                        display: false,
+                      });
+                    }}
+                  />
                 </RigidBody>
               );
             });

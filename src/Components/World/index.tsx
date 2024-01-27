@@ -83,7 +83,7 @@ let World = () => {
           noise={50}
         />
 
-        <fog attach="fog" color={"#53376c"} />
+        {/* <fog attach="fog" color={"#53376c"} /> */}
 
         <ambientLight intensity={1.2} />
         {/* /3Dassets/Environment/plants/alien_plant.glb
@@ -96,8 +96,10 @@ let World = () => {
         {/* <Suspense>
           <group position={[-20, 0, -20]}></group>
         </Suspense> */}
+
+        {/* <PlayGound /> */}
         <CamView />
-        <Physics gravity={[0, -9.988, 0]}>
+        <Physics debug gravity={[0, -9.988, 0]}>
           <Suspense>
             <Player position={[0, 1, 0]} ref={characterRef} />
           </Suspense>

@@ -5,20 +5,23 @@ export let infoAtom = atom(true); //rename later
 export let showEngageButton = atom(false);
 // export let showDetailsPopUp = atom(false);
 export let showSkillsSummary = atom(false);
+export let showDownload = atom(false);
 // export let showHelpPopUp = atom(false);
-export let isCharacterMoving = atom(false);
+export let isCharacterMoving = atom(false); //might need to remove
 
 export type InfoCardArgs = {
   display: boolean;
-  title: string;
-  summary: string;
-  learnMore: boolean;
+
+  title?: string;
+  summary?: string;
+  learnMore?: boolean;
 };
 
 //handle info card
-export let infoCardAtom = atom({
+export let infoCardAtom = atom<InfoCardArgs>({
   display: false,
   title: "Tiltle from state",
+
   summary:
     "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Recusandae eaque beatae dolores atque nostrum. Saepe necessitatibus rem numquam culpa eum repellendus libero rerum aperiam tenetur. ",
   learnMore: false,
@@ -27,6 +30,6 @@ export let infoCardAtom = atom({
 //TODO: SWITCH BACK TO FALSE
 
 //detect if the world has been entered from the loading screen
-export let enterWorld = atom(false);
+export let enterWorld = atom(true);
 
 // export let isMobileAtom = atom(true);
