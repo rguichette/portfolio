@@ -15,7 +15,7 @@ export default function InfoCard() {
 
   useEffect(() => {
     PowerGlitch.glitch(".glitch");
-  }, []);
+  }, [InfoCard, display]);
 
   return (
     display && (
