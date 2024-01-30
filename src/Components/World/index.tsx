@@ -3,6 +3,7 @@ import "./styles.css";
 import {
   Box,
   Cloud,
+  Environment,
   Gltf,
   Html,
   Instance,
@@ -78,20 +79,24 @@ let World = () => {
           size={10}
           scale={[250, 10, 250]}
           count={1000}
-          color={new THREE.Color("yellow")}
+          color={new THREE.Color("white")}
           position={[0, 5, 0]}
           noise={50}
         />
 
         {/* <fog attach="fog" color={"#53376c"} /> */}
 
-        <ambientLight intensity={1.2} />
+        {/* <ambientLight intensity={1.2} /> */}
+        <ambientLight intensity={0.8} />
         {/* /3Dassets/Environment/plants/alien_plant.glb
         public/3Dassets/Environment/plants/plants.glb
         public/3Dassets/Cogs.glb
 
 
 */}
+
+        <Environment files={"/assets/skyboxPink2.hdr"} background ground />
+
         {/* <OrbitControls /> */}
         {/* <Suspense>
           <group position={[-20, 0, -20]}></group>
@@ -99,7 +104,7 @@ let World = () => {
 
         {/* <PlayGound /> */}
         <CamView />
-        <Physics debug gravity={[0, -9.988, 0]}>
+        <Physics gravity={[0, -9.988, 0]}>
           <Suspense>
             <Player position={[0, 1, 0]} ref={characterRef} />
           </Suspense>

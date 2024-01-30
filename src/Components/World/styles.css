@@ -1,14 +1,15 @@
 body {
-  background: rgb(91, 226, 219);
+  /* background: rgb(91, 226, 219); */
   /* background: linear-gradient(
     0deg,
     rgba(91, 226, 219, 1) 27%,
     rgba(63, 74, 205, 1) 100%
   ); */
 
-  background: linear-gradient(
+
+  /* background: linear-gradient(
     0deg,
     rgba(91, 226, 219, 1) 59%,
     rgba(63, 74, 205, 1) 100%
-  );
+  ); */
 }

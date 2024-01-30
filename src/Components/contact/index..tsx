@@ -1,4 +1,4 @@
-import { Merged, useGLTF } from "@react-three/drei";
+import { Merged, Text, useGLTF } from "@react-three/drei";
 import { MeshProps, useFrame } from "@react-three/fiber";
 import { CuboidCollider, RigidBody, RigidBodyProps } from "@react-three/rapier";
 import {
@@ -18,7 +18,7 @@ import { GLTF } from "three-stdlib";
 import * as BufferGeometryUtils from "three/addons/utils/BufferGeometryUtils.js";
 import { infoCardAtom } from "../../state";
 import { useAtom } from "jotai";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import phoneIcon from "/assets/icons/phoneIcon.svg";
 import emailIcon from "/assets/icons/email.svg";
 import linkedInIcon from "/assets/icons/linkedin.svg";
@@ -63,6 +63,7 @@ export default function Contact(props: ContactInstanceMesh) {
     texture.wrapT = RepeatWrapping;
     texture.repeat.set(1, 1);
     texture.offset.set(0, 0);
+    texture.needsUpdate = true;
 
     new ImageLoader().load(imageUrl, (image) => {
       ctx?.rotate(-Math.PI);
@@ -125,8 +126,6 @@ export default function Contact(props: ContactInstanceMesh) {
   };
 
   let { instances } = props;
-
-  //change property from cb before it reaches Merged
   (cb.Screen as Mesh).material = new MeshPhongMaterial({
     side: DoubleSide,
     emissive: "#0a0a0a",
@@ -134,6 +133,44 @@ export default function Contact(props: ContactInstanceMesh) {
     specular: "#ffffff",
     shininess: 69.5,
   });
+
+  let [minuteChanged, setMinuteChanged] = useState(0);
+
+  // useEffect(() => {
+  //   let min = new Date().getMinutes();
+
+  //   let minChange = setInterval(() => {
+  //     console.log("minute", min);
+  //   }, 10000);
+  //   setMinuteChanged(min);
+
+  //   setTimeout(function () {
+  //     clearInterval(minChange);
+  //   }, 11000);
+
+  //   txt2.needsUpdate = true;
+  //   //change property from cb before it reaches Merged
+  //   (cb.Screen as Mesh).material = new MeshPhongMaterial({
+  //     side: DoubleSide,
+  //     emissive: "#0a0a0a",
+  //     map: txt2,
+  //     specular: "#ffffff",
+  //     shininess: 69.5,
+  //   });
+  // }, [fb, fb.length, txt2, minuteChanged]);
+
+  let prevMin = 0;
+  // useFrame(() => {
+  //   let min = new Date().getMinutes();
+
+  //   if (min > prevMin) {
+  //     prevMin = min;
+
+  //     console.log("minute: ", prevMin);
+  //     txt2.needsUpdate = true;
+  //     txt2 = phoneAnimatedTexture();
+  //   }
+  // });
 
   let contactInfo = (
     <div className="flex flex-col bg-slate-100-- h-full items-center content-center justify-center">
@@ -169,7 +206,12 @@ export default function Contact(props: ContactInstanceMesh) {
                 <RigidBody {...instProps} key={k} type={"fixed"}>
                   {Object.entries(items).map(([name, Part]: [string, any]) => (
                     <mesh key={"rigidInstMesh" + name}>
-                      <Screen scale={1.0} rotation={[0, 0, Math.PI]} />
+                      <Screen scale={1.0} rotation={[0, -Math.PI, Math.PI]} />
+                      <Screen
+                        scale={1.0}
+                        position={[0, 0, -0.02]}
+                        rotation={[0, 0, Math.PI]}
+                      />
 
                       <Part />
                     </mesh>
