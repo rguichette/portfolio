@@ -38,7 +38,7 @@ import Player from "../Player/Player.tsx";
 
 import { CameraHelper, Mesh, Vector3 } from "three";
 
-import { OrbitControls as OCtype } from "three-stdlib";
+import { OrbitControls as OCtype, RectAreaLightHelper } from "three-stdlib";
 
 import CameraControls from "camera-controls";
 import { useAtom } from "jotai";
@@ -58,10 +58,12 @@ let World = () => {
   let [popUP, setPopUP] = useAtom(infoAtom);
 
   let mLightRef = useRef(null);
+  let hLightRef = useRef(null);
 
   useEffect(() => {});
 
   useHelper(mLightRef.current && mLightRef, THREE.PointLightHelper);
+  useHelper(hLightRef.current && hLightRef, THREE.HemisphereLightHelper);
 
   return (
     <>
@@ -86,8 +88,9 @@ let World = () => {
 
         {/* <fog attach="fog" color={"#53376c"} /> */}
 
-        {/* <ambientLight intensity={1.2} /> */}
-        <ambientLight intensity={0.8} />
+        <ambientLight intensity={0.3} />
+        {/* <ambientLight intensity={0.8} /> */}
+
         {/* /3Dassets/Environment/plants/alien_plant.glb
         public/3Dassets/Environment/plants/plants.glb
         public/3Dassets/Cogs.glb

@@ -57,30 +57,34 @@ export default function City() {
         ]}
       />
 
-      <Contact
+      {/* <Contact
         instances={[{ position: [0, 0, 3.5], rotation: [0, Math.PI, 0] }]}
-      />
+      /> */}
       {/* <PlayGound /> */}
       {/* <BluePrint /> */}
 
-      <Instructions scale={2.7} position={[5, 1.5, 6]} />
+      {/* <Instructions scale={2.7} position={[5, 1.5, 6]} /> */}
       {/* <Statues /> */}
 
-      <SuccessStatue scale={3.5} position={[6.5, 0, 35]} />
+      {/* <SuccessStatue scale={3.5} position={[6.5, 0, 35]} />
       <BookStatue position={[40, -1.3, -7]} />
       <BenchStatue scale={1.6} position={[8, 0.7, -40]} />
-      <DynamicStatue scale={14} position={[-38, -4, 9]} />
+      <DynamicStatue scale={14} position={[-38, -4, 9]} /> */}
 
-      <Involvement position={[45, 0, 5]} rotation={[0, -Math.PI, 0]} />
+      {/* <Involvement position={[45, 0, 5]} rotation={[0, -Math.PI, 0]} />
       <Projects />
       <Skills position={[-30, 0, 0]} rotation={[0, Math.PI / 2, 0]} />
-      <WorkExperience />
-      <Bowling scale={1.5} position={[0, 1, 0]} />
-      <Dominos />
-      <BoxStack />
+      <WorkExperience /> */}
+      {/* <Bowling scale={1.5} position={[0, 1, 0]} /> */}
+      {/* <Dominos />
+      <BoxStack /> */}
       {/* signs*/}
 
-      <Involvement position={[45, 0, 5]} rotation={[0, -Math.PI, 0]} />
+      <Involvement position={[5, 0, 5]} rotation={[0, -Math.PI, 0]} />
+
+      {/* <Projects position={[0, 0.5, 3.5]} /> */}
+      {/* <Projects position={[0, 0, -20]} /> */}
+      {/* <Skills position={[0, 0, 0]} rotation={[0, Math.PI / 2, 0]} /> */}
 
       <RigidBody type="fixed" position={[-4, 0, 1]}>
         <group position={[0, 0.8, 0]}>

@@ -1,7 +1,19 @@
-import { Gltf, Plane, Ring, Text, useVideoTexture } from "@react-three/drei";
-import React, { Suspense, useEffect } from "react";
+import {
+  Gltf,
+  Plane,
+  Ring,
+  Text,
+  useHelper,
+  useVideoTexture,
+} from "@react-three/drei";
+import React, { Suspense, useEffect, useRef } from "react";
 import WorkStation from "../../Workstation";
-import { CylinderGeometry, DoubleSide, MeshBasicMaterial } from "three";
+import {
+  CylinderGeometry,
+  DoubleSide,
+  MeshBasicMaterial,
+  PointLightHelper,
+} from "three";
 import { GroupProps, MeshProps, useFrame } from "@react-three/fiber";
 import CustomShaderMaterial from "three-custom-shader-material";
 import data from "../../../shaders/data/data.vert";
@@ -155,9 +167,26 @@ function Data(props: MeshProps) {
 
 export default function Skills(props: GroupProps) {
   let AiData = useVideoTexture("public/AiScreen.mp4");
+  let pLightRef = useRef(null);
+
+  useHelper(pLightRef.current && pLightRef, PointLightHelper);
 
   return (
     <group {...props}>
+      <pointLight
+        // ref={pLightRef}
+        color={"#0088B6"}
+        decay={0.1}
+        intensity={5}
+        position={[4, 6, -6]}
+      />
+      <pointLight
+        ref={pLightRef}
+        color={"#0088B6"}
+        decay={0.3}
+        intensity={6}
+        position={[20, 6, -6]}
+      />
       <mesh scale={8}>
         <Plane args={[1, 0.6, 1]} position={[1.4, 0.4, -1]}>
           <meshBasicMaterial map={AiData} side={DoubleSide} />

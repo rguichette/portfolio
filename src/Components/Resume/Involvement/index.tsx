@@ -1,11 +1,17 @@
-import { Sphere, useGLTF, useTexture } from "@react-three/drei";
+import { Sphere, useGLTF, useHelper, useTexture } from "@react-three/drei";
 import { forwardRef, useRef } from "react";
 import Library from "../../Library";
-import { Mesh } from "three";
+import { Mesh, PointLightHelper } from "three";
 import { GroupProps, useFrame } from "@react-three/fiber";
+import { RectAreaLightHelper } from "three-stdlib";
 
 let Involvement: React.FC<GroupProps> = forwardRef((props, ref) => {
   let earthRef = useRef(null);
+  let rectLightRef = useRef(null);
+  let pLightRef = useRef(null);
+
+  useHelper(rectLightRef.current && rectLightRef, RectAreaLightHelper);
+  useHelper(pLightRef.current && pLightRef, PointLightHelper);
 
   let texture = useTexture("/assets/involvement/earthTexture.jpeg");
 
@@ -19,6 +25,22 @@ let Involvement: React.FC<GroupProps> = forwardRef((props, ref) => {
   return (
     <>
       <group {...props}>
+        {/* <rectAreaLight
+          color={"yellow"}
+          ref={rectLightRef}
+          position={[9, 4, 0]}
+          rotation={[0, Math.PI / 1.3, 0]}
+          intensity={1}
+        /> */}
+
+        <pointLight
+          color={"red"}
+          ref={pLightRef}
+          intensity={4}
+          position={[1, 3, 1]}
+          decay={0.3}
+        />
+
         <Library />
 
         <Sphere position={[-7, 1, -6]} ref={earthRef} scale={1.5}>
