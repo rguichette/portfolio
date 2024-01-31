@@ -63,7 +63,7 @@ let World = () => {
   useEffect(() => {});
 
   useHelper(mLightRef.current && mLightRef, THREE.PointLightHelper);
-  useHelper(hLightRef.current && hLightRef, THREE.HemisphereLightHelper);
+  // useHelper(hLightRef.current && hLightRef, THREE.HemisphereLightHelper);
 
   return (
     <>
@@ -89,7 +89,7 @@ let World = () => {
         {/* <fog attach="fog" color={"#53376c"} /> */}
 
         <ambientLight intensity={0.3} />
-        {/* <ambientLight intensity={0.8} /> */}
+        <ambientLight intensity={1} />
 
         {/* /3Dassets/Environment/plants/alien_plant.glb
         public/3Dassets/Environment/plants/plants.glb
@@ -98,14 +98,14 @@ let World = () => {
 
 */}
 
-        <Environment files={"/assets/skyboxPink2.hdr"} background ground />
+        {/* <Environment files={"/assets/skyboxPink2.hdr"} background ground /> */}
 
         {/* <OrbitControls /> */}
         {/* <Suspense>
           <group position={[-20, 0, -20]}></group>
         </Suspense> */}
 
-        {/* <PlayGound /> */}
+        <PlayGound />
         <CamView />
         <Physics gravity={[0, -9.988, 0]}>
           <Suspense>
