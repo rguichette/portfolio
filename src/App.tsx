@@ -26,6 +26,14 @@ import InfoCrad from "./Components/InfoCard";
 import SkillsDetails from "./Components/SkillsDetails";
 import MobileControls from "./Components/__MobileControls";
 import MobileControls2 from "./Components/MobileControls2";
+import {
+  Bloom,
+  DepthOfField,
+  EffectComposer,
+  Noise,
+  Selection,
+  SelectiveBloom,
+} from "@react-three/postprocessing";
 
 enum Controls {
   forward = "forward",
@@ -86,7 +94,6 @@ function App() {
           // camera={{ fov: 24, position: [10, -1, 2] }}
         >
           {/* <LoadingPage /> */}
-
           <MobileControls2 />
           <World />
         </Canvas>

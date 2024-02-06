@@ -5,6 +5,7 @@ export let infoAtom = atom(true); //rename later
 export let showEngageButton = atom(false);
 // export let showDetailsPopUp = atom(false);
 export let showSkillsSummary = atom(false);
+export let showIntroInfo = atom(false);
 export let showDownload = atom(false);
 // export let showHelpPopUp = atom(false);
 export let isCharacterMoving = atom(false); //might need to remove

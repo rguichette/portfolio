@@ -50,6 +50,12 @@ import PlayGound from "../../playGround/index.tsx";
 import Contact from "../contact/index..tsx";
 import BluePrint from "../City/bluePrint.tsx";
 import SkillsDetails from "../SkillsDetails/index.tsx";
+import {
+  Bloom,
+  DepthOfField,
+  EffectComposer,
+  Select,
+} from "@react-three/postprocessing";
 
 CameraControls.install({ THREE: THREE });
 
@@ -89,7 +95,7 @@ let World = () => {
         {/* <fog attach="fog" color={"#53376c"} /> */}
 
         <ambientLight intensity={0.3} />
-        <ambientLight intensity={1} />
+        {/* <ambientLight intensity={1} /> */}
 
         {/* /3Dassets/Environment/plants/alien_plant.glb
         public/3Dassets/Environment/plants/plants.glb
@@ -101,19 +107,20 @@ let World = () => {
         {/* <Environment files={"/assets/skyboxPink2.hdr"} background ground /> */}
 
         {/* <OrbitControls /> */}
-        {/* <Suspense>
-          <group position={[-20, 0, -20]}></group>
-        </Suspense> */}
 
-        <PlayGound />
         <CamView />
         <Physics gravity={[0, -9.988, 0]}>
+          <PlayGound />
           <Suspense>
             <Player position={[0, 1, 0]} ref={characterRef} />
           </Suspense>
           <City />
         </Physics>
       </Suspense>
+
+      {/* <EffectComposer>
+        <Bloom luminanceThreshold={1} />
+‹      </EffectComposer> */}
     </>
   );
 };

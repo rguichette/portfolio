@@ -22,7 +22,7 @@ import {
 // } from "../../state";
 import { duelJsUserDataType } from "../MobileControls2";
 import isMobile from "is-mobile";
-import { enterWorld, showSkillsSummary } from "../../state";
+import { enterWorld, showSkillsSummary, showIntroInfo } from "../../state";
 
 enum Controls {
   forward = "forward",
@@ -49,6 +49,7 @@ const Player = forwardRef<Mesh, MeshProps>(function Player(props, ref) {
   let [_, get] = useKeyboardControls<Controls>();
   let showSkills = useAtomValue(showSkillsSummary);
   let enteredWorld = useAtomValue(enterWorld);
+  let showinfoInfo = useAtomValue(showIntroInfo);
 
   //  rgidBodyRef
   let rbRef = useRef<RapierRigidBody>(null!);
@@ -60,7 +61,7 @@ const Player = forwardRef<Mesh, MeshProps>(function Player(props, ref) {
   let rotation = new Quaternion();
 
   let angle = 0;
-  let turnSpeed = 0.02;
+  let turnSpeed = 0.03;
 
   let { scene: character, animations } = useGLTF("public/PlayerMain.glb");
 
@@ -91,9 +92,10 @@ const Player = forwardRef<Mesh, MeshProps>(function Player(props, ref) {
 
   useFrame(({ clock, scene }) => {
     if (!enteredWorld) {
-      console.log("World NOT entered");
+      console.log("World NOT entered or showIntroUp");
       return;
     }
+
     // Joystick: -- handles mobile input
     let joystick = scene.getObjectByName("Joystick_data")
       ?.userData as duelJsUserDataType;
@@ -148,8 +150,8 @@ const Player = forwardRef<Mesh, MeshProps>(function Player(props, ref) {
 
         if (
           //bf- back/forward
-          (get().forward && !showSkills) ||
-          (joystickBF > 0 && !showSkills)
+          (get().forward && !showSkills && !showinfoInfo) ||
+          (joystickBF > 0 && !showSkills && !showinfoInfo)
           // !helpWindow &&
           // !detailsWindow
         ) {
@@ -182,7 +184,7 @@ const Player = forwardRef<Mesh, MeshProps>(function Player(props, ref) {
           console.log("SPEED: ", speed);
           direction.multiplyScalar(speed);
           rbRef.current.setLinvel(direction, true);
-        } else if (get().back || joystickBF < 0) {
+        } else if ((get().back && !showinfoInfo) || joystickBF < 0) {
           if (isMobile()) {
             speed = normalSpeed;
             console.log("less: ", speed);
@@ -200,7 +202,7 @@ const Player = forwardRef<Mesh, MeshProps>(function Player(props, ref) {
     let currentAnim: AnimationAction;
 
     if (
-      (get().forward && !showSkills) ||
+      (get().forward && !showSkills && !showinfoInfo) ||
       joystickBF > 0
       // //  && !helpWindow
 

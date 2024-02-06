@@ -4,6 +4,7 @@ import { CuboidCollider, RigidBody } from "@react-three/rapier";
 import React from "react";
 import { showDownload } from "../../state";
 import { useAtom } from "jotai";
+import Arrow from "../Arrow";
 
 export default function Table(props: MeshProps) {
   let ts = useGLTF("/assets/involvement/tableStand.glb");
@@ -32,6 +33,8 @@ export default function Table(props: MeshProps) {
             />
           </RoundedBox>
           <primitive object={ts.scene} />
+          <Arrow instances={[{ position: [1.5, 2, 1], scale: 0.5 }]} />
+
           <mesh scale={0.2} position={[1.3, 0.84, 0.4]} rotation={[0.0, 0, 0]}>
             <primitive object={resume} />
             <CuboidCollider
