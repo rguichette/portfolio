@@ -63,14 +63,26 @@ export default function Bookcase({
           scale={[0.2, 0.3, 0.08]}
           args={[new BoxGeometry(), new MeshLambertMaterial(), count]}
         >
-          {Array.apply(null, Array(count)).map(() => {
+          <Instance />
+          <Instance />
+        </Instances>
+      </RigidBody>
+      {/* <spotLight /> */}
+    </mesh>
+  );
+}
+
+/**
+ * 
+ * 
+ *  {Array.apply(null, Array(count)).map((it, ind) => {
             //   let color =
             //     colors[Math.floor(Math.random() * (colors.length - 1)) + 1];
             let color = () => colors[Math.floor(Math.random() * colors.length)];
 
             //   console.log("COLOR: ", color);
             return (
-              <mesh>
+              <mesh key={`${Math.random()}`}>
                 {Array.apply(null, Array(20)).map((item, i) => {
                   let j = i - 10;
 
@@ -78,52 +90,49 @@ export default function Bookcase({
                     j += 1;
                   }
 
-                  console.log("index", j);
+                  // console.log("index", j);
                   return (
                     <>
                       <Instance
                         scale={[1, 1.1, 0.8]}
                         position={[0, 2.42, j]}
                         color={color()}
+                        // key={i}
+                        
                       />
-                      ;
-                      <Instance
+                      {/* <Instance
                         scale={[1, 1.1, 0.8]}
                         position={[0, 1.22, j]}
                         color={color()}
+                        key={Math.random()}
                       />
-                      ;
                       <Instance
                         scale={[1, 1.1, 0.8]}
                         position={[0, -0.2, j]}
                         color={color()}
+                        key={Math.random()}
                       />
-                      ;
                       <Instance
                         scale={[1, 1.1, 0.8]}
                         position={[0, -1.32, j]}
                         color={color()}
+                        key={Math.random()}
                       />
-                      ;
+
                       <Instance
                         scale={[1, 1.1, 0.8]}
                         position={[0, -2.72, j]}
                         color={color()}
-                      />
-                      ;
-                    </>
-                  );
-                })}
-                {/* <Instance position={[0, 1.22, 10]} color={color()} />; */}
-              </mesh>
-            );
-          })}
-          <CuboidCollider args={[0.15, 1, 0.85]} />
-
-          {/* <CuboidCollider args={[1.15, 1, 1.85]} /> */}
-        </Instances>
-      </RigidBody>
-      <spotLight />
-    </mesh>
-  );
-}
+                        key={Math.random()}
+                      /> }
+                      </>
+                      );
+                    })}
+                    <Instance position={[0, 1.22, 10]} color={color()} />; 
+                  </mesh>
+                );
+              })}
+              <CuboidCollider args={[0.15, 1, 0.85]} key={Math.random()} />
+    
+               <CuboidCollider args={[1.15, 1, 1.85]} /> 
+ */

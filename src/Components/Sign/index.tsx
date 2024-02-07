@@ -51,7 +51,7 @@ export function FlickeringSign({
   useFrame(({ clock }) => {
     let rand = Math.floor(Math.random() * 20 + baseLightStregth);
 
-    console.log("RAND", rand);
+    // console.log("RAND", rand);
 
     if (rand % 2 == 0 && rand % 3 == 0) {
       myMat.emissiveIntensity =

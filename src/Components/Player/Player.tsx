@@ -90,6 +90,12 @@ const Player = forwardRef<Mesh, MeshProps>(function Player(props, ref) {
 
   let runninng = false;
 
+  useEffect(() => {
+    console.log("PLAYER SETTING: ", speed);
+    direction.multiplyScalar(speed);
+    rbRef.current.setLinvel(direction, true);
+  }, []);
+
   useFrame(({ clock, scene }) => {
     if (!enteredWorld) {
       console.log("World NOT entered or showIntroUp");

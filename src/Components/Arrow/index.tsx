@@ -56,11 +56,7 @@ export default function Arrow(props: ArrowProps) {
 
   //   console.log("HAS INSTANCE: ", hasInstances);
   return (
-    <Merged
-      meshes={nodes}
-      ref={ArrowsRef}
-      // frustumCulled={false}
-    >
+    <Merged meshes={nodes} ref={ArrowsRef} frustumCulled={false}>
       {({ Arrow, ArrowCenter }: { Arrow: any; ArrowCenter: any }) => {
         let a1Ref = useRef(null);
 
@@ -69,14 +65,16 @@ export default function Arrow(props: ArrowProps) {
         if (!instances || instances.length == 0) {
           return (
             <mesh>
-              <Arrow />
-              <ArrowCenter scale={0.3} />
+              {/* <Arrow /> */}
+              {/* <ArrowCenter scale={0.3} /> */}
             </mesh>
           );
         }
 
         return instances.map((instProps, k) => {
           //   console.log("INST: ", instProps);
+          // let rk = Math.random();
+          // console.log("RK: ", rk);
           return (
             <mesh {...instProps}>
               <Arrow />

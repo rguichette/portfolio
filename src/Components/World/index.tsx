@@ -103,8 +103,9 @@ let World = () => {
 
 
 */}
-
-        {/* <Environment files={"/assets/skyboxPink2.hdr"} background ground /> */}
+        <Suspense>
+          <Environment files={"/assets/skyboxPink2.hdr"} background ground />
+        </Suspense>
 
         {/* <OrbitControls /> */}
 

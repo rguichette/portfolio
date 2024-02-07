@@ -29,7 +29,7 @@ export default function City() {
   let contactScale = 0.3;
   return (
     <>
-      {/* <Contact
+      <Contact
         position={[0, 0.5, 0]}
         instances={[
           {
@@ -58,7 +58,7 @@ export default function City() {
             scale: contactScale,
           },
         ]}
-      /> */}
+      />
 
       {/* <Contact
         instances={[{ position: [0, 0, 3.5], rotation: [0, Math.PI, 0] }]}
@@ -76,31 +76,31 @@ export default function City() {
       <DynamicStatue scale={14} position={[-38, -4, 9]} /> */}
 
       <Involvement position={[45, 0, 5]} rotation={[0, -Math.PI, 0]} />
-      {/* <Projects />
+      {/* <Projects /> */}
       <Skills position={[-30, 0, 0]} rotation={[0, Math.PI / 2, 0]} />
-      <WorkExperience /> */}
+      {/* <WorkExperience /> */}
       {/* <Bowling scale={1.5} position={[0, 1, 0]} /> */}
       {/* <Dominos />
       <BoxStack /> */}
       {/* signs*/}
 
       {/* <Involvement position={[5, 0, 5]} rotation={[0, -Math.PI, 0]} /> */}
-      <Arrow
+      {/* <Arrow
         instances={[
           {
-            position: [-23, 0, -15.4],
+            position: [-23, 3, -15.4],
             rotation: [0, Math.PI / 2, 0],
-            // scale: 0.5,
+            key: "A_1",
+
           },
           {
             position: [43, 1.5, 3],
+            key: "A_2",
           },
         ]}
-      />
+      /> */}
 
-      {/* <Projects position={[0, 0.5, 3.5]} /> */}
-      {/* <Projects position={[0, 0, -20]} /> */}
-      {/* <Skills position={[0, 0, 0]} rotation={[0, Math.PI / 2, 0]} /> */}
+      {/* <Projects position={[0, 0.5, 7]} /> */}
 
       {/* Entry Direction */}
       <group position={[0, 1, 0]}>
