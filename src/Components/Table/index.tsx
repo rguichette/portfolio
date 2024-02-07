@@ -33,13 +33,12 @@ export default function Table(props: MeshProps) {
             />
           </RoundedBox>
           <primitive object={ts.scene} />
-          <Arrow instances={[{ position: [1.5, 2, 1], scale: 0.5 }]} />
 
           <mesh scale={0.2} position={[1.3, 0.84, 0.4]} rotation={[0.0, 0, 0]}>
             <primitive object={resume} />
             <CuboidCollider
               args={[1, 1, 1]}
-              position={[25, 15, 15]}
+              position={[30, 15, 18]}
               sensor
               onIntersectionEnter={(e: any) => {
                 console.log("downloading Resume...2 success, ", e);

@@ -26,6 +26,7 @@ import Keyboard from "../Keyboard";
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
 import { useAtom, useAtomValue } from "jotai";
 import { showEngageButton } from "../../state";
+import Arrow from "../Arrow";
 // import { showEngageButton } from "../../state";
 
 // import desk from "../../3Dassets/glassDesk.glb";

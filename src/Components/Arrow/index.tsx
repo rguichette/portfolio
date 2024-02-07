@@ -56,7 +56,11 @@ export default function Arrow(props: ArrowProps) {
 
   //   console.log("HAS INSTANCE: ", hasInstances);
   return (
-    <Merged meshes={nodes} ref={ArrowsRef}>
+    <Merged
+      meshes={nodes}
+      ref={ArrowsRef}
+      // frustumCulled={false}
+    >
       {({ Arrow, ArrowCenter }: { Arrow: any; ArrowCenter: any }) => {
         let a1Ref = useRef(null);
 
