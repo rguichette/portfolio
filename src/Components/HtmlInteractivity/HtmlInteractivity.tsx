@@ -25,7 +25,7 @@ export default function HtmlInteractivity() {
   let showDownloadBtn = useAtomValue(showDownload);
   let showInfoIntro = useAtomValue(showIntroInfo);
 
-  let [acceptedWarning, setAcceptedWarning] = useState(false);
+  let [acceptedWarning, setAcceptedWarning] = useState(true);
 
   console.log("showDownloadBtn: ", showDownloadBtn);
 
