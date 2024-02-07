@@ -94,8 +94,8 @@ let World = () => {
 
         {/* <fog attach="fog" color={"#53376c"} /> */}
 
-        <ambientLight intensity={0.3} />
-        {/* <ambientLight intensity={1} /> */}
+        {/* <ambientLight intensity={0.3} /> */}
+        <ambientLight intensity={1} />
 
         {/* /3Dassets/Environment/plants/alien_plant.glb
         public/3Dassets/Environment/plants/plants.glb
@@ -103,15 +103,15 @@ let World = () => {
 
 
 */}
-        <Suspense>
+        {/* <Suspense>
           <Environment files={"/assets/skyboxPink2.hdr"} background ground />
-        </Suspense>
+        </Suspense> */}
 
         {/* <OrbitControls /> */}
 
         <CamView />
         <Physics gravity={[0, -9.988, 0]}>
-          <PlayGound />
+          {/* <PlayGound /> */}
           <Suspense>
             <Player position={[0, 1, 0]} ref={characterRef} />
           </Suspense>

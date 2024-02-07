@@ -29,6 +29,7 @@ import {
   SelectiveBloom,
 } from "@react-three/postprocessing";
 import { FlickeringSign, Sign } from "../Components/Sign";
+import Bookcase from "../Components/Bookcase";
 
 export default function PlayGound() {
   console.log(myfront);
@@ -53,23 +54,8 @@ export default function PlayGound() {
    */
   return (
     <>
-      {/* <FlickeringSign
-        lightIntensity={15}
-        color="green"
-        baseLightStregth={6.5}
-        title="Projects"
-        position={[1, 2, 1]}
-      />
-      <FlickeringSign
-        lightIntensity={1}
-        color="Pink"
-        baseLightStregth={2}
-        title="Skills"
-      />
-
-      <Plane args={[10, 10]} position={[0, 0, -2]}>
-        <meshStandardMaterial name="material" />
-      </Plane> */}
+      <Bookcase />
+      <pointLight />
     </>
   );
 }

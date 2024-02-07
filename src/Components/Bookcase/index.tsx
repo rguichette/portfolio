@@ -50,6 +50,18 @@ export default function Bookcase({
 
   let count = 1;
 
+  let row = () => {
+    return Array.apply(null, Array(20)).map((item, i) => {
+      let color = () => colors[Math.floor(Math.random() * colors.length)];
+      let j = i - 10;
+
+      if (j >= 0) {
+        j += 1;
+      }
+      return <Instance key={i} position={[0, 0, j]} color={color()} />;
+    });
+  };
+
   return (
     <mesh {...props}>
       <RigidBody colliders={false} type="fixed">
@@ -63,8 +75,21 @@ export default function Bookcase({
           scale={[0.2, 0.3, 0.08]}
           args={[new BoxGeometry(), new MeshLambertMaterial(), count]}
         >
-          <Instance />
-          <Instance />
+          <Instance key={"row_1"} position={[0, 2.4, 0]}>
+            {row()}
+          </Instance>
+          <Instance key={"row_2"} position={[0, 1.2, 0]}>
+            {row()}
+          </Instance>
+          <Instance key={"row_3"} position={[0, 0, 0]}>
+            {row()}
+          </Instance>
+          <Instance key={"row_4"} position={[0, -1.2, 0]}>
+            {row()}
+          </Instance>
+          <Instance key={"row_5"} position={[0, -2.4, 0]}>
+            {row()}
+          </Instance>
         </Instances>
       </RigidBody>
       {/* <spotLight /> */}
