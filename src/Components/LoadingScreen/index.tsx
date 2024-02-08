@@ -181,7 +181,7 @@ let LoadingPage = () => {
           </span>
           {displayContinue && (
             <button
-              className="animate-pulse delay-2000  h-6 w-32 sm:p-2  md:p-0 text-stone-100"
+              className="animate-pulse delay-2000  h-6 w-32 sm:p-2  md:p-0 text-stone-100 focus:text-teal-600"
               onClick={() => setSubmit(true)}
             >
               CONTINUE

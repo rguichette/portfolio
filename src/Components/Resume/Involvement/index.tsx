@@ -4,6 +4,10 @@ import Library from "../../Library";
 import { Mesh, PointLightHelper } from "three";
 import { GroupProps, useFrame } from "@react-three/fiber";
 import { RectAreaLightHelper } from "three-stdlib";
+import { BallCollider } from "@react-three/rapier";
+import { infoCardAtom } from "../../../state";
+import { useAtom } from "jotai";
+import summaries from "../../../statements";
 
 let Involvement: React.FC<GroupProps> = forwardRef((props, ref) => {
   let earthRef = useRef(null);
@@ -21,6 +25,8 @@ let Involvement: React.FC<GroupProps> = forwardRef((props, ref) => {
         clock.elapsedTime * 0.4;
     }
   });
+
+  let [ic, setic] = useAtom(infoCardAtom);
 
   return (
     <>
@@ -46,6 +52,14 @@ let Involvement: React.FC<GroupProps> = forwardRef((props, ref) => {
         <Sphere position={[-7, 1, -6]} ref={earthRef} scale={1.5}>
           <meshBasicMaterial map={texture} transparent opacity={0.7} />
         </Sphere>
+        <BallCollider
+          sensor
+          args={[1.5]}
+          position={[-7, 1, -6]}
+          onIntersectionEnter={() => {
+            setic(summaries.involvement.globe);
+          }}
+        />
       </group>
     </>
   );

@@ -30,6 +30,7 @@ import {
 } from "@react-three/postprocessing";
 import { FlickeringSign, Sign } from "../Components/Sign";
 import Bookcase from "../Components/Bookcase";
+import summeries from "../statements";
 
 export default function PlayGound() {
   console.log(myfront);
@@ -52,6 +53,8 @@ export default function PlayGound() {
    *
    *
    */
+  // summeries.involvement.globe
+
   return (
     <>
       <Bookcase />

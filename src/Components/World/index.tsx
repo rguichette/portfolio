@@ -110,7 +110,7 @@ let World = () => {
         {/* <OrbitControls /> */}
 
         <CamView />
-        <Physics gravity={[0, -9.988, 0]}>
+        <Physics debug gravity={[0, -9.988, 0]}>
           {/* <PlayGound /> */}
           <Suspense>
             <Player position={[0, 1, 0]} ref={characterRef} />

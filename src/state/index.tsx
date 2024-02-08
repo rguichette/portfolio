@@ -31,6 +31,6 @@ export let infoCardAtom = atom<InfoCardArgs>({
 //TODO: SWITCH BACK TO FALSE
 
 //detect if the world has been entered from the loading screen
-export let enterWorld = atom(true);
+export let enterWorld = atom(false);
 
 // export let isMobileAtom = atom(true);
