@@ -113,7 +113,7 @@ let LoadingPage = () => {
 
   return (
     // <Suspense>
-    <div className={`${submit && "fade_away"} absolute top-0  z-50`}>
+    <div className={`${submit && "fade_away"} absolute top-0  z-40`}>
       <div
         // id="glitch"
         className=" z-20  bg-slate-900 w-screen h-screen flex flex-col justify-center items-center uppercas "

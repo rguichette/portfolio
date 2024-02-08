@@ -17,8 +17,8 @@ function Dom(props: DominoInstanceMesh) {
 
   return (
     <>
-      <mesh {...props}>
-        <Merged meshes={[box]} frustumCulled={false}>
+      <mesh {...props} key={"dom_wrapper"}>
+        <Merged meshes={[box]} frustumCulled={false} key={"domino_"}>
           {(B) => {
             return instances.map((instProps, k) => {
               return (

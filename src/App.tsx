@@ -34,6 +34,7 @@ import {
   Selection,
   SelectiveBloom,
 } from "@react-three/postprocessing";
+import Warning from "./Components/Warning";
 
 enum Controls {
   forward = "forward",
@@ -85,7 +86,7 @@ function App() {
 
       {/* <InfoCrad /> */}
       {/* {showSkills && <SkillsDetails />} */}
-
+      <Warning />
       <KeyboardControls map={co}>
         <Canvas
           className=" w-screen h-screen "
@@ -93,7 +94,6 @@ function App() {
 
           // camera={{ fov: 24, position: [10, -1, 2] }}
         >
-          {/* <LoadingPage /> */}
           <MobileControls2 />
           <World />
         </Canvas>

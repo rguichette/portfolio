@@ -17,14 +17,14 @@ function StackInst(props: StackInstancedMesh) {
 
   return (
     <>
-      <mesh {...props}>
+      <mesh {...props} key={"stack_parant"}>
         <Merged meshes={[box]} frustumCulled={false}>
           {(B: any) => {
             return instances.map((instProps, k) => {
               return (
-                <RigidBody {...instProps} key={k} colliders={false}>
+                <RigidBody {...instProps} colliders={false} key={"r_s_k" + k}>
                   <B />
-                  <CuboidCollider args={[0.5, 0.5, 0.5]} />
+                  <CuboidCollider args={[0.5, 0.5, 0.5]} key={"s_k" + k} />
                 </RigidBody>
               );
             });
@@ -60,9 +60,20 @@ export default function BoxStack() {
   return (
     <>
       <mesh position={[15, -3.5, 0]}>
-        <StackInst instances={instances} scale={1} position={[3, 3, 1]} />;
-        <StackInst instances={instances} scale={1} position={[9, 3, 1]} />;
-        {/* create bridge with top */}
+        <StackInst
+          instances={instances}
+          scale={1}
+          position={[3, 3, 1]}
+          key={"stack_1"}
+        />
+        ;
+        <StackInst
+          instances={instances}
+          scale={1}
+          position={[9, 3, 1]}
+          key={"stack_2"}
+        />
+        ;{/* create bridge with top */}
         <StackInst
           instances={[
             { scale: [4, 1, 1], position: [-1, 2, 2] },
@@ -73,10 +84,16 @@ export default function BoxStack() {
           ]}
           scale={1}
           position={[9, 3, 1]}
+          key={"stack_3"}
         />
-        <RigidBody />
+        {/* <RigidBody /> */}
       </mesh>
-      <RigidBody scale={3} position={[15, 3, -12]} colliders="ball">
+      <RigidBody
+        scale={3}
+        position={[15, 3, -12]}
+        colliders="ball"
+        key={"rigid_stack"}
+      >
         <Sphere />
       </RigidBody>
     </>

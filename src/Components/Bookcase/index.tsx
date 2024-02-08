@@ -91,6 +91,7 @@ export default function Bookcase({
             {row()}
           </Instance>
         </Instances>
+        <CuboidCollider args={[0.2, 1, 0.9]} />
       </RigidBody>
       {/* <spotLight /> */}
     </mesh>
