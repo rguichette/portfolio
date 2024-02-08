@@ -107,9 +107,9 @@ let World = () => {
           <Environment files={"/assets/skyboxPink2.hdr"} background ground />
         </Suspense>
 
-        {/* <OrbitControls /> */}
+        <OrbitControls />
 
-        <CamView />
+        {/* <CamView /> */}
         <Physics debug gravity={[0, -9.988, 0]}>
           {/* <PlayGound /> */}
           <Suspense>

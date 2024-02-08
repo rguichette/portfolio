@@ -155,7 +155,7 @@ function Data(props: MeshProps) {
         args={[1, 1, 1]}
         sensor
         onIntersectionEnter={() => {
-          setInfo(summeries.data);
+          setInfo(summeries.data.graph);
         }}
         onIntersectionExit={() => {
           setInfo((i) => ({ ...i, display: false }));

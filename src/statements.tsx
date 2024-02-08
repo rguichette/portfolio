@@ -2,7 +2,7 @@ import { InfoCardArgs } from "./state";
 
 type Involvement = { [key in "globe" | "table" | "board"]: InfoCardArgs };
 type Skills = { [key in "gopher" | "python" | "overview"]: InfoCardArgs };
-type Data = { [key in "data_overview"]: InfoCardArgs };
+type Data = { [key in "data_overview" | "graph"]: InfoCardArgs };
 type Projects = {
   [key in
     | "ridPost"
@@ -65,7 +65,13 @@ let summaries: Summaries = {
       title: "Data tools",
       display: true,
       learnMore: false,
-      summary: "data is beautiful isn't it...",
+      summary: "data is beautiful, isn't it...",
+    },
+    graph: {
+      title: "graph",
+      display: true,
+      learnMore: false,
+      summary: "data speaks",
     },
   },
   projects: {

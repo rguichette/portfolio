@@ -1,7 +1,11 @@
 import { Plane, useHelper, useTexture } from "@react-three/drei";
 import { GroupProps } from "@react-three/fiber";
+import { CuboidCollider, RigidBody } from "@react-three/rapier";
 import { useRef } from "react";
 import { Color, PointLightHelper } from "three";
+import summaries from "../../../statements";
+import { infoCardAtom } from "../../../state";
+import { useAtom } from "jotai";
 
 export default function Projects(props: GroupProps) {
   let pLightRef = useRef(null);
@@ -20,6 +24,7 @@ export default function Projects(props: GroupProps) {
   ]);
 
   let c = new Color(10, 10, 10);
+  let [sp, setsp] = useAtom(infoCardAtom);
 
   return (
     <>
@@ -52,6 +57,7 @@ export default function Projects(props: GroupProps) {
 
             // roughness={0.2}
           />
+
           <Plane rotation={[0, -Math.PI, 0]} />
         </Plane>
 
@@ -104,6 +110,7 @@ export default function Projects(props: GroupProps) {
           />
           <Plane rotation={[0, -Math.PI, 0]} />
         </Plane>
+
         <Plane
           scale={[2, 4.2, 1]}
           rotation={[0, -Math.PI, 0]}
@@ -112,6 +119,107 @@ export default function Projects(props: GroupProps) {
           <meshStandardMaterial map={post} />
           <Plane rotation={[0, -Math.PI, 0]} />
         </Plane>
+        {/* 
+
+breathe, dashboard, kel, listings, account, photos, post
+
+*/}
+
+        <CuboidCollider
+          args={[3, 1, 0.1]}
+          position={[-5, 1, 29]}
+          name="breathe"
+          sensor
+          onIntersectionEnter={() => {
+            console.log("Intercepted 2");
+          }}
+          onIntersectionExit={() => {
+            setsp((i) => ({ ...i, display: false }));
+          }}
+        />
+
+        <CuboidCollider
+          args={[3, 1, 0.1]}
+          position={[0, 1, 42]}
+          name="dashboard"
+          sensor
+          onIntersectionEnter={() => {
+            setsp(summaries.projects.dashboard);
+            console.log("Intercepted 2");
+          }}
+          onIntersectionExit={() => {
+            setsp((i) => ({ ...i, display: false }));
+          }}
+        />
+
+        <CuboidCollider
+          args={[3, 1, 0.1]}
+          position={[-10, 1, 49]}
+          name="kel"
+          sensor
+          onIntersectionEnter={() => {
+            setsp(summaries.projects.kelescope);
+          }}
+          onIntersectionExit={() => {
+            setsp((i) => ({ ...i, display: false }));
+          }}
+        />
+
+        <CuboidCollider
+          args={[0.8, 1, 0.1]}
+          position={[10, 1, 49]}
+          name="listings"
+          sensor
+          onIntersectionEnter={() => {
+            console.log("Intercepted 2");
+          }}
+          onIntersectionExit={() => {
+            setsp((i) => ({ ...i, display: false }));
+          }}
+        />
+
+        <CuboidCollider
+          args={[1, 1, 0.1]}
+          position={[18, 1, 39]}
+          name="account"
+          sensor
+          onIntersectionEnter={() => {
+            setsp(summaries.projects.ridAccount);
+
+            console.log("Intercepted 2");
+          }}
+          onIntersectionExit={() => {
+            setsp((i) => ({ ...i, display: false }));
+          }}
+        />
+
+        <CuboidCollider
+          args={[1, 1, 0.1]}
+          position={[17, 1, 54]}
+          name="photos"
+          sensor
+          onIntersectionEnter={() => {
+            console.log("Intercepted 2");
+          }}
+          onIntersectionExit={() => {
+            setsp((i) => ({ ...i, display: false }));
+          }}
+        />
+
+        <CuboidCollider
+          args={[1, 1, 0.1]}
+          position={[-15, 1, 34]}
+          name="post"
+          sensor
+          onIntersectionEnter={() => {
+            setsp(summaries.projects.ridPost);
+
+            console.log("Intercepted 2");
+          }}
+          onIntersectionExit={() => {
+            setsp((i) => ({ ...i, display: false }));
+          }}
+        />
       </group>
     </>
   );

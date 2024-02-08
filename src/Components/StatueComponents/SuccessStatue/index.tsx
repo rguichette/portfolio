@@ -2,10 +2,14 @@ import { Box, Plane, useGLTF, useVideoTexture } from "@react-three/drei";
 import { MeshProps } from "@react-three/fiber";
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
 import { DoubleSide } from "three";
+import { infoCardAtom } from "../../../state";
+import { useAtom } from "jotai";
+import summaries from "../../../statements";
 
 export default function SuccessStatue(props: MeshProps) {
   let { scene: sucessGroup } = useGLTF("/poses/mf_Accomplished.glb");
   let sgTexture = useVideoTexture("public/textures/video/Code.mp4");
+  let [sp, setsp] = useAtom(infoCardAtom);
 
   return (
     <>
@@ -21,7 +25,16 @@ export default function SuccessStatue(props: MeshProps) {
             />
           </Plane>
           <Box scale={[2, 0.1, 2]} position={[0, -0.2, 0]} />
-          <CuboidCollider args={[1, 1, 1]} />
+          <CuboidCollider
+            args={[1, 1, 1]}
+            onCollisionEnter={() => {
+              console.log("Collider");
+              setsp(() => summaries.projects.overview);
+            }}
+            onCollisionExit={() => {
+              setsp((i) => ({ ...i, display: false }));
+            }}
+          />
         </RigidBody>
       </mesh>
     </>
