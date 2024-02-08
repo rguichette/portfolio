@@ -18,12 +18,13 @@ export default function Introducion(props: GroupProps) {
         {showBtn && (
           <Html center>
             <button
+              className="border-2 inline-block w-32 h-10 rounded-md text-center bg-cyan-500 text-cyan-100"
               onClick={() => {
                 setShowIntroInfo(true);
                 setShowBtn(false);
               }}
             >
-              Intro
+              View Message
             </button>
           </Html>
         )}
