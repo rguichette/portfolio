@@ -169,6 +169,8 @@ export default function Skills(props: GroupProps) {
   let AiData = useVideoTexture("public/AiScreen.mp4");
   let pLightRef = useRef(null);
 
+  let [info, setInfo] = useAtom(infoCardAtom);
+
   useHelper(pLightRef.current && pLightRef, PointLightHelper);
 
   return (
@@ -200,6 +202,12 @@ export default function Skills(props: GroupProps) {
         scale={3}
         position={[13, -1.5, -15]}
         rotation={[0, -0.4, 0]}
+        onCollisionEnter={() => {
+          setInfo(summeries.skills.gopher);
+        }}
+        onCollisionExit={() => {
+          setInfo((i) => ({ ...i, display: false }));
+        }}
       >
         <Gltf src="/assets/skills/gopher.glb">
           {/* <CuboidCollider args={[0.45, 1, 1.5]} position={[-0.4, 0, -0.13]} /> */}
@@ -213,7 +221,15 @@ export default function Skills(props: GroupProps) {
         position={[3, 0, -25]}
       >
         <Gltf src="/assets/skills/python.glb">
-          <CuboidCollider args={[1, 1, 0.2]} />
+          <CuboidCollider
+            args={[1, 1, 0.2]}
+            onCollisionEnter={() => {
+              setInfo(summeries.skills.python);
+            }}
+            onCollisionExit={() => {
+              setInfo((i) => ({ ...i, display: false }));
+            }}
+          />
         </Gltf>
       </RigidBody>
 

@@ -28,7 +28,6 @@ export default function SuccessStatue(props: MeshProps) {
           <CuboidCollider
             args={[1, 1, 1]}
             onCollisionEnter={() => {
-              console.log("Collider");
               setsp(() => summaries.projects.overview);
             }}
             onCollisionExit={() => {
