@@ -185,7 +185,7 @@ export default function Contact(props: ContactInstanceMesh) {
     <div className="flex flex-col bg-slate-100-- h-full items-center content-center justify-center">
       <div className="flex  w-full -justify-center justify-between items-center  ">
         <img className="flex w-6 mr-auto invert  " src={phoneIcon} alt="" />
-        <a href="tel:617-230-3689">617-309-3609</a>
+        <a href="tel:617-230-3689">617-230-3609</a>
       </div>
 
       <div className="flex  w-full -justify-center justify-between items-center  ">
@@ -227,11 +227,11 @@ export default function Contact(props: ContactInstanceMesh) {
                   ))}
 
                   <CuboidCollider
-                    args={[0.5, 1, 0.14]}
+                    args={[0.7, 1, 0.34]}
                     key={"cuboid_" + k}
                     sensor
                     onIntersectionEnter={() => {
-                      console.log("CONTACT..");
+                      // console.log("CONTACT..");
                       setInfo({
                         display: true,
                         title: "Contact",

@@ -91,6 +91,7 @@ function App() {
         <Canvas
           className=" w-screen h-screen "
           shadows
+          camera={{ far: 10000 }}
 
           // camera={{ fov: 24, position: [10, -1, 2] }}
         >

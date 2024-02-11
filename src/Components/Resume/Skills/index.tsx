@@ -46,7 +46,7 @@ const CylinderRing = (props: CylinderRingProps) => {
   const defaultMaterial = new MeshBasicMaterial({ color: "red" });
   defaultMaterial.side = DoubleSide;
 
-  console.log(children);
+  // console.log(children);
 
   // Use the provided material or the default material
   const material =

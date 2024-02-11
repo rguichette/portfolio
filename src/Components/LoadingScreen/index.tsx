@@ -35,12 +35,12 @@ let LoadingPage = () => {
     };
 
     DefaultLoadingManager.onLoad = () => {
-      console.log("LOADED");
+      // console.log("LOADED");
     };
 
     //handle progress
     DefaultLoadingManager.onProgress = (url, itemsLoaded, itemsTotal) => {
-      console.log("loading...", itemsLoaded / itemsTotal);
+      // console.log("loading...", itemsLoaded / itemsTotal);
       setProgress((itemsLoaded / itemsTotal) * 100);
     };
 
@@ -73,15 +73,15 @@ let LoadingPage = () => {
     function detectOri(e: Event) {
       if (portrait.matches && !submit) {
         setHorizontal(false);
-        console.log("portrait");
+        // console.log("portrait");
       } else {
         if (!submit) {
           setHorizontal(true);
-          console.log("LandScape");
+          // console.log("LandScape");
         }
       }
     }
-    console.log("isMobile: ", ismobile);
+    // console.log("isMobile: ", ismobile);
 
     portrait.addEventListener("change", detectOri);
 
@@ -108,7 +108,7 @@ let LoadingPage = () => {
       if (displayContinue) clearTimeout(displayBtnTimer);
     }
 
-    console.log("Progress: ", progress);
+    // console.log("Progress: ", progress);
   }, [progress, touchDevice, horizontal]);
 
   return (

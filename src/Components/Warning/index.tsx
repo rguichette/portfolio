@@ -14,7 +14,7 @@ export default function Warning() {
                 The Following page may Potentially trigger seizures for some
                 people.
               </p>
-              <p className="mt-6">View Discretion is advised.</p>
+              <p className="mt-6">Viewer Discretion is advised.</p>
             </div>
           </div>
           <button

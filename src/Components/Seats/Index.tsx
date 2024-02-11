@@ -22,21 +22,20 @@ let Seats = forwardRef((props: InstancedChairProps, ref) => {
   let refT = useRef(null);
 
   Object.entries(nodes).forEach(([_, node]) => {
-    console.log(node);
+    // console.log(node);
     (node as Mesh).frustumCulled = false;
   });
 
   useEffect(() => {
     if (refT.current) {
-      console.log(nodes);
-
+      // console.log(nodes);
       // nodes.forEach((node) => {
       //   console.log("Nodes", node);
       // });
     }
   }, []);
 
-  console.log("CP: ", nodes);
+  // console.log("CP: ", nodes);
 
   return (
     <>

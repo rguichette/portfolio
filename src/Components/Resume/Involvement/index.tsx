@@ -59,6 +59,9 @@ let Involvement: React.FC<GroupProps> = forwardRef((props, ref) => {
           onIntersectionEnter={() => {
             setic(summaries.involvement.globe);
           }}
+          onIntersectionExit={() => {
+            setic((i) => ({ ...i, display: false }));
+          }}
         />
       </group>
     </>
