@@ -17,13 +17,7 @@ type AccProps = {
 export default function CustomAccordion({ items }: AccProps) {
   // console.log("ITEMS", items);
   return (
-    <Accordion.Root
-      collapsible
-      className="flex flex-col"
-      onFocusChange={(i) => {
-        // console.log("op", i);
-      }}
-    >
+    <Accordion.Root collapsible className="flex flex-col">
       {items.map((item, id) => (
         <Accordion.Item key={id} value={item.technology} className=" w-full">
           <Accordion.ItemTrigger className="w-full justify-between font-bold">

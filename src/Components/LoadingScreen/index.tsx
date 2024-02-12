@@ -18,18 +18,6 @@ let LoadingPage = () => {
   let [progress, setProgress] = useState(0);
   let [submit, setSubmit] = useAtom(enterWorld);
   useEffect(() => {
-    DefaultLoadingManager.onStart = function (url, itemsLoaded, itemsTotal) {
-      // console.log(
-      //   "Started loading file: " +
-      //     url +
-      //     ".\nLoaded " +
-      //     itemsLoaded +
-      //     " of " +
-      //     itemsTotal +
-      //     " files."
-      // );
-    };
-
     DefaultLoadingManager.onLoad = () => {
       // console.log("LOADED");
     };
