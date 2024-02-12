@@ -1,11 +1,14 @@
 version: '3'
-
 services:
-  frontend:
+  web:
     build:
       context: .
       dockerfile: Dockerfile.frontend
     ports:
-      - "5173:5173"
-    volumes:
-      - ./app:/app
+      - "8080:80"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
