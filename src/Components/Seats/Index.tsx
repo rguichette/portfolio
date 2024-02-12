@@ -14,9 +14,9 @@ export interface InstancedChairProps extends MeshProps {
 }
 // TODO: implement instamces
 
-let Seats = forwardRef((props: InstancedChairProps, ref) => {
+let Seats = forwardRef((props: InstancedChairProps, _) => {
   let { nodes, scene } = useGLTF(
-    "public/assets/involvement/office_chair.glb"
+    "/assets/involvement/office_chair.glb"
   ) as GltfExtend;
 
   let refT = useRef(null);

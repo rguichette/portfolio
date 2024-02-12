@@ -14,13 +14,13 @@ export default function Projects(props: GroupProps) {
   // useHelper(pLightRef2.current && pLightRef2, PointLightHelper);
 
   let [breathe, dashboard, kel, listings, account, photos, post] = useTexture([
-    "public/assets/portfolio/breath-min.png",
-    "public/assets/portfolio/dashboard-min.png",
-    "public/assets/portfolio/Kel-min.png",
-    "public/assets/portfolio/Listings-min.png",
-    "public/assets/portfolio/RidAccount-min.png",
-    "public/assets/portfolio/RidPhotos-min.png",
-    "public/assets/portfolio/RidPost-min.png",
+    "/assets/portfolio/breath-min.png",
+    "/assets/portfolio/dashboard-min.png",
+    "/assets/portfolio/Kel-min.png",
+    "/assets/portfolio/Listings-min.png",
+    "/assets/portfolio/RidAccount-min.png",
+    "/assets/portfolio/RidPhotos-min.png",
+    "/assets/portfolio/RidPost-min.png",
   ]);
 
   let c = new Color(10, 10, 10);
@@ -131,7 +131,7 @@ breathe, dashboard, kel, listings, account, photos, post
           name="breathe"
           sensor
           onIntersectionEnter={() => {
-            console.log("Intercepted 2");
+            // console.log("Intercepted 2");
           }}
           onIntersectionExit={() => {
             setsp((i) => ({ ...i, display: false }));
@@ -145,7 +145,7 @@ breathe, dashboard, kel, listings, account, photos, post
           sensor
           onIntersectionEnter={() => {
             setsp(summaries.projects.dashboard);
-            console.log("Intercepted 2");
+            // console.log("Intercepted 2");
           }}
           onIntersectionExit={() => {
             setsp((i) => ({ ...i, display: false }));
@@ -171,7 +171,7 @@ breathe, dashboard, kel, listings, account, photos, post
           name="listings"
           sensor
           onIntersectionEnter={() => {
-            console.log("Intercepted 2");
+            // console.log("Intercepted 2");
           }}
           onIntersectionExit={() => {
             setsp((i) => ({ ...i, display: false }));
@@ -186,7 +186,7 @@ breathe, dashboard, kel, listings, account, photos, post
           onIntersectionEnter={() => {
             setsp(summaries.projects.ridAccount);
 
-            console.log("Intercepted 2");
+            // console.log("Intercepted 2");
           }}
           onIntersectionExit={() => {
             setsp((i) => ({ ...i, display: false }));
@@ -199,7 +199,7 @@ breathe, dashboard, kel, listings, account, photos, post
           name="photos"
           sensor
           onIntersectionEnter={() => {
-            console.log("Intercepted 2");
+            // console.log("Intercepted 2");
           }}
           onIntersectionExit={() => {
             setsp((i) => ({ ...i, display: false }));
@@ -214,7 +214,7 @@ breathe, dashboard, kel, listings, account, photos, post
           onIntersectionEnter={() => {
             setsp(summaries.projects.ridPost);
 
-            console.log("Intercepted 2");
+            // console.log("Intercepted 2");
           }}
           onIntersectionExit={() => {
             setsp((i) => ({ ...i, display: false }));

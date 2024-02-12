@@ -1,14 +1,7 @@
-import { Box, Merged, Sphere, useGLTF } from "@react-three/drei";
+import { Merged, useGLTF } from "@react-three/drei";
 import { MeshProps, useFrame } from "@react-three/fiber";
-import React, { useEffect, useRef } from "react";
-import {
-  Color,
-  Group,
-  InstancedMesh,
-  Mesh,
-  MeshBasicMaterial,
-  MeshStandardMaterial,
-} from "three";
+import { useRef } from "react";
+import { Color, Group, Mesh, MeshStandardMaterial } from "three";
 import { GLTF } from "three-stdlib";
 
 interface ArrowProps extends MeshProps {
@@ -58,8 +51,6 @@ export default function Arrow(props: ArrowProps) {
   return (
     <Merged meshes={nodes} ref={ArrowsRef} frustumCulled={false}>
       {({ Arrow, ArrowCenter }: { Arrow: any; ArrowCenter: any }) => {
-        let a1Ref = useRef(null);
-
         // console.log("inst; ", instances);
 
         if (!instances || instances.length == 0) {
@@ -71,7 +62,7 @@ export default function Arrow(props: ArrowProps) {
           );
         }
 
-        return instances.map((instProps, k) => {
+        return instances.map((instProps, _) => {
           //   console.log("INST: ", instProps);
           // let rk = Math.random();
           // console.log("RK: ", rk);

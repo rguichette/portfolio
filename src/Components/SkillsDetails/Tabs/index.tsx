@@ -20,14 +20,14 @@ export default function Nav() {
   return <Tabs />;
 }
 
-function Tabs(props: HTMLAttributes<HTMLDivElement>) {
+function Tabs(_: HTMLAttributes<HTMLDivElement>) {
   let pRef = useRef<HTMLDivElement>(null);
   let tabNames: string[] = [];
   let [selected, setActive] = useState("Frontend");
 
   useEffect(() => {
     let arrEl = pRef.current?.children;
-    console.log("PREF", arrEl?.length);
+    // console.log("PREF", arrEl?.length);
 
     if (arrEl) {
       for (let item of arrEl) {
@@ -42,12 +42,12 @@ function Tabs(props: HTMLAttributes<HTMLDivElement>) {
     let elText = (e.target as HTMLParagraphElement).innerText;
     let clickedInd = tabNames.indexOf(elText);
     if (clickedInd >= 0) {
-      console.log("EL : ", elText);
+      // console.log("EL : ", elText);
 
-      console.log("El", e);
+      // console.log("El", e);
       setActive(elText);
 
-      console.log("El ind", pRef.current?.children[clickedInd]);
+      // console.log("El ind", pRef.current?.children[clickedInd]);
     }
   };
 

@@ -17,7 +17,7 @@ let Statues = () => {
   let sgTexture = useVideoTexture("public/textures/video/Code.mp4");
 
   useEffect(() => {
-    console.log("DYNAMIC:", dynamic.children[0].children[0]);
+    // console.log("DYNAMIC:", dynamic.children[0].children[0]);
     (dynamic.children[0].children[0] as Mesh).material = new MeshBasicMaterial({
       color: "blue",
       opacity: 0.4,
@@ -35,7 +35,7 @@ let Statues = () => {
       // );
     }
 
-    book.children.map((b, i) => {
+    book.children.map((b, _) => {
       (b as Mesh).material = new MeshPhysicalMaterial({
         metalness: 0.3,
         reflectivity: 0.5,

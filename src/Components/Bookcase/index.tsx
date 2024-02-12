@@ -1,25 +1,13 @@
-import {
-  Box,
-  Gltf,
-  Instance,
-  Instances,
-  Merged,
-  useGLTF,
-} from "@react-three/drei";
+import { Instance, Instances, useGLTF } from "@react-three/drei";
 import { MeshProps } from "@react-three/fiber";
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
-import React, { useEffect } from "react";
 import {
   BoxGeometry,
   Material,
-  MeshBasicMaterial,
   MeshLambertMaterial,
-  MeshPhongMaterial,
-  MeshPhysicalMaterial,
   MeshStandardMaterial,
 } from "three";
 import { GLTF } from "three-stdlib";
-import { log } from "three/examples/jsm/nodes/Nodes.js";
 
 interface BookProps extends MeshProps {
   material?: Material;
@@ -51,7 +39,7 @@ export default function Bookcase({
   let count = 1;
 
   let row = () => {
-    return Array.apply(null, Array(20)).map((item, i) => {
+    return Array.apply(null, Array(20)).map((_, i) => {
       let color = () => colors[Math.floor(Math.random() * colors.length)];
       let j = i - 10;
 

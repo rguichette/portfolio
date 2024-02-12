@@ -19,7 +19,7 @@ export default function BookStatue(props: RigidBodyProps) {
       clearcoat: 0.84,
     })
   );
-  console.log("M: ", newMesh);
+  // console.log("M: ", newMesh);
 
   useEffect(() => {
     if (scene) {
@@ -30,7 +30,7 @@ export default function BookStatue(props: RigidBodyProps) {
         reflectivity: 0.7,
         clearcoat: 0.84,
       });
-      console.log("MAT ", nodes.Book);
+      // console.log("MAT ", nodes.Book);
     }
   }, []);
 

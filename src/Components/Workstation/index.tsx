@@ -81,7 +81,7 @@ let WorkStation: React.FC<MeshProps> = forwardRef<Mesh, MeshProps>(
             sensor
             onIntersectionEnter={() => {
               setEngBtn(true);
-              console.log("collision....");
+              // console.log("collision....");
             }}
             onIntersectionExit={() => {
               setEngBtn(false);

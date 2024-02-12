@@ -166,7 +166,7 @@ function Data(props: MeshProps) {
 }
 
 export default function Skills(props: GroupProps) {
-  let AiData = useVideoTexture("public/AiScreen.mp4");
+  let AiData = useVideoTexture("/AiScreen.mp4");
   let pLightRef = useRef(null);
 
   let [info, setInfo] = useAtom(infoCardAtom);

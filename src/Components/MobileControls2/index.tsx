@@ -101,7 +101,7 @@ export default function MobileControl2() {
 
   useEffect(() => {
     window.onresize = () => {
-      console.log("RESIZE!");
+      // console.log("RESIZE!");
       setIsMobile(isMobile());
     };
 

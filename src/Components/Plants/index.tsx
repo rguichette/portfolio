@@ -14,7 +14,7 @@ type NGLTF = GLTF & {
 };
 
 export default function Plants() {
-  let { nodes, scene } = useGLTF("public/plants/office_plant.glb") as NGLTF;
+  let { nodes, scene } = useGLTF("/plants/office_plant.glb") as NGLTF;
 
   let plantRef = useRef(null);
 

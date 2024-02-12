@@ -24,7 +24,6 @@ import { enterWorld, showSkillsSummary } from "./state";
 import { isMobile } from "is-mobile";
 import InfoCrad from "./Components/InfoCard";
 import SkillsDetails from "./Components/SkillsDetails";
-import MobileControls from "./Components/__MobileControls";
 import MobileControls2 from "./Components/MobileControls2";
 import {
   Bloom,

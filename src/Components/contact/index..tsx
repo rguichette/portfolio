@@ -1,4 +1,4 @@
-import { Merged, Text, useGLTF } from "@react-three/drei";
+import { Merged, useGLTF } from "@react-three/drei";
 import { MeshProps, useFrame } from "@react-three/fiber";
 import { CuboidCollider, RigidBody, RigidBodyProps } from "@react-three/rapier";
 import {
@@ -7,8 +7,6 @@ import {
   DoubleSide,
   EdgesGeometry,
   ImageLoader,
-  LineBasicMaterial,
-  LineSegments,
   Mesh,
   MeshPhongMaterial,
   RepeatWrapping,
@@ -18,7 +16,7 @@ import { GLTF } from "three-stdlib";
 import * as BufferGeometryUtils from "three/addons/utils/BufferGeometryUtils.js";
 import { infoCardAtom } from "../../state";
 import { useAtom } from "jotai";
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import phoneIcon from "/assets/icons/phoneIcon.svg";
 import emailIcon from "/assets/icons/email.svg";
 import linkedInIcon from "/assets/icons/linkedin.svg";
@@ -116,7 +114,6 @@ export default function Contact(props: ContactInstanceMesh) {
   //------------------------ end canvas -------------
 
   let { nodes: fb } = useGLTF("/phoneBez.glb") as any;
-  let { nodes: sb } = useGLTF("/phoneScreenBack.glb") as any;
 
   let [info, setInfo] = useAtom(infoCardAtom);
 
@@ -143,8 +140,6 @@ export default function Contact(props: ContactInstanceMesh) {
     });
   }, [txt2, info]);
 
-  let [minuteChanged, setMinuteChanged] = useState(0);
-
   // useEffect(() => {
   //   let min = new Date().getMinutes();
 
@@ -168,7 +163,6 @@ export default function Contact(props: ContactInstanceMesh) {
   //   });
   // }, [fb, fb.length, txt2, minuteChanged]);
 
-  let prevMin = 0;
   // useFrame(() => {
   //   let min = new Date().getMinutes();
 
@@ -208,7 +202,7 @@ export default function Contact(props: ContactInstanceMesh) {
       <mesh {...props}>
         <Merged meshes={{ ...fb, ...cb }} frustumCulled={false}>
           {({ Screen, ...items }: { Screen: any }) => {
-            console.log(items);
+            // console.log(items);
 
             return instances.map((instProps, k) => {
               return (

@@ -27,7 +27,7 @@ export default function BluePrint() {
   // m.toneMapped = false;
 
   useEffect(() => {
-    console.log("SCENE:", test.scene.children[0].children);
+    // console.log("SCENE:", test.scene.children[0].children);
   }, []);
 
   return (

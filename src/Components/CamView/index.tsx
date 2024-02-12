@@ -54,7 +54,7 @@ export default function CamView() {
           !viewSkills
         ) {
           spectating = true;
-          console.log("panning");
+          // console.log("panning");
         }
       };
 
@@ -78,7 +78,7 @@ export default function CamView() {
   var position = { x: 0, y: 300 };
   var target = { x: 4, y: 1.5 };
 
-  useFrame(({ scene, camera, clock }) => {
+  useFrame(({ scene }) => {
     let character = scene.getObjectByName("charRigidBody");
     if (character && enteredWorld)
       if (character && orbitControlsRef.current) {

@@ -12,5 +12,6 @@ import * as TWEEN from '@tweenjs/tween.js'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), glsl()],
+
   assetsInclude: ['**/*.glb']
 })

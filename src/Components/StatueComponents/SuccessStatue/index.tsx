@@ -8,7 +8,7 @@ import summaries from "../../../statements";
 
 export default function SuccessStatue(props: MeshProps) {
   let { scene: sucessGroup } = useGLTF("/poses/mf_Accomplished.glb");
-  let sgTexture = useVideoTexture("public/textures/video/Code.mp4");
+  let sgTexture = useVideoTexture("/textures/video/Code.mp4");
   let [sp, setsp] = useAtom(infoCardAtom);
 
   return (

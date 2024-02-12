@@ -63,10 +63,10 @@ const Player = forwardRef<Mesh, MeshProps>(function Player(props, ref) {
   let angle = 0;
   let turnSpeed = 0.03;
 
-  let { scene: character, animations } = useGLTF("public/PlayerMain.glb");
+  let { scene: character, animations } = useGLTF("/PlayerMain.glb");
 
   const { actions, mixer } = useAnimations(animations, character);
-  console.log("ANIMATIONS: ", animations);
+  // console.log("ANIMATIONS: ", animations);
 
   let idleAnimation = animations.find(
     (clip) => clip.name == "Breathing_idle"
@@ -91,14 +91,14 @@ const Player = forwardRef<Mesh, MeshProps>(function Player(props, ref) {
   let runninng = false;
 
   useEffect(() => {
-    console.log("PLAYER SETTING: ", speed);
+    // console.log("PLAYER SETTING: ", speed);
     direction.multiplyScalar(speed);
     rbRef.current.setLinvel(direction, true);
   }, []);
 
-  useFrame(({ clock, scene }) => {
+  useFrame(() => {
     if (!enteredWorld) {
-      console.log("World NOT entered or showIntroUp");
+      // console.log("World NOT entered or showIntroUp");
       return;
     }
 
@@ -187,13 +187,13 @@ const Player = forwardRef<Mesh, MeshProps>(function Player(props, ref) {
           //   }
           // }
 
-          console.log("SPEED: ", speed);
+          // console.log("SPEED: ", speed);
           direction.multiplyScalar(speed);
           rbRef.current.setLinvel(direction, true);
         } else if ((get().back && !showinfoInfo) || joystickBF < 0) {
           if (isMobile()) {
             speed = normalSpeed;
-            console.log("less: ", speed);
+            // console.log("less: ", speed);
           }
           direction.multiplyScalar(-speed);
           rbRef.current.setLinvel(direction, true);

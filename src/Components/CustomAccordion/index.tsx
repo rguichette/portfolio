@@ -15,13 +15,13 @@ type AccProps = {
 };
 
 export default function CustomAccordion({ items }: AccProps) {
-  console.log("ITEMS", items);
+  // console.log("ITEMS", items);
   return (
     <Accordion.Root
       collapsible
       className="flex flex-col"
       onFocusChange={(i) => {
-        console.log("op", i);
+        // console.log("op", i);
       }}
     >
       {items.map((item, id) => (

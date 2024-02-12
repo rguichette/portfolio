@@ -94,14 +94,11 @@ export let Sign = forwardRef(function Sign(
 
   return (
     <mesh {...props} ref={ref as any}>
-      <Text
-        font={"public/assets/fonts/Interstellar Trip.ttf"}
-        material={material}
-      >
+      <Text font={"/assets/fonts/Interstellar Trip.ttf"} material={material}>
         {`${title}`} {direction && ">"}
       </Text>
       <Text
-        font={"public/assets/fonts/Interstellar Trip.ttf"}
+        font={"/assets/fonts/Interstellar Trip.ttf"}
         rotation={[0, Math.PI, 0]}
         material={material}
       >

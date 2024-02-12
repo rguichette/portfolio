@@ -1,22 +1,6 @@
-import {
-  Box,
-  Cylinder,
-  Merged,
-  Sphere,
-  useGLTF,
-  useTexture,
-} from "@react-three/drei";
+import { Merged, Sphere, useGLTF } from "@react-three/drei";
 import { MeshProps } from "@react-three/fiber";
-import {
-  CuboidCollider,
-  RigidBody,
-  RigidBodyProps,
-  RoundCylinderCollider,
-  TrimeshCollider,
-} from "@react-three/rapier";
-import React from "react";
-import { GLTF } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { log } from "three/examples/jsm/nodes/Nodes.js";
+import { RigidBody, RigidBodyProps } from "@react-three/rapier";
 
 interface BowlingInstanceMesh extends MeshProps {
   instances: RigidBodyProps[];
@@ -24,7 +8,6 @@ interface BowlingInstanceMesh extends MeshProps {
 
 function BowlingSub(props: BowlingInstanceMesh) {
   let { nodes } = useGLTF("/3Dassets/bowling_pin.glb") as any;
-  let t = useTexture("/bowlingTexture.png");
 
   let { instances } = props;
 
@@ -33,12 +16,12 @@ function BowlingSub(props: BowlingInstanceMesh) {
       <mesh {...props}>
         <Merged meshes={nodes} frustumCulled={false}>
           {({ ...items }) => {
-            console.log(items);
+            // console.log(items);
 
             return instances.map((instProps, k) => {
               return (
                 <RigidBody {...instProps} key={k}>
-                  {Object.entries(items).map(([name, Part]: [string, any]) => (
+                  {Object.entries(items).map(([_, Part]: [string, any]) => (
                     // <mesh key={"rigidInstMesh" + name}>
                     <Part />
 
@@ -58,6 +41,7 @@ function BowlingSub(props: BowlingInstanceMesh) {
 }
 
 export default function Bowling(props: MeshProps) {
+  // @ts-ignore
   let instances: RigidBodyProps[] = [
     {
       position: [0.5, 0, 0.5],

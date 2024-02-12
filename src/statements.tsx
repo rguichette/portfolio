@@ -47,7 +47,7 @@ let summaries: Summaries = {
       display: true,
       learnMore: false,
       summary:
-        "Worked on various projects, learning how much golang shines when it comes to cuncurrency ",
+        "Worked on various projects, learning how much golang shines when it comes to concurrency ",
     },
     python: {
       title: "Productivity",

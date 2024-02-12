@@ -41,7 +41,7 @@ export default function Table(props: MeshProps) {
               position={[30, 15, 18]}
               sensor
               onIntersectionEnter={(e: any) => {
-                console.log("downloading Resume...2 success, ", e);
+                // console.log("downloading Resume...2 success, ", e);
 
                 if (e.rigidBodyObject.name == "charRigidBody") {
                   setShowDownloadBtn(true);

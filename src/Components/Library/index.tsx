@@ -9,7 +9,7 @@ import Seats from "../Seats";
 import Bookcase from "../Bookcase";
 
 let Library: React.FC<GroupProps> = forwardRef<any, GroupProps>(
-  (props: GroupProps, ref) => {
+  (props: GroupProps) => {
     let instances = useMemo(() => {
       let chairInstance: RigidBodyProps[] = [
         { position: [3.4, 0, 0], rotation: [0, 0.1, 0] },

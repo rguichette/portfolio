@@ -9,7 +9,7 @@ import { infoCardAtom } from "../../../state";
 import { useAtom } from "jotai";
 import summaries from "../../../statements";
 
-let Involvement: React.FC<GroupProps> = forwardRef((props, ref) => {
+let Involvement: React.FC<GroupProps> = forwardRef((props, _) => {
   let earthRef = useRef(null);
   let rectLightRef = useRef(null);
   let pLightRef = useRef(null);

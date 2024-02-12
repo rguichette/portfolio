@@ -2,6 +2,7 @@ import { Merged, Cylinder, Box } from "@react-three/drei";
 import { MeshProps } from "@react-three/fiber";
 import { CuboidCollider, RigidBody, RigidBodyProps } from "@react-three/rapier";
 import React from "react";
+import { JSX } from "react/jsx-runtime";
 import { BoxGeometry, Mesh, MeshBasicMaterial, Sphere } from "three";
 
 interface DominoInstanceMesh extends MeshProps {
@@ -9,7 +10,7 @@ interface DominoInstanceMesh extends MeshProps {
 }
 function Dom(props: DominoInstanceMesh) {
   let { instances } = props;
-  console.log("Instances", instances);
+  // console.log("Instances", instances);
 
   let m = new MeshBasicMaterial({ color: "#d9b99b" });
 
@@ -19,7 +20,7 @@ function Dom(props: DominoInstanceMesh) {
     <>
       <mesh {...props} key={"dom_wrapper"}>
         <Merged meshes={[box]} frustumCulled={false} key={"domino_"}>
-          {(B) => {
+          {(B: any) => {
             return instances.map((instProps, k) => {
               return (
                 <RigidBody {...instProps} key={k}>

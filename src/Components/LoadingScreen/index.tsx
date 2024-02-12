@@ -19,19 +19,15 @@ let LoadingPage = () => {
   let [submit, setSubmit] = useAtom(enterWorld);
   useEffect(() => {
     DefaultLoadingManager.onStart = function (url, itemsLoaded, itemsTotal) {
-      console.log(
-        "Started loading file: " +
-          url +
-          ".\nLoaded " +
-          itemsLoaded +
-          " of " +
-          itemsTotal +
-          " files."
-      );
-      // DefaultLoadingManager.onStart = t;
-      // setTimeout(() => setProgress((itemsLoaded / itemsTotal) * 100), 0);
-      // setProgress((itemsLoaded / itemsTotal) * 100);
-      //   // let p = (itemsLoaded / itemsTotal) * 100;
+      // console.log(
+      //   "Started loading file: " +
+      //     url +
+      //     ".\nLoaded " +
+      //     itemsLoaded +
+      //     " of " +
+      //     itemsTotal +
+      //     " files."
+      // );
     };
 
     DefaultLoadingManager.onLoad = () => {
@@ -39,7 +35,7 @@ let LoadingPage = () => {
     };
 
     //handle progress
-    DefaultLoadingManager.onProgress = (url, itemsLoaded, itemsTotal) => {
+    DefaultLoadingManager.onProgress = (_, itemsLoaded, itemsTotal) => {
       // console.log("loading...", itemsLoaded / itemsTotal);
       setProgress((itemsLoaded / itemsTotal) * 100);
     };
@@ -70,7 +66,7 @@ let LoadingPage = () => {
       PowerGlitch.glitch(container, glitchOptions);
     } else {
     }
-    function detectOri(e: Event) {
+    function detectOri(_: Event) {
       if (portrait.matches && !submit) {
         setHorizontal(false);
         // console.log("portrait");
