@@ -9,7 +9,7 @@ services:
     networks:
       - app-network
     volumes:
-      - ./certs:/certs
+      - /3dportfolio/cert:/certs
 
 networks:
   app-network:
