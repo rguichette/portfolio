@@ -7,8 +7,8 @@ services:
     ports:
       - "443:443"
     networks:
+      - app-network
     volumes:
-
       - ./certs:/certs
 
 networks:
