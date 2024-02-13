@@ -5,9 +5,11 @@ services:
       context: .
       dockerfile: Dockerfile.frontend
     ports:
-      - "8080:80"
+      - "443:443"
     networks:
-      - app-network
+    volumes:
+
+      - ./certs:/certs
 
 networks:
   app-network:
