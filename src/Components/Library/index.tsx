@@ -5,8 +5,9 @@ import { forwardRef, useMemo } from "react";
 
 import { RigidBody, RigidBodyProps } from "@react-three/rapier";
 import Table from "../Table";
-import Seats from "../Seats";
+
 import Bookcase from "../Bookcase";
+import Seats from "../Seats";
 
 let Library: React.FC<GroupProps> = forwardRef<any, GroupProps>(
   (props: GroupProps) => {
