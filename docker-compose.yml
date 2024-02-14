@@ -8,8 +8,8 @@ services:
       - "443:443"
     networks:
       - app-network
-    volumes:
-      - /3dportfolio/cert:/certs
+    # volumes:
+    #   - /3dportfolio/cert:/certs
 
 networks:
   app-network:
