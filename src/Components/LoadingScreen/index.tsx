@@ -89,7 +89,10 @@ let LoadingPage = () => {
         setDisplayContinue(true);
       }, 2000);
 
-      if (displayContinue) clearTimeout(displayBtnTimer);
+      // if (displayContinue) clearTimeout(displayBtnTimer);
+      return () => {
+        clearTimeout(displayBtnTimer);
+      };
     }
 
     // console.log("Progress: ", progress);
