@@ -190,7 +190,7 @@ export default function Contact(props: ContactInstanceMesh) {
       </div>
       <div className="flex  w-full -justify-center justify-between items-center   ">
         <img className="flex w-6 invert " src={linkedInIcon} alt="" />
-        <a href="https://www.linkedin.com/in/ralphguichette" target="_blank">
+        <a href="https://www.linkedin.com/in/ralphIsidore" target="_blank">
           LinkedIn
         </a>
       </div>
