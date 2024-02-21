@@ -179,13 +179,13 @@ export default function Contact(props: ContactInstanceMesh) {
     <div className="flex flex-col bg-slate-100-- h-full items-center content-center justify-center">
       <div className="flex  w-full -justify-center justify-between items-center  ">
         <img className="flex w-6 mr-auto invert  " src={phoneIcon} alt="" />
-        <a href="tel:617-230-3689">617-230-3609</a>
+        <a href="tel:617-230-3609">617-230-3609</a>
       </div>
 
       <div className="flex  w-full -justify-center justify-between items-center  ">
         <img className="flex w-6 invert mt-2 mb-2 " src={emailIcon} alt="" />
-        <a className="flex  text-sm" href="mailto:ralphIsidore@gmail.com">
-          RalphIsidore@gmail.com
+        <a className="flex  text-sm" href="mailto:ralphEisidore@gmail.com">
+          RalphEisidore@gmail.com
         </a>
       </div>
       <div className="flex  w-full -justify-center justify-between items-center   ">
